@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Ginger",
+    "dailyLimitTbs": 0.5,
+    "grade": "standard",
+    "shortDescription": "Ginger not only adds delicious flavor to food — it’s also full of nutrients. People have been using the root for cooking and healing for thousands of years.",
+    "description": "Ginger is a tropical flowering plant that originally grew in Southeast Asia but is now widely available from growers around the world. It's classified as a member of the Zingiberaceae family, making it a close relative of turmeric. (3) The scientific name for ginger is Zingiber officinale, which is thought to come from the Sanskrit name for the spice (singabera).",
+    "nutrition": {
+      "sodium": 0.01,
+      "protein": 1,
+      "monounsaturatedFat": 0,
+      "polyunsaturatedFat": null,
+      "saturatedFat": 0,
+      "cholesterol": 0,
+      "carbohydrates": 0,
+      "fiber": null,
+      "sugars": 1
+    },
+    "organic": true,
+    "vegan": true,
+    "gluten": false
+  },
+  {
+    "name": "Turmeric",
+    "dailyLimitTbs": 0.5,
+    "grade": "premium",
+    "shortDescription": "Turmeric is a root plant native to Asia that has been used for millennia. It’s known by its signature golden hue — what gives curries and mustards their vibrant color.",
+    "description": "Turmeric is a flowering plant, Curcuma longa of the ginger family, Zingiberaceae, the roots of which are used in cooking. The plant is a perennial, rhizomatous, herbaceous plant native to the Indian subcontinent and Southeast Asia",
+    "nutrition": {
+      "sodium": 0.01,
+      "protein": 1,
+      "monounsaturatedFat": 3,
+      "polyunsaturatedFat": null,
+      "saturatedFat": 0,
+      "cholesterol": 0,
+      "carbohydrates": 0,
+      "fiber": null,
+      "sugars": 1
+    },
+    "organic": true,
+    "vegan": true,
+    "gluten": false
+  },
+  {
+    "name": "Black Pepper",
+    "dailyLimitTbs": 0.75,
+    "grade": "standard",
+    "shortDescription": "But black pepper is more than just a kitchen staple. It has been deemed the “king of spices” and used in ancient Ayurvedic medicine for thousands of years due to its high concentration of potent, beneficial plant compounds.",
+    "description": "Black pepper is a flowering vine in the family Piperaceae, cultivated for its fruit, known as a peppercorn, which is usually dried and used as a spice and seasoning. When fresh and fully mature, the fruit is about 5 mm in diameter and dark red, and contains a single seed, like all drupes.",
+    "nutrition": {
+      "sodium": 0.01,
+      "protein": 0,
+      "monounsaturatedFat": 0,
+      "polyunsaturatedFat": 0,
+      "saturatedFat": 0,
+      "cholesterol": 0,
+      "carbohydrates": 0,
+      "fiber": 0,
+      "sugars": 0
+    },
+    "organic": true,
+    "vegan": true,
+    "gluten": false
+  }
+]
