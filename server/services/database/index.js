@@ -1,8 +1,6 @@
 // import blendService from './blends'
 import authService from "./auth";
-import blendService from "./blends";
-import ingredientService from "./ingredients";
-import orderService from "./orders";
+import portfolioService from "./portfolios";
 import admin from "./firebase";
 import { verifyToken } from "./verify";
 import { getOrCreateUser } from "./users";
@@ -18,9 +16,7 @@ const Database = async ({ token } = {}) => {
 
   let db = { user };
   db.auth = authService({ db, user });
-  db.blends = blendService({ db, user });
-  db.ingredients = ingredientService({ db, user });
-  db.orders = orderService({ db, user });
+  db.portfolios = portfolioService({ db, user });
   return db;
 };
 
