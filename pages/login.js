@@ -22,6 +22,9 @@ export default (_props) => {
           if (router.query.from) {
             window.location.href = router.query.from
           }
+          else {
+            window.location.href = '/'
+          }
         }}
       >
         Log in

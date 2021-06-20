@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import nookies from "nookies";
 import * as auth from '../server/utils/auth'
-import { useAuth } from 'client/useAuth'
 import Database from 'server/services/database'
 import Landing from 'shared/components/Landing'
+import { Editor } from "shared/components";
 
 export const getServerSideProps = async (ctx) => {
   try {
@@ -31,18 +31,12 @@ export const getServerSideProps = async (ctx) => {
 
 const Home = (props) => {
 
-  const user = useAuth()
-
   if (!props.isAuthenticated) {
     return <Landing />
   }
-
-  return (
-    <div>
-      <h2>Hello, {user?.email}</h2>
-      <p>{JSON.stringify(props.portfolio)}</p>
-    </div>
-  );
+  else {
+    return <Editor />
+  }
 };
 
 export default Home

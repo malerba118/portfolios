@@ -1,11 +1,16 @@
 import { AuthProvider } from "client/useAuth";
+import { QueryClient, QueryClientProvider } from "react-query";
 import '../styles/globals.css'
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }) {
   return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
+    </QueryClientProvider>
   )
 }
 
