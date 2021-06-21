@@ -9,11 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.6.4",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
     "@stripe/stripe-js": "^1.15.0",
     "axios": "^0.21.1",
     "babel-plugin-superjson-next": "^0.3.0",
     "firebase": "^8.6.7",
     "firebase-admin": "^9.9.0",
+    "framer-motion": "^4",
     "joi": "^17.4.0",
     "nanoid": "^3.1.23",
     "next": "11.0.0",

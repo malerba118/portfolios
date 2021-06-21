@@ -1,17 +1,36 @@
 import { AuthProvider } from "client/useAuth";
 import { QueryClient, QueryClientProvider } from "react-query";
-import '../styles/globals.css'
+import { ChakraProvider, Box } from "@chakra-ui/react";
+import { isServer } from "shared/utils/ssr";
+import { getSubdomain } from "shared/utils/url";
+import "../styles/globals.css";
 
 const queryClient = new QueryClient();
 
-function MyApp({ Component, pageProps }) {
+function MyApp(props) {
+  if (props.subdomain === "127") {
+    return <Box>Hiii</Box>;
+  }
+  const { Component, pageProps } = props;
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <Component {...pageProps} />
+        <ChakraProvider>
+          <Component {...pageProps} />
+        </ChakraProvider>
       </AuthProvider>
     </QueryClientProvider>
-  )
+  );
 }
 
-export default MyApp
+MyApp.getInitialProps = async ({ ctx }) => {
+  let subdomain;
+  if (isServer()) {
+    subdomain = getSubdomain(ctx.req.headers.host);
+  } else {
+    subdomain = getSubdomain(window.location.hostname);
+  }
+  return { subdomain };
+};
+
+export default MyApp;
