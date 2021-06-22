@@ -6,7 +6,6 @@ import Landing from "shared/components/Landing";
 import { Editor } from "shared/components";
 
 export const getServerSideProps = async (ctx) => {
-  console.log("please 2");
   try {
     const cookies = nookies.get(ctx);
     const db = await Database({ token: cookies.token });

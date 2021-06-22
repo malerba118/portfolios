@@ -5,3 +5,5 @@ export const isServer = () => {
 export const isBrowser = () => {
   return !isServer();
 };
+
+export const isDev = process.env.NEXT_PUBLIC_ENV === "development";
