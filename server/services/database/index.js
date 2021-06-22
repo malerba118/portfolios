@@ -1,11 +1,8 @@
 // import blendService from './blends'
 import authService from "./auth";
 import portfolioService from "./portfolios";
-import admin from "./firebase";
 import { verifyToken } from "./verify";
 import { getOrCreateUser } from "./users";
-
-const firestore = admin.firestore();
 
 const Database = async ({ token } = {}) => {
   let user = null;

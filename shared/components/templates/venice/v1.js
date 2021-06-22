@@ -5,7 +5,7 @@ import { useAuth } from "client/useAuth";
 import * as api from "client/api";
 
 const Template = ({ portfolio }) => {
-  return <h1>{portfolio.name}</h1>;
+  return <h1>hii</h1>;
 };
 
 export default Template;

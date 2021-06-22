@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 const provider = new firebaseClient.auth.GoogleAuthProvider();
 
 export default (_props) => {
-  console.log(_props);
   const router = useRouter();
 
   return (
