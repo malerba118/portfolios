@@ -989,6 +989,11 @@
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.5.0.tgz#7c9a250cd272ccb94b3069bb237b5c30c3ce70f6"
   integrity sha512-5808ztHwCy0bE154pmYSR86+uKToDcoxvM7F+nMDJ2NktxujYZLsz10e7iMXrKtyePKNP5VCVgp7s0vsViSKDA==
 
+"@fontsource/josefin-sans@^4.4.5":
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/@fontsource/josefin-sans/-/josefin-sans-4.4.5.tgz#ce29538af89c16a521ca87eff81c649523680661"
+  integrity sha512-CHK6XWuBHjMIhEByddq+UV4pNUg1JlsuKVaDWWsrEB9ZcgoK6HL5ReMm/cMTUALc89UUyF/lHObEvC6zEXdOlw==
+
 "@google-cloud/common@^3.6.0":
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/@google-cloud/common/-/common-3.6.0.tgz#c2f6da5f79279a4a9ac7c71fc02d582beab98e8b"

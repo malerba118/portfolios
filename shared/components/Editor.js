@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { useAuth } from "client/useAuth";
 import Previewer from "./Previewer";
 import DeviceSelector from "./DeviceSelector";
+import PortfolioContentEditor from "./PortfolioContentEditor";
 import { useResizeDetector } from "react-resize-detector";
 import * as styles from "../utils/styles";
 import * as api from "client/api";
@@ -20,6 +21,16 @@ const Editor = () => {
   const [device, setDevice] = useState("desktop");
   const { width, height, ref } = useResizeDetector();
 
+  const ratio = deviceAspectRatios[device];
+  const previewerSize = {};
+  if (width / height > ratio) {
+    previewerSize.height = height * 0.88;
+    previewerSize.width = previewerSize.height * ratio;
+  } else {
+    previewerSize.width = width * 0.88;
+    previewerSize.height = previewerSize.width / ratio;
+  }
+
   return (
     <Flex h="100%">
       <Flex
@@ -33,6 +44,9 @@ const Editor = () => {
           h="56px"
           {...styles.borders({ bottom: true })}
         ></Flex>
+        <Box className="sidebar-content" flex="1" overflow="auto">
+          <PortfolioContentEditor />
+        </Box>
       </Flex>
       <Flex flex={1} className="main" flexDirection="column">
         <Flex
@@ -45,23 +59,9 @@ const Editor = () => {
           <DeviceSelector value={device} onChange={setDevice} />
         </Flex>
         <Flex ref={ref} flex={1} className="main-content" bg="gray.100">
-          {(() => {
-            console.log(width);
-            const ratio = deviceAspectRatios[device];
-            const size = {};
-            if (width / height > ratio) {
-              size.height = height * 0.88;
-              size.width = size.height * ratio;
-            } else {
-              size.width = width * 0.88;
-              size.height = size.width / ratio;
-            }
-            return (
-              <Center w="100%">
-                <Previewer {...size} portfolio={query.data} />
-              </Center>
-            );
-          })()}
+          <Center w="100%">
+            <Previewer {...previewerSize} portfolio={query.data} />
+          </Center>
         </Flex>
       </Flex>
     </Flex>

@@ -1,7 +1,7 @@
 import React from "react";
 import Embed from "./Embed";
 import { isDev } from "shared/utils/runtime";
-import { AspectRatio } from "@chakra-ui/react";
+import * as styles from "../utils/styles";
 
 const Previewer = ({ width, height, portfolio }) => {
   if (!portfolio) return null;

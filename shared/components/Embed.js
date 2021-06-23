@@ -20,6 +20,7 @@ const Embed = ({ data, width, height, ...otherProps }) => {
       ref={iframeRef}
       onLoad={() => setLoaded(true)}
       {...otherProps}
+      bg="white"
       initial={{
         scale: 0,
         opacity: 0,
