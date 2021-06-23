@@ -3,6 +3,8 @@ import nookies from "nookies";
 import * as auth from "../server/utils/auth";
 import Database from "server/services/database";
 import Landing from "shared/components/Landing";
+import Toolbar from "shared/components/Toolbar";
+import Layout from "shared/components/Layout";
 import { Editor } from "shared/components";
 
 export const getServerSideProps = async (ctx) => {
@@ -30,9 +32,9 @@ export const getServerSideProps = async (ctx) => {
 
 const Home = (props) => {
   if (!props.isAuthenticated) {
-    return <Landing />;
+    return <Layout toolbar={<Toolbar />} content={<Landing />} />;
   } else {
-    return <Editor />;
+    return <Layout fitWindow toolbar={<Toolbar />} content={<Editor />} />;
   }
 };
 

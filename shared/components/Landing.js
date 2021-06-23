@@ -1,8 +1,8 @@
-import Link from 'next/link';
-import React from 'react'
+import Link from "next/link";
+import React from "react";
 
 const Landing = ({ user }) => {
-  return <div>landing <Link href="/login">log in</Link></div>;
+  return <div>landing</div>;
 };
 
 export default Landing;

@@ -1,10 +1,11 @@
-import { Avatar, HStack } from "@chakra-ui/react";
+import { Avatar, HStack, Text } from "@chakra-ui/react";
 
-const User = ({ user }) => {
+const User = ({ user, showName = false }) => {
+  console.log(user);
   return (
     <HStack alignItems="center">
-      <Avatar size="xs" name={user.name} src={user.image} />
-      <Text>{user.name}</Text>
+      <Avatar size="sm" name={user.displayName} src={user.photoURL} />
+      {showName && <Text>{user.displayName}</Text>}
     </HStack>
   );
 };

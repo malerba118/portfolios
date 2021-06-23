@@ -7,12 +7,12 @@ const Previewer = ({ device, portfolio }) => {
 
   let src;
   if (isDev) {
-    src = "http://localhost:3001?subdomain=" + portfolio.subdomain;
+    src = "http://localhost:3001?edit=true&subdomain=" + portfolio.subdomain;
   } else {
-    src = `https://${portfolio.subdomain}.portfolios.us`;
+    src = `https://${portfolio.subdomain}.portfolios.us?edit=true`;
   }
 
-  return <Embed src={src} data={portfolio} />;
+  return <Embed src={src} data={portfolio.draft} />;
 };
 
 export default Previewer;

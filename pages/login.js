@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import firebaseClient from "client/firebase";
 import { useRouter } from "next/router";
+import { Button, Center } from "@chakra-ui/react";
 
 // import { Button } from "@chakra-ui/react";
 
@@ -11,12 +12,8 @@ export default (_props) => {
   const router = useRouter();
 
   return (
-    <div>
-      <Link href="/">
-        <a>Go back to home page</a>
-      </Link>
-      <br />
-      <button
+    <Center h="100vh" w="100%">
+      <Button
         onClick={async () => {
           await firebaseClient.auth().signInWithPopup(provider);
           if (router.query.from) {
@@ -26,8 +23,8 @@ export default (_props) => {
           }
         }}
       >
-        Log in
-      </button>
-    </div>
+        Log in with Google
+      </Button>
+    </Center>
   );
 };

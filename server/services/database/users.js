@@ -5,6 +5,7 @@ const firestore = admin.firestore();
 
 export const getOrCreateUser = async (decodedToken) => {
   let userDoc = await firestore.collection("users").doc(decodedToken.uid).get();
+  console.log(decodedToken);
   if (!userDoc.exists) {
     await firestore
       .collection("users")
@@ -12,6 +13,8 @@ export const getOrCreateUser = async (decodedToken) => {
       .set({
         id: decodedToken.uid,
         email: decodedToken.email,
+        displayName: decodedToken.name,
+        photoURL: decodedToken.picture,
         roles: decodedToken.roles || ["user"],
         createdAt: now(),
       });
