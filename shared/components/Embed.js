@@ -20,7 +20,13 @@ const Embed = ({ data, width, height, ...otherProps }) => {
       ref={iframeRef}
       onLoad={() => setLoaded(true)}
       {...otherProps}
+      initial={{
+        scale: 0,
+        opacity: 0,
+      }}
       animate={{
+        scale: 1,
+        opacity: 1,
         width,
         height,
         transition: transitions.spring.normal,

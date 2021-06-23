@@ -9,8 +9,8 @@ import * as styles from "../utils/styles";
 import * as api from "client/api";
 
 const deviceAspectRatios = {
-  phone: 9 / 18.5,
-  tablet: 10 / 16,
+  phone: 9 / 16,
+  tablet: 3 / 4,
   desktop: 16 / 9,
 };
 
@@ -50,10 +50,10 @@ const Editor = () => {
             const ratio = deviceAspectRatios[device];
             const size = {};
             if (width / height > ratio) {
-              size.height = height * 0.85;
+              size.height = height * 0.88;
               size.width = size.height * ratio;
             } else {
-              size.width = width * 0.85;
+              size.width = width * 0.88;
               size.height = size.width / ratio;
             }
             return (
