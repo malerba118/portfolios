@@ -23,3 +23,9 @@ export const borders = ({
 
   return props;
 };
+
+export const transitions = {
+  spring: {
+    normal: { type: "spring", damping: 48, stiffness: 400 },
+  },
+};

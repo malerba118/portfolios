@@ -1,8 +1,9 @@
 import React from "react";
 import Embed from "./Embed";
 import { isDev } from "shared/utils/runtime";
+import { AspectRatio } from "@chakra-ui/react";
 
-const Previewer = ({ device, portfolio }) => {
+const Previewer = ({ width, height, portfolio }) => {
   if (!portfolio) return null;
 
   let src;
@@ -12,7 +13,16 @@ const Previewer = ({ device, portfolio }) => {
     src = `https://${portfolio.subdomain}.portfolios.us?edit=true`;
   }
 
-  return <Embed src={src} data={portfolio.draft} />;
+  return (
+    <Embed
+      boxShadow="sm"
+      rounded="md"
+      width={width}
+      height={height}
+      src={src}
+      data={portfolio.draft}
+    />
+  );
 };
 
 export default Previewer;
