@@ -22,15 +22,15 @@ const Embed = ({ data, width, height, ...otherProps }) => {
       {...otherProps}
       bg="white"
       initial={{
-        scale: 0,
-        opacity: 0,
-      }}
-      animate={{
-        scale: 1,
-        opacity: 1,
         width,
         height,
+        scale: 0.88,
+      }}
+      animate={{
         transition: transitions.spring.normal,
+        width,
+        height,
+        scale: 1,
       }}
     />
   );

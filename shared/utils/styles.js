@@ -26,6 +26,6 @@ export const borders = ({
 
 export const transitions = {
   spring: {
-    normal: { type: "spring", damping: 48, stiffness: 400 },
+    normal: { type: "spring", damping: 48, stiffness: 480 },
   },
 };

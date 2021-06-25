@@ -1,9 +1,10 @@
 import React from "react";
 import Embed from "./Embed";
 import { isDev } from "shared/utils/runtime";
+import { observer } from "mobx-react";
 import * as styles from "../utils/styles";
 
-const Previewer = ({ width, height, portfolio }) => {
+const Previewer = observer(({ width, height, portfolio }) => {
   if (!portfolio) return null;
 
   let src;
@@ -20,9 +21,9 @@ const Previewer = ({ width, height, portfolio }) => {
       width={width}
       height={height}
       src={src}
-      data={portfolio.draft}
+      data={portfolio.draft.toJSON()}
     />
   );
-};
+});
 
 export default Previewer;
