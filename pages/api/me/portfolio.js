@@ -5,6 +5,10 @@ import { token } from "shared/utils/token";
 export default router({
   get: async (req) => {
     const db = await Database({ token: token(req) });
-    return db.portfolios.getOrCreate()
+    return db.portfolios.getOrCreate();
+  },
+  patch: async (req) => {
+    const db = await Database({ token: token(req) });
+    return db.portfolios.patch(req.body);
   },
 });

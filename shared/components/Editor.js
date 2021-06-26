@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Flex, Center, Box } from "@chakra-ui/react";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
+import debounce from "lodash/debounce";
 import { useAuth } from "client/useAuth";
+import { observer } from "mobx-react";
 import Previewer from "./Previewer";
 import DeviceSelector from "./DeviceSelector";
 import PortfolioContentEditor from "./PortfolioContentEditor";
@@ -9,6 +11,7 @@ import ResizeDetector from "react-resize-detector";
 import * as models from "shared/services/models";
 import * as styles from "../utils/styles";
 import * as api from "client/api";
+import { autorun } from "mobx";
 
 const deviceAspectRatios = {
   phone: 9 / 16,
@@ -16,18 +19,30 @@ const deviceAspectRatios = {
   desktop: 16 / 9,
 };
 
-const Editor = () => {
-  const user = useAuth();
+const Editor = observer(() => {
+  // const user = useAuth();
   const query = useQuery("portfolio", api.portfolio.get);
+  const mutation = useMutation((data) => api.portfolio.patch(data));
   const [device, setDevice] = useState("desktop");
-  // const { width, height, ref } = useResizeDetector();
-  const [portfolio, setPortfolio] = useState(null);
+
+  const updatePortfolio = useMemo(() => {
+    return debounce(mutation.mutate, 3000);
+  }, [mutation.mutate]);
+
+  const portfolio = useMemo(() => {
+    if (query.data?.id) {
+      return models.Portfolio.create(query.data);
+    }
+    return null;
+  }, [query.data]);
 
   useEffect(() => {
-    if (query.data?.id) {
-      setPortfolio(models.Portfolio.create(query.data));
-    }
-  }, [query.data]);
+    autorun(() => {
+      updatePortfolio({
+        draft: portfolio.draft.toJSON(),
+      });
+    });
+  }, [portfolio]);
 
   // const ratio = deviceAspectRatios[device];
   // const previewerSize = {};
@@ -42,8 +57,6 @@ const Editor = () => {
   if (!portfolio) {
     return null;
   }
-
-  console.log(portfolio.toJSON());
 
   return (
     <Flex h="100%">
@@ -97,6 +110,6 @@ const Editor = () => {
       </Flex>
     </Flex>
   );
-};
+});
 
 export default Editor;
