@@ -5,8 +5,15 @@ export const portfolio = {
     const res = await axios.get("/api/me/portfolio");
     return res.data;
   },
-  patch: async (data) => {
-    const res = await axios.patch("/api/me/portfolio", data);
+  updateDraft: async (data) => {
+    const res = await axios.put("/api/me/portfolio/draft", data);
+    return res.data;
+  },
+};
+
+export const subdomains = {
+  isSubdomainAvailable: async (subdomain) => {
+    const res = await axios.get(`/api/subdomains/${subdomain}`);
     return res.data;
   },
 };

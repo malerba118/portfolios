@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Flex, Center, Box } from "@chakra-ui/react";
+import { Flex, Center, Box, Button, useDisclosure } from "@chakra-ui/react";
 import { useQuery, useMutation } from "react-query";
 import debounce from "lodash/debounce";
 import { useAuth } from "client/useAuth";
@@ -12,6 +12,7 @@ import * as models from "shared/services/models";
 import * as styles from "../utils/styles";
 import * as api from "client/api";
 import { autorun } from "mobx";
+import PublishModal from "./PublishModal";
 
 const deviceAspectRatios = {
   phone: 9 / 16,
@@ -22,8 +23,9 @@ const deviceAspectRatios = {
 const Editor = observer(() => {
   // const user = useAuth();
   const query = useQuery("portfolio", api.portfolio.get);
-  const mutation = useMutation((data) => api.portfolio.patch(data));
+  const mutation = useMutation((data) => api.portfolio.updateDraft(data));
   const [device, setDevice] = useState("desktop");
+  const publishModal = useDisclosure();
 
   const updatePortfolio = useMemo(() => {
     return debounce(mutation.mutate, 3000);
@@ -38,9 +40,7 @@ const Editor = observer(() => {
 
   useEffect(() => {
     autorun(() => {
-      updatePortfolio({
-        draft: portfolio.draft.toJSON(),
-      });
+      updatePortfolio(portfolio.draft.toJSON());
     });
   }, [portfolio]);
 
@@ -82,8 +82,18 @@ const Editor = observer(() => {
           {...styles.borders({ bottom: true })}
           justifyContent="center"
           alignItems="center"
+          pos="relative"
         >
           <DeviceSelector value={device} onChange={setDevice} />
+          <Button
+            onClick={publishModal.onOpen}
+            colorScheme="purple"
+            size="sm"
+            pos="absolute"
+            right={4}
+          >
+            Publish
+          </Button>
         </Flex>
         <ResizeDetector handleWidth handleHeight>
           {({ width, height }) => {
@@ -108,6 +118,10 @@ const Editor = observer(() => {
           }}
         </ResizeDetector>
       </Flex>
+      <PublishModal
+        isOpen={publishModal.isOpen}
+        onClose={publishModal.onClose}
+      />
     </Flex>
   );
 });

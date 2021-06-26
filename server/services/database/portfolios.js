@@ -10,30 +10,29 @@ import { ResourceNotFoundError } from "./errors";
 import joi from "joi";
 
 const schemas = {
-  patch: joi.object({
-    subdomain: joi.string(),
-    draft: joi.object({
-      template: joi.object({
-        name: joi.string().required(),
-        version: joi.string().required(),
+  updateDraft: joi.object({
+    template: joi.object({
+      name: joi.string().required(),
+      version: joi.string().required(),
+    }),
+    content: joi.object({
+      about: joi.object({
+        firstName: joi.string().required().allow(""),
+        lastName: joi.string().required().allow(""),
+        title: joi.string().required().allow(""),
       }),
-      content: joi.object({
-        about: joi.object({
-          firstName: joi.string().required().allow(""),
-          lastName: joi.string().required().allow(""),
-          title: joi.string().required().allow(""),
-        }),
-        projects: joi.array().items(
-          joi.object({
-            id: joi.string().required(),
-            name: joi.string().required().allow(""),
-            summary: joi.string().required().allow(""),
-            description: joi.string().required().allow(""),
-          })
-        ),
-      }),
+      projects: joi.array().items(
+        joi.object({
+          id: joi.string().required(),
+          name: joi.string().required().allow(""),
+          summary: joi.string().required().allow(""),
+          description: joi.string().required().allow(""),
+        })
+      ),
     }),
   }),
+  updateSubdomain: joi.string().required(),
+  isSubdomainAvailable: joi.string().required(),
 };
 
 const firestore = admin.firestore();
@@ -98,20 +97,48 @@ export default ({ db, user }) => {
     return toData(portfolioDoc);
   };
 
-  const patch = async (data) => {
+  const updateDraft = async (data) => {
     assertAuthenticated(user);
-    assertValid(data, schemas.patch);
+    assertValid(data, schemas.updateDraft);
     let portfolio = await getOrCreate();
     await portfoliosCol.doc(portfolio.id).update({
       ...portfolio,
-      ...data,
+      draft: data,
     });
+    return getOrCreate();
+  };
+
+  const isSubdomainAvailable = async (subdomain) => {
+    assertAuthenticated(user);
+    assertValid(subdomain, schemas.isSubdomainAvailable);
+    let portfoliosSnapshot = await portfoliosCol
+      .where("subdomain", "==", subdomain)
+      .get();
+    let portfolioDoc = portfoliosSnapshot.docs[0];
+    return !(portfolioDoc && portfolioDoc.exists);
+  };
+
+  const updateSubdomain = async (subdomain) => {
+    assertAuthenticated(user);
+    assertValid(subdomain, schemas.updateSubdomain);
+    let portfolio = await getOrCreate();
+    const available = await isSubdomainAvailable(subdomain);
+    if (available) {
+      await portfoliosCol.doc(portfolio.id).update({
+        ...portfolio,
+        subdomain: data,
+      });
+    } else {
+      throw new ValidationError();
+    }
     return getOrCreate();
   };
 
   return {
     getOrCreate,
     getBySubdomain,
-    patch,
+    isSubdomainAvailable,
+    updateDraft,
+    updateSubdomain,
   };
 };
