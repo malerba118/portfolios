@@ -6,27 +6,9 @@ import firebaseClient from "client/firebase";
 import * as styles from "../utils/styles";
 import Dropzone from "react-dropzone";
 import { nanoid } from "nanoid";
-import { motion } from "framer-motion";
 import { MdAdd } from "react-icons/md";
-import * as models from "shared/services/models";
-import { Wrap, Box, Center, Icon } from "@chakra-ui/react";
-
-const MotionWrap = motion(Wrap);
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.18,
-    },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1 },
-};
+import { Wrap, Box, Center, Icon, Spinner } from "@chakra-ui/react";
+import Img from "./Img";
 
 const useStorageRef = () => {
   const storageRef = useRef();
@@ -43,6 +25,7 @@ const FileUploader = ({ onFiles }) => {
     <Dropzone onDrop={onFiles}>
       {({ getRootProps, getInputProps }) => (
         <Box
+          cursor="pointer"
           h="73px"
           w="73px"
           rounded="md"
@@ -67,7 +50,6 @@ const MediaForm = observer(({ medias }) => {
   const [fileMap, setFileMap] = useState({});
 
   const handleFiles = (files) => {
-    console.log(files);
     const map = {};
     const newMedias = [];
     files.forEach((file) => {
@@ -82,15 +64,13 @@ const MediaForm = observer(({ medias }) => {
     setFileMap(map);
   };
 
-  console.log(medias.items.map((m) => m.id));
-
   return (
-    <MotionWrap variants={container} initial="hidden" animate="show">
+    <Wrap>
       {medias.items.map((media) => (
         <MediaManager key={media.id} media={media} file={fileMap[media.id]} />
       ))}
       <FileUploader onFiles={handleFiles} />
-    </MotionWrap>
+    </Wrap>
   );
 });
 
@@ -103,22 +83,23 @@ const MediaManager = observer(
       if (file && media) {
         const upload = async () => {
           try {
+            setLoading(true);
             const fileRef = storageRef.current.child(media.id);
             await fileRef.put(file);
             const url = await fileRef.getDownloadURL();
-            console.log(url);
             media.set({ url });
             onUploadComplete?.();
           } catch (err) {
-            console.log(err);
             onUploadError?.(err);
+          } finally {
+            setLoading(false);
           }
         };
         upload();
       }
     }, [file, media]);
 
-    if (!media.url) {
+    if (!media.url || loading) {
       return (
         <Box
           h="73px"
@@ -130,21 +111,24 @@ const MediaManager = observer(
             bottom: true,
             left: true,
           })}
-        />
+        >
+          <Center h="100%" w="100%">
+            <Spinner size="xs" color="gray.200" />
+          </Center>
+        </Box>
       );
     }
 
     return (
-      <img
+      <Img
         src={media.url}
-        style={{
+        imgStyle={{
           objectFit: "cover",
           width: "73px",
           height: "73px",
           borderRadius: ".25rem",
         }}
-        // initial={{ opacity: 0 }}
-        // animate={{ opacity: 1 }}
+        rounded="md"
       />
     );
   }
