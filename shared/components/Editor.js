@@ -36,10 +36,10 @@ const Editor = observer(() => {
       return models.Portfolio.create(query.data);
     }
     return null;
-  }, [query.data]);
+  }, [query.data?.id]);
 
   useEffect(() => {
-    autorun(() => {
+    return autorun(() => {
       updatePortfolio(portfolio.draft.toJSON());
     });
   }, [portfolio]);

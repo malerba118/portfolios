@@ -3,6 +3,7 @@ import { Stack, Input, Textarea } from "@chakra-ui/react";
 import FormSection from "./FormSection";
 import { observer } from "mobx-react";
 import InputContainer from "./InputContainer";
+import MediaForm from "./MediaForm";
 
 const ProjectsForm = observer(({ portfolio, projects }) => {
   return (
@@ -42,6 +43,12 @@ const ProjectsForm = observer(({ portfolio, projects }) => {
                 }}
                 placeholder="Description"
                 size="sm"
+              />
+            </InputContainer>
+            <InputContainer label="Images">
+              <MediaForm
+                medias={project.images}
+                onAdd={(newMedias) => project.images.add(newMedias)}
               />
             </InputContainer>
           </Stack>

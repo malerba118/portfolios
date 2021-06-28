@@ -1,5 +1,34 @@
 import { types } from "mobx-state-tree";
 
+export const Media = types
+  .model("Media", {
+    id: types.string,
+    url: types.maybeNull(types.string),
+  })
+  .actions((self) => ({
+    set: (patch) => {
+      Object.entries(patch).forEach(([key, val]) => {
+        if (val !== undefined) {
+          self[key] = val;
+        }
+      });
+    },
+  }));
+
+export const Medias = types
+  .model("Medias", {
+    items: types.array(Media),
+  })
+  .actions((self) => ({
+    add: (media) => {
+      if (Array.isArray(media)) {
+        self.items.push(...media);
+      } else {
+        self.items.push(media);
+      }
+    },
+  }));
+
 export const Template = types.model("Template", {
   name: types.string,
   version: types.string,
@@ -27,6 +56,7 @@ export const Project = types
     name: types.maybe(types.string),
     summary: types.maybe(types.string),
     description: types.maybe(types.string),
+    images: Medias,
   })
   .actions((self) => ({
     set: (patch) => {
@@ -49,6 +79,9 @@ export const Content = types
         name: "",
         summary: "",
         description: "",
+        images: {
+          items: [],
+        },
       });
     },
     removeProject(id) {
@@ -73,3 +106,13 @@ export const Portfolio = types
     published: types.maybeNull(PortfolioData),
   })
   .actions((self) => ({}));
+
+// export const MediaStore = types
+//   .model("MediaStore", {
+//     images: MediaArray,
+//   })
+//   .actions((self) => ({
+//     addImage: (media) => {
+//       self.images.push(media);
+//     },
+//   }));

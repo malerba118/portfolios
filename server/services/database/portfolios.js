@@ -27,6 +27,14 @@ const schemas = {
           name: joi.string().required().allow(""),
           summary: joi.string().required().allow(""),
           description: joi.string().required().allow(""),
+          images: joi.object({
+            items: joi.array().items(
+              joi.object({
+                id: joi.string().required(),
+                url: joi.string().allow(null),
+              })
+            ),
+          }),
         })
       ),
     }),
