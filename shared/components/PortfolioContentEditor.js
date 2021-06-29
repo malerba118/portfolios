@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import { Heading, Stack, Flex, Box, IconButton } from "@chakra-ui/react";
+import {
+  Heading,
+  Stack,
+  Flex,
+  Box,
+  IconButton,
+  Tooltip,
+} from "@chakra-ui/react";
 import { MdEdit, MdDelete, MdAdd } from "react-icons/md";
 import FormSection from "./FormSection";
 import AboutForm from "./AboutForm";
 import ProjectsForm from "./ProjectsForm";
 import * as styles from "../utils/styles";
 
-const Section = ({ title, children, canAdd = false, onAdd }) => {
+const Section = ({ title, tooltips, children, canAdd = false, onAdd }) => {
   return (
     <>
       <Box>
@@ -14,12 +21,14 @@ const Section = ({ title, children, canAdd = false, onAdd }) => {
           <Flex justify="space-between" align="flex-end">
             <Heading size="md">{title}</Heading>
             {canAdd && (
-              <IconButton
-                size="sm"
-                rounded="4px"
-                icon={<MdAdd />}
-                onClick={() => onAdd?.()}
-              />
+              <Tooltip label={tooltips?.add}>
+                <IconButton
+                  size="sm"
+                  rounded="4px"
+                  icon={<MdAdd />}
+                  onClick={() => onAdd?.()}
+                />
+              </Tooltip>
             )}
           </Flex>
           <Box>{children}</Box>
@@ -40,28 +49,14 @@ const PortfolioContentEditor = ({ width, height, portfolio }) => {
         title="Projects"
         canAdd
         onAdd={() => portfolio.content.addProject()}
+        tooltips={{
+          add: "Add Project",
+        }}
       >
         <ProjectsForm
-          portfolio={portfolio}
           projects={portfolio.content.projects}
+          onDelete={(id) => portfolio.content.removeProject(id)}
         />
-        {/* <FormSection canDelete>
-          <Stack spacing={4}>
-            <InputContainer label="Name">
-              <Input
-                value={"Iconik Studio"}
-                placeholder="Project Name"
-                size="sm"
-              />
-            </InputContainer>
-            <InputContainer label="Summary">
-              <Input value={"An svg editor"} placeholder="Summary" size="sm" />
-            </InputContainer>
-            <InputContainer label="Description">
-              <Textarea value={""} placeholder="Description" size="sm" />
-            </InputContainer>
-          </Stack>
-        </FormSection> */}
       </Section>
       <Section title="Work">
         <FormSection canDelete />

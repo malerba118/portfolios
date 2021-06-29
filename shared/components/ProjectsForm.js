@@ -5,14 +5,17 @@ import { observer } from "mobx-react";
 import InputContainer from "./InputContainer";
 import MediaForm from "./MediaForm";
 
-const ProjectsForm = observer(({ portfolio, projects }) => {
+const ProjectsForm = observer(({ projects, onDelete }) => {
   return (
     <Stack spacing={6}>
       {projects.map((project) => (
         <FormSection
           key={project.id}
           canDelete
-          onDelete={() => portfolio.content.removeProject(project.id)}
+          onDelete={() => onDelete?.(project.id)}
+          tooltips={{
+            delete: "Remove Project",
+          }}
         >
           <Stack spacing={4}>
             <InputContainer label="Name">
@@ -45,10 +48,10 @@ const ProjectsForm = observer(({ portfolio, projects }) => {
                 size="sm"
               />
             </InputContainer>
-            <InputContainer label="Images">
+            <InputContainer label="Photos">
               <MediaForm
                 medias={project.images}
-                onAdd={(newMedias) => project.images.add(newMedias)}
+                accept={["image/png", "image/jpeg"]}
               />
             </InputContainer>
           </Stack>

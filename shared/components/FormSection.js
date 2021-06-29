@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Box, IconButton } from "@chakra-ui/react";
-import { MdDelete, MdRemove } from "react-icons/md";
+import { Box, IconButton, Tooltip } from "@chakra-ui/react";
+import { MdRemove } from "react-icons/md";
 import * as styles from "../utils/styles";
 
-const FormSection = ({ children, canDelete, onDelete }) => {
+const FormSection = ({ children, canDelete, onDelete, tooltips }) => {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -25,15 +25,15 @@ const FormSection = ({ children, canDelete, onDelete }) => {
         overflow="hidden"
       >
         {canDelete && (
-          <IconButton
-            size="sm"
-            variant="solid"
-            // colorScheme="purple"
-            // color="white"
-            borderRadius={0}
-            icon={<MdRemove />}
-            onClick={() => onDelete?.()}
-          />
+          <Tooltip label={tooltips?.delete}>
+            <IconButton
+              size="sm"
+              variant="solid"
+              borderRadius={0}
+              icon={<MdRemove />}
+              onClick={() => onDelete?.()}
+            />
+          </Tooltip>
         )}
       </Box>
       {children}

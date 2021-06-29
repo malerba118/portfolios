@@ -27,6 +27,13 @@ export const Medias = types
         self.items.push(media);
       }
     },
+    set: (patch) => {
+      Object.entries(patch).forEach(([key, val]) => {
+        if (val !== undefined) {
+          self[key] = val;
+        }
+      });
+    },
   }));
 
 export const Template = types.model("Template", {

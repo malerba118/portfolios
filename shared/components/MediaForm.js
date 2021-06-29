@@ -7,8 +7,24 @@ import * as styles from "../utils/styles";
 import Dropzone from "react-dropzone";
 import { nanoid } from "nanoid";
 import { MdAdd } from "react-icons/md";
-import { Wrap, Box, Center, Icon, Spinner } from "@chakra-ui/react";
+import {
+  Wrap,
+  Box,
+  Center,
+  Icon,
+  Spinner,
+  Flex,
+  Tooltip,
+} from "@chakra-ui/react";
 import Img from "./Img";
+import ReorderableList from "./ReorderableList";
+import compress from "browser-image-compression";
+
+const options = {
+  maxSizeMB: 0.5,
+  maxWidthOrHeight: 1920,
+  useWebWorker: true,
+};
 
 const useStorageRef = () => {
   const storageRef = useRef();
@@ -20,15 +36,31 @@ const useStorageRef = () => {
   return storageRef;
 };
 
-const FileUploader = ({ onFiles }) => {
+const processFiles = async (files) => {
+  return Promise.all(
+    files.map((file) => {
+      return compress(file, options).catch((err) => {
+        console.log("compression error", err);
+        return Promise.resolve(file);
+      });
+    })
+  );
+};
+
+const FileUploader = ({ onFiles, accept }) => {
+  const handleDrop = (files) => {
+    processFiles(files).then(onFiles);
+  };
+
   return (
-    <Dropzone onDrop={onFiles}>
+    <Dropzone accept={accept} onDrop={handleDrop}>
       {({ getRootProps, getInputProps }) => (
         <Box
-          cursor="pointer"
+          {...getRootProps()}
           h="73px"
           w="73px"
           rounded="md"
+          position="relative"
           {...styles.borders({
             top: true,
             right: true,
@@ -36,17 +68,22 @@ const FileUploader = ({ onFiles }) => {
             left: true,
           })}
         >
-          <Center h="100%" w="100%" {...getRootProps()}>
-            <input {...getInputProps()} />
-            <Icon as={MdAdd} color="gray.400" />
-          </Center>
+          <input
+            {...getInputProps()}
+            style={{ width: 71, height: 71, opacity: 0, cursor: "pointer" }}
+          />
+          <Tooltip label="Upload Files">
+            <Center pos="absolute" inset="0" cursor="pointer">
+              <Icon as={MdAdd} color="gray.400" />
+            </Center>
+          </Tooltip>
         </Box>
       )}
     </Dropzone>
   );
 };
 
-const MediaForm = observer(({ medias }) => {
+const MediaForm = observer(({ medias, accept }) => {
   const [fileMap, setFileMap] = useState({});
 
   const handleFiles = (files) => {
@@ -65,12 +102,20 @@ const MediaForm = observer(({ medias }) => {
   };
 
   return (
-    <Wrap>
-      {medias.items.map((media) => (
+    <Flex w="100%" overflowX="auto">
+      {/* {medias.items.map((media) => (
         <MediaManager key={media.id} media={media} file={fileMap[media.id]} />
-      ))}
-      <FileUploader onFiles={handleFiles} />
-    </Wrap>
+      ))} */}
+      <ReorderableList
+        items={medias.items.slice()}
+        onChange={(items) => medias.set({ items })}
+      >
+        {(media) => (
+          <MediaManager key={media.id} media={media} file={fileMap[media.id]} />
+        )}
+      </ReorderableList>
+      <FileUploader accept={accept} onFiles={handleFiles} />
+    </Flex>
   );
 });
 
@@ -80,7 +125,8 @@ const MediaManager = observer(
     const storageRef = useStorageRef();
 
     useEffect(() => {
-      if (file && media) {
+      if (file?.name && media?.id) {
+        console.log(file, media.id);
         const upload = async () => {
           try {
             setLoading(true);
@@ -97,7 +143,7 @@ const MediaManager = observer(
         };
         upload();
       }
-    }, [file, media]);
+    }, [file, media?.id]);
 
     if (!media.url || loading) {
       return (
@@ -128,6 +174,8 @@ const MediaManager = observer(
           height: "73px",
           borderRadius: ".25rem",
         }}
+        w="73px"
+        h="73px"
         rounded="md"
       />
     );

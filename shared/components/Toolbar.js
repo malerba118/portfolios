@@ -17,6 +17,8 @@ import * as styles from "../utils/styles";
 
 const Toolbar = () => {
   const user = useAuth();
+
+  console.log(user);
   return (
     <Flex
       px={4}

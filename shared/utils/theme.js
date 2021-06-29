@@ -26,6 +26,27 @@ const theme = extendTheme({
         borderWidth: "2px !important",
       },
     },
+    Tooltip: {
+      baseStyle: {
+        bgColor: "purple.300",
+        textTransform: "capitalize",
+      },
+    },
+    Tabs: {
+      tab: {
+        baseStyle: {
+          _selected: {
+            color: "purple.400",
+            borderBottom: "2px solid",
+            borderColor: "purple.400",
+            marginBottom: "-2px",
+          },
+          _focus: {
+            boxShadow: "none",
+          },
+        },
+      },
+    },
   },
 });
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import nookies from "nookies";
 import firebaseClient from "./firebase";
+import { Alert } from "@chakra-ui/react";
 
 const AuthContext = createContext({
   user: null,
@@ -18,8 +19,8 @@ export function AuthProvider({ children }) {
       if (!user) {
         console.log(`no token found...`);
         setUser(null);
-        // nookies.destroy(null, "token");
-        // nookies.set(null, "token", "", {});
+        nookies.destroy(null, "token");
+        nookies.set(null, "token", "", {});
         return;
       }
       console.log(`updating token...`);

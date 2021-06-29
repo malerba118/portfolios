@@ -13,6 +13,7 @@ import * as styles from "../utils/styles";
 import * as api from "client/api";
 import { autorun } from "mobx";
 import PublishModal from "./PublishModal";
+import Sidebar from "./Sidebar";
 
 const deviceAspectRatios = {
   phone: 9 / 16,
@@ -21,7 +22,8 @@ const deviceAspectRatios = {
 };
 
 const Editor = observer(() => {
-  // const user = useAuth();
+  const user = useAuth();
+  console.log(user);
   const query = useQuery("portfolio", api.portfolio.get);
   const mutation = useMutation((data) => api.portfolio.updateDraft(data));
   const [device, setDevice] = useState("desktop");
@@ -44,37 +46,13 @@ const Editor = observer(() => {
     });
   }, [portfolio]);
 
-  // const ratio = deviceAspectRatios[device];
-  // const previewerSize = {};
-  // if (width / height > ratio) {
-  //   previewerSize.height = height * 0.88;
-  //   previewerSize.width = previewerSize.height * ratio;
-  // } else {
-  //   previewerSize.width = width * 0.88;
-  //   previewerSize.height = previewerSize.width / ratio;
-  // }
-
   if (!portfolio) {
     return null;
   }
 
   return (
     <Flex h="100%">
-      <Flex
-        className="sidebar"
-        w="420px"
-        flexDirection="column"
-        {...styles.borders({ right: true })}
-      >
-        <Flex
-          className="sidebar-header"
-          h="56px"
-          {...styles.borders({ bottom: true })}
-        ></Flex>
-        <Box className="sidebar-content" flex="1" overflow="auto">
-          <PortfolioContentEditor portfolio={portfolio.draft} />
-        </Box>
-      </Flex>
+      <Sidebar portfolio={portfolio} />
       <Flex flex={1} className="main" flexDirection="column">
         <Flex
           className="main-header"

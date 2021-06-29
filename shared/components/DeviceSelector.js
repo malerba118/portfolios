@@ -16,11 +16,7 @@ function RadioCard(props) {
   const checkbox = getCheckboxProps();
 
   return (
-    <Tooltip
-      bgColor="purple.300"
-      textTransform="capitalize"
-      label={props.value}
-    >
+    <Tooltip label={props.value}>
       <Box as="label" h="100%">
         <input {...input} />
         <Flex
