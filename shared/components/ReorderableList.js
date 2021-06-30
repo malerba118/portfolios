@@ -67,7 +67,7 @@ const ReorderableList = ({
                     style={{
                       ...getItemStyle(snapshot.isDragging),
                       ...provided.draggableProps.style,
-                      // cursor: "move",
+                      cursor: "move",
                     }}
                   >
                     {children(item)}

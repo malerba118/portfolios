@@ -14,3 +14,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.show-on-hover-trigger .show-on-hover {
+  display: none;
+}
+
+.show-on-hover-trigger:hover .show-on-hover {
+  display: block;
+}

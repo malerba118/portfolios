@@ -17,12 +17,27 @@ import {
   Tooltip,
   IconButton,
   useDisclosure,
+  Alert,
 } from "@chakra-ui/react";
 import { useAuth } from "client/useAuth";
 import Img from "./Img";
 import ReorderableList from "./ReorderableList";
 import compress from "browser-image-compression";
 import MediaEditorModal from "./MediaEditorModal";
+
+const getFileDimensions = (file) =>
+  new Promise((resolve) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      resolve({
+        height: img.height,
+        width: img.width,
+      });
+      URL.revokeObjectURL(img.src);
+    };
+    img.src = url;
+  });
 
 const THUMBNAIL_SIZE = "80px";
 
@@ -92,15 +107,7 @@ const FileUploader = ({ onFiles, accept }) => {
 
 const MediaForm = observer(({ medias, accept }) => {
   const [fileMap, setFileMap] = useState({});
-  const [editing, setEditing] = useState(null);
   const user = useAuth();
-
-  const setFile = (mediaId, file) => {
-    setFileMap((prev) => ({
-      ...prev,
-      [mediaId]: file,
-    }));
-  };
 
   const handleFiles = (files) => {
     const map = {};
@@ -109,7 +116,10 @@ const MediaForm = observer(({ medias, accept }) => {
       const id = nanoid();
       newMedias.push({
         id,
-        url: null,
+        rawUrl: null,
+        processedUrl: null,
+        crop: null,
+        zoom: null,
       });
       map[id] = file;
     });
@@ -129,21 +139,11 @@ const MediaForm = observer(({ medias, accept }) => {
             media={media}
             file={fileMap[media.id]}
             folder={`users/${user?.uid}/public/`}
-            onEdit={() => setEditing(media)}
             onDelete={() => medias.remove(media.id)}
           />
         )}
       </ReorderableList>
       <FileUploader accept={accept} onFiles={handleFiles} />
-      <MediaEditorModal
-        key={editing?.id}
-        isOpen={!!editing}
-        media={editing}
-        onSave={(file) => {
-          setFile(editing?.id, file);
-        }}
-        onClose={() => setEditing(null)}
-      />
     </Flex>
   );
 });
@@ -152,30 +152,25 @@ const MediaForm = observer(({ medias, accept }) => {
  * Responsible for thumbnail previews and file uploading to firebase storage
  */
 const MediaManager = observer(
-  ({
-    media,
-    file,
-    onEdit,
-    onDelete,
-    onUploadComplete,
-    onUploadError,
-    folder = "",
-  }) => {
+  ({ media, file, onDelete, onUploadComplete, onUploadError, folder = "" }) => {
     const [loading, setLoading] = useState(false);
     const [hovered, setHovered] = useState(false);
+    const [editing, setEditing] = useState(false);
     const storageRef = useStorageRef();
 
     useEffect(() => {
-      if (file?.name && media?.id) {
-        console.log(file, media.id);
+      if (file && media) {
         const upload = async () => {
           try {
             setLoading(true);
             const proccesedFile = await processFile(file);
-            const fileRef = storageRef.current.child(folder + media.id);
+            const dimensions = await getFileDimensions(proccesedFile);
+            const fileRef = storageRef.current.child(
+              folder + "raw-" + media.id
+            );
             await fileRef.put(proccesedFile);
             const url = await fileRef.getDownloadURL();
-            media.set({ url });
+            media.set({ rawUrl: url, type: file.type, ...dimensions });
             onUploadComplete?.();
           } catch (err) {
             onUploadError?.(err);
@@ -186,6 +181,25 @@ const MediaManager = observer(
         upload();
       }
     }, [file, media?.id]);
+
+    const uploadProcessed = async ({ file, crop, zoom }) => {
+      try {
+        setLoading(true);
+        const proccesedFile = await processFile(file);
+        const fileRef = storageRef.current.child(
+          folder + "processed-" + media.id
+        );
+        await fileRef.put(proccesedFile);
+        const url = await fileRef.getDownloadURL();
+        media.set({ processedUrl: url, crop, zoom });
+        onUploadComplete?.();
+      } catch (err) {
+        console.log(err);
+        onUploadError?.(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
     if (loading) {
       return (
@@ -216,7 +230,7 @@ const MediaManager = observer(
         onMouseLeave={() => setHovered(false)}
       >
         <Img
-          src={media.url}
+          src={media.processedUrl || media.rawUrl}
           imgStyle={{
             objectFit: "cover",
             width: THUMBNAIL_SIZE,
@@ -263,7 +277,7 @@ const MediaManager = observer(
               size="xs"
               variant="solid"
               icon={<MdEdit />}
-              onClick={() => onEdit?.()}
+              onClick={() => setEditing(true)}
             />
           </Tooltip>
           <Tooltip label={"Remove"}>
@@ -274,6 +288,16 @@ const MediaManager = observer(
               onClick={() => onDelete?.()}
             />
           </Tooltip>
+          <MediaEditorModal
+            isOpen={editing}
+            media={media}
+            onSave={({ file, crop, zoom }) => {
+              uploadProcessed({ file, crop, zoom }).then(() => {
+                setEditing(false);
+              });
+            }}
+            onClose={() => setEditing(false)}
+          />
         </Box>
       </Box>
     );

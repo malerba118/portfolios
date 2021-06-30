@@ -39,7 +39,8 @@
     "react-resize-detector": "^6.7.2",
     "stripe": "^8.155.0",
     "superjson": "^1.7.4",
-    "use-debounce": "^7.0.0"
+    "use-debounce": "^7.0.0",
+    "use-image": "^1.0.7"
   },
   "devDependencies": {
     "eslint": "7.28.0",

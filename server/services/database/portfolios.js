@@ -31,7 +31,19 @@ const schemas = {
             items: joi.array().items(
               joi.object({
                 id: joi.string().required(),
-                url: joi.string().allow(null),
+                rawUrl: joi.string().allow(null),
+                processedUrl: joi.string().allow(null),
+                crop: joi
+                  .object({
+                    x: joi.number(),
+                    y: joi.number(),
+                    width: joi.number(),
+                    height: joi.number(),
+                  })
+                  .allow(null),
+                zoom: joi.number().allow(null),
+                width: joi.number().allow(null),
+                height: joi.number().allow(null),
               })
             ),
           }),

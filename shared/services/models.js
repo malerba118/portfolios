@@ -1,9 +1,19 @@
 import { types } from "mobx-state-tree";
 
+export const Crop = types.model("Crop", {
+  x: types.number,
+  y: types.number,
+});
+
 export const Media = types
   .model("Media", {
     id: types.string,
-    url: types.maybeNull(types.string),
+    rawUrl: types.maybeNull(types.string),
+    processedUrl: types.maybeNull(types.string),
+    crop: types.maybeNull(Crop),
+    zoom: types.maybeNull(types.number),
+    width: types.maybeNull(types.number),
+    height: types.maybeNull(types.number),
   })
   .actions((self) => ({
     set: (patch) => {

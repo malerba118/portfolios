@@ -15,12 +15,13 @@ import {
 } from "@chakra-ui/react";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "client/utils/image";
+import { observer } from "mobx-react";
 
-function MediaEditorModal({ isOpen, media, onSave, onClose }) {
+const MediaEditorModal = observer(({ isOpen, media, onSave, onClose }) => {
   const initialRef = React.useRef();
   const finalRef = React.useRef();
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
+  const [crop, setCrop] = useState(media.crop || { x: 0, y: 0 });
+  const [zoom, setZoom] = useState(media.zoom || 1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState();
 
   return (
@@ -30,7 +31,7 @@ function MediaEditorModal({ isOpen, media, onSave, onClose }) {
       finalFocusRef={finalRef}
       isOpen={isOpen}
       onClose={onClose}
-      size="xl"
+      size="3xl"
     >
       <ModalOverlay />
       <ModalContent>
@@ -39,23 +40,29 @@ function MediaEditorModal({ isOpen, media, onSave, onClose }) {
           {media && (
             <Box
               w="100%"
-              h="400px"
+              h="500px"
               pos="relative"
               background="#333"
               roundedTop="md"
               overflow="hidden"
             >
               <Cropper
-                image={media.url}
+                minZoom={1}
+                mazXoom={3}
+                image={media.rawUrl}
                 crop={crop}
-                zoom={1}
-                aspect={4 / 3}
+                aspect={
+                  media.width && media.height
+                    ? media.width / media.height
+                    : 4 / 3
+                }
                 onCropChange={setCrop}
                 zoom={zoom}
                 onCropComplete={(croppedArea, croppedAreaPixels) => {
                   setCroppedAreaPixels(croppedAreaPixels);
                 }}
                 onZoomChange={setZoom}
+                restrictPosition={false}
               />
             </Box>
           )}
@@ -65,18 +72,18 @@ function MediaEditorModal({ isOpen, media, onSave, onClose }) {
             colorScheme="purple"
             mr={3}
             onClick={() => {
-              getCroppedImg(media.url, croppedAreaPixels)
-                .then(onSave)
-                .catch((e) => console.log(e.message));
+              getCroppedImg(media.rawUrl, croppedAreaPixels).then((file) =>
+                onSave({ file, crop, zoom })
+              );
             }}
           >
-            Publish
+            Save
           </Button>
           <Button onClick={onClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
   );
-}
+});
 
 export default MediaEditorModal;

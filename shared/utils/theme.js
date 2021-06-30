@@ -28,7 +28,7 @@ const theme = extendTheme({
     },
     Tooltip: {
       baseStyle: {
-        bgColor: "purple.300",
+        bgColor: "purple.400",
         textTransform: "capitalize",
       },
     },
