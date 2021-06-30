@@ -19,7 +19,6 @@ const defaults = {
   }),
   getItemStyle: (isDragging) => ({
     marginRight: 8,
-    display: "inline-block",
   }),
 };
 

@@ -27,6 +27,12 @@ export const Medias = types
         self.items.push(media);
       }
     },
+    remove: (id) => {
+      const index = self.items.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        self.items.splice(index, 1);
+      }
+    },
     set: (patch) => {
       Object.entries(patch).forEach(([key, val]) => {
         if (val !== undefined) {
