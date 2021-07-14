@@ -1,8 +1,12 @@
 import { types } from "mobx-state-tree";
 
+// All percentages
 export const Crop = types.model("Crop", {
+  unit: types.string,
   x: types.number,
   y: types.number,
+  width: types.number,
+  height: types.number,
 });
 
 export const Media = types
@@ -22,6 +26,14 @@ export const Media = types
           self[key] = val;
         }
       });
+    },
+  }))
+  .views((self) => ({
+    get aspect() {
+      if (self.width == null || self.height == null) {
+        return 16 / 9;
+      }
+      return self.width / self.height;
     },
   }));
 

@@ -18,11 +18,22 @@ function getRadianAngle(degreeValue) {
 /**
  * This function was adapted from the one in the ReadMe of https://github.com/DominicTobias/react-image-crop
  * @param {File} image - Image File url
- * @param {Object} pixelCrop - pixelCrop Object provided by react-easy-crop
+ * @param {Object} percentCrop - percentCrop
  * @param {number} rotation - optional rotation parameter
  */
-export const getCroppedImg = async (imageSrc, pixelCrop, rotation = 0) => {
+export const getCroppedImg = async (imageSrc, percentCrop, rotation = 0) => {
   const image = await createImage(imageSrc);
+  console.log(typeof image.height);
+  console.log(image.height);
+  console.log(typeof image.width);
+  console.log(image.width);
+  const pixelCrop = {
+    x: (percentCrop.x * image.width) / 100,
+    width: (percentCrop.width * image.width) / 100,
+    y: (percentCrop.y * image.height) / 100,
+    height: (percentCrop.height * image.height) / 100,
+  };
+
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -60,3 +71,39 @@ export const getCroppedImg = async (imageSrc, pixelCrop, rotation = 0) => {
 
   return compress.canvasToFile(canvas, "image/jpeg", nanoid(), Date.now(), 1);
 };
+
+// /**
+//  * @param {String} url - Image src
+//  * @param {Object} crop - crop Object
+//  * @param {String} fileName - Name of the returned file in Promise
+//  */
+// export async function getCroppedImg(url, crop) {
+//   const image = await createImage(url);
+//   const canvas = document.createElement("canvas");
+//   const scaleX = image.naturalWidth / image.width;
+//   const scaleY = image.naturalHeight / image.height;
+//   canvas.width = crop.width;
+//   canvas.height = crop.height;
+//   const ctx = canvas.getContext("2d");
+
+//   // New lines to be added
+//   const pixelRatio = window.devicePixelRatio;
+//   canvas.width = crop.width * pixelRatio;
+//   canvas.height = crop.height * pixelRatio;
+//   ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+//   ctx.imageSmoothingQuality = "high";
+
+//   ctx.drawImage(
+//     image,
+//     crop.x * scaleX,
+//     crop.y * scaleY,
+//     crop.width * scaleX,
+//     crop.height * scaleY,
+//     0,
+//     0,
+//     crop.width,
+//     crop.height
+//   );
+
+//   return compress.canvasToFile(canvas, "image/jpeg", nanoid(), Date.now(), 1);
+// }

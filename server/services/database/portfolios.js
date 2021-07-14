@@ -35,6 +35,7 @@ const schemas = {
                 processedUrl: joi.string().allow(null),
                 crop: joi
                   .object({
+                    unit: joi.string(),
                     x: joi.number(),
                     y: joi.number(),
                     width: joi.number(),
