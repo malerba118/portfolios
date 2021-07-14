@@ -12,32 +12,33 @@ import FormSection from "./FormSection";
 import AboutForm from "./AboutForm";
 import ProjectsForm from "./ProjectsForm";
 import * as styles from "../utils/styles";
+import Section from "./Section";
 
-const Section = ({ title, tooltips, children, canAdd = false, onAdd }) => {
-  return (
-    <>
-      <Box>
-        <Stack>
-          <Flex justify="space-between" align="flex-end">
-            <Heading size="md">{title}</Heading>
-            {canAdd && (
-              <Tooltip label={tooltips?.add}>
-                <IconButton
-                  size="sm"
-                  rounded="4px"
-                  icon={<MdAdd />}
-                  onClick={() => onAdd?.()}
-                />
-              </Tooltip>
-            )}
-          </Flex>
-          <Box>{children}</Box>
-        </Stack>
-      </Box>
-      {/* <Box h="2px" bg="gray.200" /> */}
-    </>
-  );
-};
+// const Section = ({ title, tooltips, children, canAdd = false, onAdd }) => {
+//   return (
+//     <>
+//       <Box>
+//         <Stack>
+//           <Flex justify="space-between" align="flex-end">
+//             <Heading size="md">{title}</Heading>
+//             {canAdd && (
+//               <Tooltip label={tooltips?.add}>
+//                 <IconButton
+//                   size="sm"
+//                   rounded="4px"
+//                   icon={<MdAdd />}
+//                   onClick={() => onAdd?.()}
+//                 />
+//               </Tooltip>
+//             )}
+//           </Flex>
+//           <Box>{children}</Box>
+//         </Stack>
+//       </Box>
+//       {/* <Box h="2px" bg="gray.200" /> */}
+//     </>
+//   );
+// };
 
 const PortfolioContentEditor = ({ width, height, portfolio }) => {
   return (

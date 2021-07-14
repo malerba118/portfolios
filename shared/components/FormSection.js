@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, IconButton, Tooltip } from "@chakra-ui/react";
 import { MdRemove } from "react-icons/md";
 import * as styles from "../utils/styles";
+import _styles from "./FormSection.module.css";
 
 const FormSection = ({ children, canDelete, onDelete, tooltips }) => {
   const [hovered, setHovered] = useState(false);
@@ -12,11 +13,10 @@ const FormSection = ({ children, canDelete, onDelete, tooltips }) => {
       p={6}
       rounded="md"
       position="relative"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className={_styles.showOnHoverTrigger}
     >
       <Box
-        display={hovered ? "block" : "none"}
+        className={_styles.showOnHover}
         position="absolute"
         top="0px"
         right="0px"

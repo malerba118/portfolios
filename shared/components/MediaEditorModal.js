@@ -47,8 +47,8 @@ const MediaEditorModal = observer(({ isOpen, media, onSave, onClose }) => {
               overflow="hidden"
             >
               <Cropper
-                minZoom={1}
-                mazXoom={3}
+                minZoom={0.5}
+                mazXoom={5}
                 image={media.rawUrl}
                 crop={crop}
                 aspect={

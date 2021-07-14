@@ -1,0 +1,7 @@
+.showOnHoverTrigger .showOnHover {
+  display: none;
+}
+
+.showOnHoverTrigger:hover .showOnHover {
+  display: block;
+}

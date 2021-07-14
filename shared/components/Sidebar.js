@@ -4,6 +4,7 @@ import PortfolioContentEditor from "./PortfolioContentEditor";
 import * as styles from "../utils/styles";
 import { observer } from "mobx-react";
 import { Tabs, TabList, Tab } from "./Tabs";
+import Templates from "./Templates";
 
 const tabs = ["content", "templates"];
 const labels = {
@@ -42,6 +43,7 @@ const Sidebar = observer(({ portfolio }) => {
         {selectedTab === "content" && (
           <PortfolioContentEditor portfolio={portfolio.draft} />
         )}
+        {selectedTab === "templates" && <Templates />}
       </Box>
     </Flex>
   );

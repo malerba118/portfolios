@@ -24,6 +24,7 @@ import Img from "./Img";
 import ReorderableList from "./ReorderableList";
 import compress from "browser-image-compression";
 import MediaEditorModal from "./MediaEditorModal";
+import _styles from "./MediaForm.module.css";
 
 const getFileDimensions = (file) =>
   new Promise((resolve) => {
@@ -226,8 +227,7 @@ const MediaManager = observer(
         position="relative"
         w={THUMBNAIL_SIZE}
         h={THUMBNAIL_SIZE}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
+        className={_styles.showOnHoverTrigger}
       >
         <Img
           src={media.processedUrl || media.rawUrl}
@@ -240,6 +240,7 @@ const MediaManager = observer(
           w={THUMBNAIL_SIZE}
           h={THUMBNAIL_SIZE}
           rounded="md"
+          overflow="hidden"
         />
         {/* <Box
           display={hovered ? "block" : "none"}
@@ -264,7 +265,7 @@ const MediaManager = observer(
           </Center>
         </Box> */}
         <Box
-          display={hovered ? "block" : "none"}
+          className={_styles.showOnHover}
           position="absolute"
           top="-1px"
           right="0px"
