@@ -6,7 +6,7 @@ import {
   assertValid,
 } from "./utils";
 import { nanoid } from "nanoid";
-import { ResourceNotFoundError } from "./errors";
+import { ResourceNotFoundError, UnauthorizedError } from "./errors";
 import joi from "joi";
 
 const schemas = {
@@ -58,33 +58,40 @@ const schemas = {
 
 const firestore = admin.firestore();
 
-const getDefaultPortfolio = ({ user }) => ({
-  subdomain: null,
-  owner: user.id,
-  draft: {
-    template: {
-      name: "venice",
-      version: "v1",
-    },
-    content: {
-      about: {
-        firstName: "",
-        lastName: "",
-        title: "",
+const getDefaultPortfolio = ({ user }) => {
+  const portfolio = {
+    subdomain: null,
+    owner: user.id,
+    draft: {
+      template: {
+        name: "venice",
+        version: "v1",
       },
-      projects: [
-        {
-          id: nanoid(),
-          name: "Example Project",
-          summary: "",
-          description: "",
+      content: {
+        about: {
+          firstName: "",
+          lastName: "",
+          title: "",
         },
-      ],
+        projects: [
+          {
+            id: nanoid(),
+            name: "",
+            summary: "",
+            description: "",
+            images: {
+              items: [],
+            },
+          },
+        ],
+      },
     },
-  },
-  published: null,
-  live: false,
-});
+    published: null,
+    live: false,
+  };
+  assertValid(portfolio.draft, schemas.updateDraft);
+  return portfolio;
+};
 
 export default ({ db, user }) => {
   const portfoliosCol = firestore.collection("portfolios");
@@ -136,7 +143,16 @@ export default ({ db, user }) => {
       .where("subdomain", "==", subdomain)
       .get();
     let portfolioDoc = portfoliosSnapshot.docs[0];
-    return !(portfolioDoc && portfolioDoc.exists);
+    if (portfolioDoc && portfolioDoc.exists) {
+      // unavailable if owned by another user
+      if (portfolioDoc.data().owner !== user.id) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
   };
 
   const updateSubdomain = async (subdomain) => {
@@ -147,11 +163,25 @@ export default ({ db, user }) => {
     if (available) {
       await portfoliosCol.doc(portfolio.id).update({
         ...portfolio,
-        subdomain: data,
+        subdomain,
       });
     } else {
       throw new ValidationError();
     }
+    return getOrCreate();
+  };
+
+  const publish = async (subdomain) => {
+    assertAuthenticated(user);
+    let portfolio = await getOrCreate();
+    if (!portfolio.live) {
+      throw new UnauthorizedError();
+    }
+    portfolio = await updateSubdomain(subdomain);
+    await portfoliosCol.doc(portfolio.id).update({
+      ...portfolio,
+      published: portfolio.draft,
+    });
     return getOrCreate();
   };
 
@@ -161,5 +191,6 @@ export default ({ db, user }) => {
     isSubdomainAvailable,
     updateDraft,
     updateSubdomain,
+    publish,
   };
 };

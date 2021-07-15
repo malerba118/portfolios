@@ -96,6 +96,8 @@ const Editor = observer(() => {
         </ResizeDetector>
       </Flex>
       <PublishModal
+        key={String(publishModal.isOpen)}
+        defaultValue={portfolio.subdomain}
         isOpen={publishModal.isOpen}
         onClose={publishModal.onClose}
       />

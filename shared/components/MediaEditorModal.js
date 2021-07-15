@@ -13,11 +13,9 @@ import {
   Icon,
   Flex,
 } from "@chakra-ui/react";
-// import Cropper from "react-easy-crop";
 import { getCroppedImg } from "client/utils/image";
 import { observer } from "mobx-react";
 import Cropper from "react-image-crop";
-import { nanoid } from "nanoid";
 import "react-image-crop/dist/ReactCrop.css";
 
 const MediaEditorModal = observer(({ isOpen, media, onSave, onClose }) => {
@@ -26,12 +24,6 @@ const MediaEditorModal = observer(({ isOpen, media, onSave, onClose }) => {
   const [crop, setCrop] = useState(
     media.crop || { unit: "%", x: 0, y: 0, width: 100, height: 100 }
   );
-  const [zoom, setZoom] = useState(media.zoom || 1);
-  // const [croppedAreaPixels, setCroppedAreaPixels] = useState();
-
-  useEffect(() => {
-    console.log(crop);
-  }, [crop]);
 
   return (
     <Modal
@@ -51,7 +43,7 @@ const MediaEditorModal = observer(({ isOpen, media, onSave, onClose }) => {
               w="100%"
               h="500px"
               pos="relative"
-              background="#141414"
+              background="gray.100"
               roundedTop="md"
               overflow="hidden"
               justify="center"
@@ -61,9 +53,6 @@ const MediaEditorModal = observer(({ isOpen, media, onSave, onClose }) => {
                 src={media.rawUrl}
                 crop={crop}
                 onChange={(crop, percentCrop) => setCrop(percentCrop)}
-                // onCropComplete={(crop, croppedAreaPixels) => {
-                //   setCroppedAreaPixels(croppedAreaPixels);
-                // }}
                 style={{ width: media.aspect * 500 }}
               />
             </Flex>
