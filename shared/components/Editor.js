@@ -1,5 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Flex, Center, Box, Button, useDisclosure } from "@chakra-ui/react";
+import {
+  Flex,
+  Center,
+  IconButton,
+  Button,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useQuery, useMutation } from "react-query";
 import debounce from "lodash/debounce";
 import { useAuth } from "client/useAuth";
@@ -14,6 +20,11 @@ import * as api from "client/api";
 import { autorun } from "mobx";
 import PublishModal from "./PublishModal";
 import Sidebar from "./Sidebar";
+import {
+  MdFullscreen as FullscreenIcon,
+  MdFullscreenExit as ExitFullscreenIcon,
+} from "react-icons/md";
+import { useFullscreen } from "./Fullscreen";
 
 const deviceAspectRatios = {
   phone: 9 / 16,
@@ -27,6 +38,7 @@ const Editor = observer(() => {
   const mutation = useMutation((data) => api.portfolio.updateDraft(data));
   const [device, setDevice] = useState("desktop");
   const publishModal = useDisclosure();
+  const { fullscreen, setFullscreen } = useFullscreen();
 
   const updatePortfolio = useMemo(() => {
     return debounce(mutation.mutate, 3000);
@@ -61,6 +73,15 @@ const Editor = observer(() => {
           alignItems="center"
           pos="relative"
         >
+          <IconButton
+            onClick={() => setFullscreen(!fullscreen)}
+            size="sm"
+            fontSize="xl"
+            rounded="4px"
+            pos="absolute"
+            left={4}
+            icon={fullscreen ? <ExitFullscreenIcon /> : <FullscreenIcon />}
+          />
           <DeviceSelector value={device} onChange={setDevice} />
           <Button
             onClick={publishModal.onOpen}
@@ -75,12 +96,14 @@ const Editor = observer(() => {
         <ResizeDetector handleWidth handleHeight>
           {({ width, height }) => {
             const ratio = deviceAspectRatios[device];
+            const padding = fullscreen ? 12 : 24;
+            // const percentage = fullscreen ? 0.94 : 0.94;
             const previewerSize = {};
             if (width / height > ratio) {
-              previewerSize.height = height * 0.88;
+              previewerSize.height = height - 2 * padding;
               previewerSize.width = previewerSize.height * ratio;
             } else {
-              previewerSize.width = width * 0.88;
+              previewerSize.width = width - 2 * padding;
               previewerSize.height = previewerSize.width / ratio;
             }
             return (

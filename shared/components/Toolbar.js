@@ -14,17 +14,26 @@ import User from "./User";
 import { useAuth } from "client/useAuth";
 import firebaseClient from "client/firebase";
 import * as styles from "../utils/styles";
+import { useFullscreen } from "./Fullscreen";
+import { MotionFlex, transitions } from "./animation";
 
 const Toolbar = () => {
   const user = useAuth();
+  const { fullscreen } = useFullscreen();
+
   return (
-    <Flex
+    <MotionFlex
       px={4}
-      h="56px"
+      h={"56px"}
+      animate={{
+        marginTop: fullscreen ? "-56px" : 0,
+        transition: transitions.one(0.3),
+      }}
       alignItems="center"
+      overflow="hidden"
       {...styles.borders({ bottom: true })}
     >
-      <Heading size="sm">Folios</Heading>
+      <Heading size="sm">Vernos</Heading>
       <Box flex={1} />
       {user && (
         <Menu>
@@ -45,7 +54,7 @@ const Toolbar = () => {
         </Menu>
       )}
       {!user && <Link href="/login">log in</Link>}
-    </Flex>
+    </MotionFlex>
   );
 };
 

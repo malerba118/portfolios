@@ -14,6 +14,14 @@ const theme = extendTheme({
     }),
   },
   components: {
+    IconButton: {
+      variants: {
+        active: {
+          background: "purple.300",
+          color: "red.400",
+        },
+      },
+    },
     Input: {
       baseStyle: {
         field: {

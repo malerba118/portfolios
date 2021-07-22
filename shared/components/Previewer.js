@@ -16,7 +16,7 @@ const Previewer = observer(({ width, height, portfolio }) => {
 
   return (
     <Embed
-      boxShadow="sm"
+      boxShadow="none"
       rounded="md"
       width={width}
       height={height}

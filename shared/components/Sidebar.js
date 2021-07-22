@@ -5,6 +5,8 @@ import * as styles from "../utils/styles";
 import { observer } from "mobx-react";
 import { Tabs, TabList, Tab } from "./Tabs";
 import Templates from "./Templates";
+import { useFullscreen } from "./Fullscreen";
+import { MotionFlex, transitions } from "./animation";
 
 const tabs = ["content", "templates"];
 const labels = {
@@ -14,11 +16,18 @@ const labels = {
 
 const Sidebar = observer(({ portfolio }) => {
   const [selectedTab, setSelectedTab] = useState("content");
+  const { fullscreen } = useFullscreen();
 
   return (
-    <Flex
+    <MotionFlex
+      position="relative"
       className="sidebar"
       w="420px"
+      animate={{
+        marginLeft: fullscreen ? "-420px" : 0,
+        transition: transitions.one(0.3),
+      }}
+      overflow="hidden"
       flexDirection="column"
       {...styles.borders({ right: true })}
     >
@@ -45,7 +54,7 @@ const Sidebar = observer(({ portfolio }) => {
         )}
         {selectedTab === "templates" && <Templates />}
       </Box>
-    </Flex>
+    </MotionFlex>
   );
 });
 
