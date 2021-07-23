@@ -17,14 +17,14 @@ const defaults = {
   getListStyle: (isDraggingOver) => ({
     display: "flex",
   }),
-  getItemStyle: (isDragging) => ({
-    marginRight: 8,
-  }),
+  getItemStyle: (isDragging) => ({}),
 };
 
 const ReorderableList = ({
   items,
   onChange,
+  direction = "horizontal",
+  isDisabled = false,
   children,
   getId = defaults.getId,
   getListStyle = defaults.getListStyle,
@@ -46,7 +46,11 @@ const ReorderableList = ({
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="droppable" direction="horizontal">
+      <Droppable
+        isDropDisabled={isDisabled}
+        droppableId="droppable"
+        direction={direction}
+      >
         {(provided, snapshot) => (
           <div
             ref={provided.innerRef}
@@ -58,6 +62,7 @@ const ReorderableList = ({
                 key={getId(item)}
                 draggableId={getId(item)}
                 index={index}
+                isDragDisabled={isDisabled}
               >
                 {(provided, snapshot) => (
                   <div
@@ -65,12 +70,12 @@ const ReorderableList = ({
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     style={{
-                      ...getItemStyle(snapshot.isDragging),
+                      ...getItemStyle(snapshot.isDragging, index),
                       ...provided.draggableProps.style,
-                      cursor: "move",
+                      cursor: isDisabled ? undefined : "move",
                     }}
                   >
-                    {children(item)}
+                    {children(item, index)}
                   </div>
                 )}
               </Draggable>
@@ -82,5 +87,4 @@ const ReorderableList = ({
     </DragDropContext>
   );
 };
-
 export default ReorderableList;

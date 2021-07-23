@@ -1,19 +1,32 @@
 import React, { useState } from "react";
-import { Box, IconButton, Tooltip } from "@chakra-ui/react";
-import { MdRemove } from "react-icons/md";
+import { Box, IconButton, Tooltip, Icon } from "@chakra-ui/react";
+import { IoMdTrash as RemoveIcon } from "react-icons/io";
 import * as styles from "../utils/styles";
 import _styles from "./FormSection.module.css";
+import { MotionBox, transitions } from "./animation";
 
-const FormSection = ({ children, canDelete, onDelete, tooltips }) => {
-  const [hovered, setHovered] = useState(false);
-
+const FormSection = ({
+  children,
+  canDelete,
+  onDelete,
+  tooltips,
+  expanded = true,
+  ...otherProps
+}) => {
   return (
-    <Box
+    <MotionBox
       {...styles.borders({ top: true, right: true, bottom: true, left: true })}
       p={6}
       rounded="md"
       position="relative"
       className={_styles.showOnHoverTrigger}
+      initial={{ height: "auto" }}
+      overflow="hidden"
+      animate={{
+        height: expanded ? "auto" : "68px",
+        transition: transitions.two(0.2),
+      }}
+      {...otherProps}
     >
       <Box
         className={_styles.showOnHover}
@@ -28,16 +41,17 @@ const FormSection = ({ children, canDelete, onDelete, tooltips }) => {
           <Tooltip label={tooltips?.delete}>
             <IconButton
               size="sm"
+              fontSize="md"
               variant="solid"
               borderRadius={0}
-              icon={<MdRemove />}
+              icon={<Icon as={RemoveIcon} color="orange.500" />}
               onClick={() => onDelete?.()}
             />
           </Tooltip>
         )}
       </Box>
       {children}
-    </Box>
+    </MotionBox>
   );
 };
 

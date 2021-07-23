@@ -14,11 +14,18 @@ const theme = extendTheme({
     }),
   },
   components: {
+    Button: {
+      baseStyle: {
+        _focus: {
+          boxShadow: "none",
+        },
+      },
+    },
     IconButton: {
       variants: {
         active: {
           background: "purple.300",
-          color: "red.400",
+          color: "white",
         },
       },
     },

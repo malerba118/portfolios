@@ -123,6 +123,13 @@ export const Content = types
       const index = self.projects.findIndex((p) => p.id === id);
       self.projects.splice(index, 1);
     },
+    set: (patch) => {
+      Object.entries(patch).forEach(([key, val]) => {
+        if (val !== undefined) {
+          self[key] = val;
+        }
+      });
+    },
   }));
 
 export const PortfolioData = types

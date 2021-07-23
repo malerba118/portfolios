@@ -13,6 +13,7 @@ import AboutForm from "./AboutForm";
 import ProjectsForm from "./ProjectsForm";
 import * as styles from "../utils/styles";
 import Section from "./Section";
+import { observer } from "mobx-react";
 
 // const Section = ({ title, tooltips, children, canAdd = false, onAdd }) => {
 //   return (
@@ -40,7 +41,7 @@ import Section from "./Section";
 //   );
 // };
 
-const PortfolioContentEditor = ({ width, height, portfolio }) => {
+const PortfolioContentEditor = observer(({ width, height, portfolio }) => {
   return (
     <Stack p={6} spacing={6}>
       <Section title="About">
@@ -54,16 +55,20 @@ const PortfolioContentEditor = ({ width, height, portfolio }) => {
           add: "Add Project",
         }}
       >
-        <ProjectsForm
-          projects={portfolio.content.projects}
-          onDelete={(id) => portfolio.content.removeProject(id)}
-        />
+        {({ expanded }) => (
+          <ProjectsForm
+            projects={portfolio.content.projects}
+            expanded={expanded}
+            onDelete={(id) => portfolio.content.removeProject(id)}
+            onReorder={(projects) => portfolio.content.set({ projects })}
+          />
+        )}
       </Section>
       <Section title="Work">
         <FormSection canDelete />
       </Section>
     </Stack>
   );
-};
+});
 
 export default PortfolioContentEditor;

@@ -6,6 +6,7 @@ import firebaseClient from "client/firebase";
 import * as styles from "../utils/styles";
 import Dropzone from "react-dropzone";
 import { nanoid } from "nanoid";
+import { IoMdTrash as RemoveIcon } from "react-icons/io";
 import { MdAdd, MdEdit, MdRemove } from "react-icons/md";
 import {
   Wrap,
@@ -133,6 +134,9 @@ const MediaForm = observer(({ medias, accept }) => {
       <ReorderableList
         items={medias.items.slice()}
         onChange={(items) => medias.set({ items })}
+        getItemStyle={(isDragging) => ({
+          marginRight: 8,
+        })}
       >
         {(media) => (
           <MediaManager
@@ -281,11 +285,12 @@ const MediaManager = observer(
               onClick={() => setEditing(true)}
             />
           </Tooltip>
-          <Tooltip label={"Remove"}>
+          <Tooltip label={"Delete"}>
             <IconButton
               size="xs"
               variant="solid"
-              icon={<MdRemove />}
+              icon={<RemoveIcon />}
+              color="orange.500"
               onClick={() => onDelete?.()}
             />
           </Tooltip>
