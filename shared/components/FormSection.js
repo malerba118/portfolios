@@ -24,7 +24,7 @@ const FormSection = ({
       overflow="hidden"
       animate={{
         height: expanded ? "auto" : "68px",
-        transition: transitions.two(0.2),
+        transition: transitions.two(0.25),
       }}
       {...otherProps}
     >

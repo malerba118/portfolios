@@ -7,7 +7,7 @@ const Templates = () => {
   return (
     <Stack p={6} spacing={6}>
       <Section title="Templates">
-        <Stack spacing={4}>
+        <Stack spacing={6}>
           <FormSection>
             <Stack spacing={2}>
               <Flex justify="space-between">

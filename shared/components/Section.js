@@ -11,8 +11,8 @@ import {
 } from "@chakra-ui/react";
 import {
   MdAdd,
-  MdKeyboardArrowRight as ExpandIcon,
-  MdKeyboardArrowDown as CollapseIcon,
+  MdExpandMore as ExpandIcon,
+  MdExpandLess as CollapseIcon,
 } from "react-icons/md";
 
 const Section = ({ title, tooltips, children, canAdd = false, onAdd }) => {
