@@ -20,8 +20,9 @@ const FormSection = ({
       rounded="md"
       position="relative"
       className={_styles.showOnHoverTrigger}
-      initial={{ height: "auto" }}
+      initial={{ height: expanded ? "auto" : "68px" }}
       overflow="hidden"
+      bg="white"
       animate={{
         height: expanded ? "auto" : "68px",
         transition: transitions.two(0.25),

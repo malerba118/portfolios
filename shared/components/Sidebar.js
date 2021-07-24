@@ -43,7 +43,7 @@ const Sidebar = observer(({ portfolio }) => {
         >
           <TabList h="100%">
             {tabs.map((tab) => (
-              <Tab>{labels[tab]}</Tab>
+              <Tab key={tab}>{labels[tab]}</Tab>
             ))}
           </TabList>
         </Tabs>

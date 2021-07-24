@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Stack, Input, Textarea, Heading } from "@chakra-ui/react";
+import { Stack, Input, Textarea, Heading, HStack, Box } from "@chakra-ui/react";
 import FormSection from "./FormSection";
 import { observer } from "mobx-react";
 import InputContainer from "./InputContainer";
 import MediaForm from "./MediaForm";
 import ReorderableList from "./ReorderableList";
+import Datepicker from "./Datepicker";
 
 const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
   <FormSection
@@ -15,7 +16,11 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
     }}
     expanded={expanded}
   >
-    {!expanded && <Heading fontSize="md">{project.name || "Untitled"}</Heading>}
+    {!expanded && (
+      <Heading pos="absolute" fontSize="md">
+        {project.name || "Untitled"}
+      </Heading>
+    )}
     <Stack visibility={expanded ? "visible" : "hidden"} spacing={4}>
       <InputContainer label="Name">
         <Input
@@ -37,6 +42,18 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
           size="sm"
         />
       </InputContainer>
+      <HStack spacing={4}>
+        <InputContainer label="Start Date">
+          <Box>
+            <Datepicker />
+          </Box>
+        </InputContainer>
+        <InputContainer label="End Date">
+          <Box>
+            <Datepicker />
+          </Box>
+        </InputContainer>
+      </HStack>
       <InputContainer label="Description">
         <Textarea
           value={project.description}

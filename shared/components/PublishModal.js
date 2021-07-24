@@ -60,8 +60,12 @@ function PublishModal({ defaultValue, isOpen, onSuccess, onClose }) {
           <ModalBody>
             <Text fontSize="md">
               Check it out at{" "}
-              <Link href="http://localhost:3001?subsomain" color="purple.400">
-                http://localhost:3001?subsomain
+              <Link
+                target="_blank"
+                href={`http://localhost:3001?subdomain=${debouncedSubdomain}`}
+                color="purple.400"
+              >
+                {`http://localhost:3001?subdomain=${debouncedSubdomain}`}
               </Link>
             </Text>
           </ModalBody>
@@ -117,7 +121,6 @@ function PublishModal({ defaultValue, isOpen, onSuccess, onClose }) {
             </InputContainer>
           </FormSection>
         </ModalBody>
-
         <ModalFooter>
           <Button
             isDisabled={!isSubdomainAvailable}
