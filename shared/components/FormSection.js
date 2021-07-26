@@ -42,7 +42,7 @@ const FormSection = ({
           <Tooltip label={tooltips?.delete}>
             <IconButton
               size="sm"
-              fontSize="md"
+              fontSize="sm"
               variant="solid"
               borderRadius={0}
               icon={<Icon as={RemoveIcon} color="orange.500" />}

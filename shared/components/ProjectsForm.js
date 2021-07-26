@@ -45,12 +45,22 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
       <HStack spacing={4}>
         <InputContainer label="Start Date">
           <Box>
-            <Datepicker />
+            <Datepicker
+              value={project.startDate}
+              onChange={(date) => {
+                project.set({ startDate: date });
+              }}
+            />
           </Box>
         </InputContainer>
         <InputContainer label="End Date">
           <Box>
-            <Datepicker />
+            <Datepicker
+              value={project.endDate}
+              onChange={(date) => {
+                project.set({ endDate: date });
+              }}
+            />
           </Box>
         </InputContainer>
       </HStack>

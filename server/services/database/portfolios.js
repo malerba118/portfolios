@@ -48,6 +48,8 @@ const schemas = {
               })
             ),
           }),
+          startDate: joi.date().allow(null),
+          endDate: joi.date().allow(null),
         })
       ),
     }),
@@ -82,6 +84,8 @@ const getDefaultPortfolio = ({ user }) => {
             images: {
               items: [],
             },
+            startDate: null,
+            endDate: null,
           },
         ],
       },

@@ -92,6 +92,8 @@ export const Project = types
     summary: types.maybe(types.string),
     description: types.maybe(types.string),
     images: Medias,
+    startDate: types.maybeNull(types.Date),
+    endDate: types.maybeNull(types.Date),
   })
   .actions((self) => ({
     set: (patch) => {
@@ -117,6 +119,8 @@ export const Content = types
         images: {
           items: [],
         },
+        startDate: null,
+        endDate: null,
       });
     },
     removeProject(id) {

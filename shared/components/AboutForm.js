@@ -10,6 +10,8 @@ const AboutForm = observer(({ about }) => {
       <Stack spacing={4}>
         <InputContainer label="First Name">
           <Input
+            type="text"
+            name="first-name"
             value={about.firstName}
             onChange={(e) => {
               about.set({ firstName: e.target.value });

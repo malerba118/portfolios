@@ -64,9 +64,9 @@ const PortfolioContentEditor = observer(({ width, height, portfolio }) => {
           />
         )}
       </Section>
-      <Section title="Work">
+      {/* <Section title="Work">
         <FormSection canDelete />
-      </Section>
+      </Section> */}
     </Stack>
   );
 });
