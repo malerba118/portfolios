@@ -1,0 +1,37 @@
+.showOnFocusTrigger .showOnFocus {
+  display: none;
+}
+
+.toolbar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 32px;
+  top: -32px;
+  visibility: hidden;
+  transition: all var(--chakra-transition-duration-normal);
+  transition-delay: 0.3s;
+}
+
+.editable {
+  height: 100%;
+  transition: all var(--chakra-transition-duration-normal);
+  transition-delay: 0.3s;
+}
+
+.showOnFocusTrigger:focus-within .toolbar {
+  display: flex;
+  height: 32px;
+  top: 0;
+  visibility: visible;
+}
+
+.showOnFocusTrigger:focus-within .editable {
+  margin-top: 32px;
+  height: calc(100% - 32px);
+}
+
+.showOnFocusTrigger:focus-visible .editable {
+  box-shadow: none !important;
+  border-width: 0;
+}

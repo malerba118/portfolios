@@ -25,7 +25,7 @@ const FormSection = ({
       bg="white"
       animate={{
         height: expanded ? "auto" : "68px",
-        transition: transitions.two(0.25),
+        transition: transitions.two(0.3),
       }}
       {...otherProps}
     >

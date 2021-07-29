@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Stack, Input, Textarea, Heading, HStack, Box } from "@chakra-ui/react";
+import { Stack, Input, Heading, HStack, Box } from "@chakra-ui/react";
 import FormSection from "./FormSection";
 import { observer } from "mobx-react";
 import InputContainer from "./InputContainer";
 import MediaForm from "./MediaForm";
 import ReorderableList from "./ReorderableList";
 import Datepicker from "./Datepicker";
+import Textarea from "./Textarea";
 
 const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
   <FormSection
