@@ -25,6 +25,8 @@ import {
   InputGroup,
   InputRightElement,
   FormControl,
+  StylesProvider,
+  Alert,
 } from "@chakra-ui/react";
 import isUrl from "is-url";
 // Import the Slate components and React plugin.
@@ -48,6 +50,7 @@ import {
 } from "react-icons/bs";
 import { CgFormatHeading, CgCheck, CgClose } from "react-icons/cg";
 import _styles from "./Textarea.module.css";
+import * as styles from "../utils/styles";
 
 const withLinks = (editor) => {
   const { insertData, insertText, isInline } = editor;
@@ -145,10 +148,11 @@ const Toolbar = ({ className }) => {
         pos="relative"
         size="sm"
         isAttached
-        rounded="md"
+        rounded="sm"
         overflow="hidden"
         display="flex"
         flex={1}
+        colorScheme="gray"
       >
         <MarkButton format="bold" icon={<BsTypeBold />} />
         <MarkButton format="italic" icon={<BsTypeItalic />} />
@@ -172,57 +176,60 @@ const Toolbar = ({ className }) => {
         <BlockButton format="numbered-list" icon={<BsListOl />} />
         <BlockButton format="bulleted-list" icon={<BsListUl />} />
         {editingLink && (
-          <Box zIndex={1} position="absolute" inset={0} bg="purple.400">
-            <InputGroup size="md" color="whiteAlpha.800">
-              <Input
-                size="sm"
-                placeholder="Url..."
-                value={link}
-                onChange={(e) => setLink(e.target.value)}
-                borderColor="purple.400"
-                _hover={{
-                  borderColor: "purple.400",
-                }}
-                onFocus={() => {
-                  //   editor.selection = lastKnownSelection;
-                  Transforms.select(editor, lastKnownSelection);
-                }}
-                focusBorderColor="purple.400"
-                _placeholder={{ color: "whiteAlpha.800" }}
-              />
-              <InputRightElement w="64px" h="100%" rounded="sm">
-                <ButtonGroup
-                  display="flex"
-                  w="100%"
-                  spacing={0}
-                  colorScheme="whiteAlpha"
-                >
-                  <IconButton
-                    flex={1}
-                    size="sm"
-                    onClick={() => {
-                      editor.selection = lastKnownSelection;
-                      insertLink(editor, link);
-                      setEditingLink(false);
-                      setLink("");
-                    }}
-                    icon={
-                      <Icon color="whiteAlpha.800" fontSize="xl" as={CgCheck} />
-                    }
-                  />
-                  <IconButton
-                    flex={1}
-                    size="sm"
-                    fontSize="xs"
-                    onClick={() => {
-                      setLink("");
-                      setEditingLink(false);
-                    }}
-                    icon={<Icon color="whiteAlpha.800" as={CgClose} />}
-                  />
-                </ButtonGroup>
-              </InputRightElement>
-            </InputGroup>
+          <Box zIndex={1} position="absolute" inset={0} bg="gray.200">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                alert("maybe");
+              }}
+            >
+              <InputGroup size="md" colorScheme="gray">
+                <Input
+                  size="sm"
+                  placeholder="Url..."
+                  value={link}
+                  onChange={(e) => setLink(e.target.value)}
+                  focusBorderColor="gray.200"
+                  _hover={{ borderColor: "gray.200" }}
+                  // onFocus={() => {
+                  //   Transforms.select(editor, lastKnownSelection);
+                  // }}
+                  // _placeholder={{ color: "whiteAlpha.800" }}
+                />
+                <InputRightElement w="64px" h="100%" rounded="sm">
+                  <ButtonGroup
+                    display="flex"
+                    w="100%"
+                    spacing={0}
+                    colorScheme="gray"
+                  >
+                    <IconButton
+                      type="submit"
+                      flex={1}
+                      size="sm"
+                      onClick={() => {
+                        editor.selection = lastKnownSelection;
+                        insertLink(editor, link);
+                        setEditingLink(false);
+                        setLink("");
+                      }}
+                      icon={<Icon fontSize="xl" as={CgCheck} />}
+                    />
+                    <IconButton
+                      flex={1}
+                      size="sm"
+                      fontSize="xs"
+                      onClick={() => {
+                        editor.selection = lastKnownSelection;
+                        setLink("");
+                        setEditingLink(false);
+                      }}
+                      icon={<Icon as={CgClose} />}
+                    />
+                  </ButtonGroup>
+                </InputRightElement>
+              </InputGroup>
+            </form>
           </Box>
         )}
       </ButtonGroup>
@@ -262,7 +269,7 @@ const Textarea = ({ size }) => {
         size={size}
         rounded="sm"
         borderWidth="2px"
-        height={32}
+        height={36}
         overflow="auto"
         transition="all var(--chakra-transition-duration-normal);"
         _hover={{ borderColor: "gray.300" }}
@@ -407,8 +414,10 @@ const BlockButton = ({ format, icon }) => {
   return (
     <IconButton
       flex={1}
-      colorScheme="purple"
-      bg={isBlockActive(editor, format) ? "purple.500" : "purple.400"}
+      {...(isBlockActive(editor, format) ? styles.variants.active : {})}
+      _hover={{
+        bg: isBlockActive(editor, format) ? "purple.400" : "gray.200",
+      }}
       onMouseDown={(event) => {
         event.preventDefault();
         toggleBlock(editor, format);
@@ -423,8 +432,10 @@ const MarkButton = ({ format, icon }) => {
   return (
     <IconButton
       flex={1}
-      colorScheme="purple"
-      bg={isMarkActive(editor, format) ? "purple.500" : "purple.400"}
+      {...(isMarkActive(editor, format) ? styles.variants.active : {})}
+      _hover={{
+        bg: isMarkActive(editor, format) ? "purple.400" : "gray.200",
+      }}
       onMouseDown={(event) => {
         event.preventDefault();
         toggleMark(editor, format);
@@ -440,65 +451,13 @@ const LinkButton = ({ onMouseDown }) => {
   return (
     <IconButton
       flex={1}
-      colorScheme="purple"
-      bg={active ? "purple.500" : "purple.400"}
+      {...(active ? styles.variants.active : {})}
+      _hover={{
+        bg: active ? "purple.400" : "gray.200",
+      }}
       onMouseDown={onMouseDown}
       icon={<BsLink />}
     />
-  );
-};
-
-const Portal = ({ children }) => {
-  return typeof document === "object"
-    ? ReactDOM.createPortal(children, document.body)
-    : null;
-};
-
-const HoveringToolbar = ({ children }) => {
-  const ref = useRef();
-  const editor = useSlate();
-
-  useEffect(() => {
-    const el = ref.current;
-    const { selection } = editor;
-
-    if (!el) {
-      return;
-    }
-
-    if (
-      !selection ||
-      !ReactEditor.isFocused(editor) ||
-      Range.isCollapsed(selection) ||
-      Editor.string(editor, selection) === ""
-    ) {
-      el.style.visibility = "hidden";
-      el.style.opacity = 0;
-      return;
-    }
-
-    const domSelection = window.getSelection();
-    const domRange = domSelection.getRangeAt(0);
-    const rect = domRange.getBoundingClientRect();
-    el.style.visibility = "visible";
-    el.style.opacity = "1";
-    el.style.top = `${rect.top + window.pageYOffset - el.offsetHeight}px`;
-    el.style.left = `${
-      rect.left + window.pageXOffset - el.offsetWidth / 2 + rect.width / 2
-    }px`;
-  });
-
-  return (
-    <Portal>
-      <Box
-        transition="all .1s ease, opacity .3s ease"
-        transform="scale(.9)"
-        pos="fixed"
-        ref={ref}
-      >
-        {children}
-      </Box>
-    </Portal>
   );
 };
 

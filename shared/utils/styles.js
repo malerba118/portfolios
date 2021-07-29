@@ -24,6 +24,13 @@ export const borders = ({
   return props;
 };
 
+export const variants = {
+  active: {
+    bg: "purple.300",
+    color: "white",
+  },
+};
+
 export const transitions = {
   spring: {
     normal: { type: "spring", damping: 50, stiffness: 500 },

@@ -4,31 +4,26 @@
 
 .toolbar {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 0px;
+  right: 0px;
   height: 32px;
-  top: -32px;
-  visibility: hidden;
+  top: 0px;
   transition: all var(--chakra-transition-duration-normal);
-  transition-delay: 0.3s;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .editable {
   height: 100%;
   transition: all var(--chakra-transition-duration-normal);
-  transition-delay: 0.3s;
+  margin-top: 32px;
+  height: calc(100% - 32px);
 }
 
 .showOnFocusTrigger:focus-within .toolbar {
-  display: flex;
-  height: 32px;
-  top: 0;
-  visibility: visible;
-}
-
-.showOnFocusTrigger:focus-within .editable {
-  margin-top: 32px;
-  height: calc(100% - 32px);
+  pointer-events: all;
+  opacity: 1;
 }
 
 .showOnFocusTrigger:focus-visible .editable {

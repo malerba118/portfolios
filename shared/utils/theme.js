@@ -24,7 +24,7 @@ const theme = extendTheme({
     IconButton: {
       variants: {
         active: {
-          background: "purple.300",
+          bg: "purple.300",
           color: "white",
         },
       },
