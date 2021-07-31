@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import {
   Flex,
   Center,
   IconButton,
   Button,
+  ButtonGroup,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useQuery, useMutation } from "react-query";
@@ -12,7 +13,6 @@ import { useAuth } from "client/useAuth";
 import { observer } from "mobx-react";
 import Previewer from "./Previewer";
 import DeviceSelector from "./DeviceSelector";
-import PortfolioContentEditor from "./PortfolioContentEditor";
 import ResizeDetector from "react-resize-detector";
 import * as models from "shared/services/models";
 import * as styles from "../utils/styles";
@@ -23,6 +23,7 @@ import Sidebar from "./Sidebar";
 import {
   MdFullscreen as FullscreenIcon,
   MdFullscreenExit as ExitFullscreenIcon,
+  MdRefresh as RefreshIcon,
 } from "react-icons/md";
 import { useFullscreen } from "./Fullscreen";
 
@@ -34,6 +35,7 @@ const deviceAspectRatios = {
 
 const Editor = observer(() => {
   const user = useAuth();
+  const [refreshKey, setRefreshKey] = useState(0);
   const query = useQuery("portfolio", api.portfolio.get);
   const mutation = useMutation((data) => api.portfolio.updateDraft(data));
   const [device, setDevice] = useState("desktop");
@@ -73,15 +75,22 @@ const Editor = observer(() => {
           alignItems="center"
           pos="relative"
         >
-          <IconButton
-            onClick={() => setFullscreen(!fullscreen)}
-            size="sm"
-            fontSize="xl"
-            rounded="4px"
-            pos="absolute"
-            left={4}
-            icon={fullscreen ? <ExitFullscreenIcon /> : <FullscreenIcon />}
-          />
+          <ButtonGroup pos="absolute" left={4}>
+            <IconButton
+              onClick={() => setFullscreen(!fullscreen)}
+              size="sm"
+              fontSize="xl"
+              rounded="4px"
+              icon={fullscreen ? <ExitFullscreenIcon /> : <FullscreenIcon />}
+            />
+            <IconButton
+              onClick={() => setRefreshKey((p) => p + 1)}
+              size="sm"
+              fontSize="xl"
+              rounded="4px"
+              icon={<RefreshIcon />}
+            />
+          </ButtonGroup>
           <DeviceSelector value={device} onChange={setDevice} />
           <Button
             onClick={publishModal.onOpen}
@@ -97,7 +106,6 @@ const Editor = observer(() => {
           {({ width, height }) => {
             const ratio = deviceAspectRatios[device];
             const padding = fullscreen ? 12 : 24;
-            // const percentage = fullscreen ? 0.94 : 0.94;
             const previewerSize = {};
             if (width / height > ratio) {
               previewerSize.height = height - 2 * padding;
@@ -110,7 +118,11 @@ const Editor = observer(() => {
               <Flex flex={1} className="main-content" bg="gray.100">
                 <Center w="100%">
                   {width && height && (
-                    <Previewer {...previewerSize} portfolio={portfolio} />
+                    <Previewer
+                      key={refreshKey}
+                      {...previewerSize}
+                      portfolio={portfolio}
+                    />
                   )}
                 </Center>
               </Flex>

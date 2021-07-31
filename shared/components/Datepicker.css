@@ -34,3 +34,7 @@
   border-bottom-color: var(--chakra-colors-gray-200) !important;
   border-top-color: var(--chakra-colors-gray-100) !important;
 }
+
+.react-datepicker-popper {
+  z-index: 5 !important;
+}
