@@ -25,7 +25,6 @@ import {
   InputGroup,
   InputRightElement,
   FormControl,
-  StylesProvider,
   Alert,
 } from "@chakra-ui/react";
 import isUrl from "is-url";
@@ -191,10 +190,6 @@ const Toolbar = ({ className }) => {
                   onChange={(e) => setLink(e.target.value)}
                   focusBorderColor="gray.200"
                   _hover={{ borderColor: "gray.200" }}
-                  // onFocus={() => {
-                  //   Transforms.select(editor, lastKnownSelection);
-                  // }}
-                  // _placeholder={{ color: "whiteAlpha.800" }}
                 />
                 <InputRightElement w="64px" h="100%" rounded="sm">
                   <ButtonGroup
@@ -246,13 +241,11 @@ const HOTKEYS = {
 
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 
-const Textarea = ({ size }) => {
-  const [value, setValue] = useState([
-    {
-      type: "paragraph",
-      children: [{ text: "" }],
-    },
-  ]);
+const DEFAULT_VALUE = JSON.stringify([
+  { type: "paragraph", children: [{ text: "" }] },
+]);
+
+const Textarea = ({ size, value, onChange }) => {
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const [editor] = useState(
@@ -260,8 +253,21 @@ const Textarea = ({ size }) => {
     []
   );
 
+  const parsed = useMemo(() => {
+    try {
+      return JSON.parse(value || DEFAULT_VALUE);
+    } catch (err) {
+      console.log(err);
+      return JSON.parse(DEFAULT_VALUE);
+    }
+  }, [value]);
+
   return (
-    <Slate editor={editor} value={value} onChange={(value) => setValue(value)}>
+    <Slate
+      editor={editor}
+      value={parsed}
+      onChange={(value) => onChange(JSON.stringify(value))}
+    >
       <Box
         className={_styles.showOnFocusTrigger}
         position="relative"
@@ -359,6 +365,7 @@ const isMarkActive = (editor, format) => {
 };
 
 const Element = ({ attributes, children, element }) => {
+  console.log(attributes);
   switch (element.type) {
     case "link":
       return (
@@ -381,7 +388,7 @@ const Element = ({ attributes, children, element }) => {
         </Heading>
       );
     case "list-item":
-      return <ListItem {...attributes}>{children}</ListItem>;
+      return <li {...attributes}>{children}</li>;
     case "numbered-list":
       return <OrderedList {...attributes}>{children}</OrderedList>;
     default:

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Stack, Input, Heading, HStack, Box } from "@chakra-ui/react";
+import { Stack, Input, Heading, HStack, Box, Text } from "@chakra-ui/react";
 import FormSection from "./FormSection";
 import { observer } from "mobx-react";
 import InputContainer from "./InputContainer";
@@ -66,10 +66,11 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
         </InputContainer>
       </HStack>
       <InputContainer label="Description">
+        {/* <Text>{project.description}</Text> */}
         <Textarea
           value={project.description}
-          onChange={(e) => {
-            project.set({ description: e.target.value });
+          onChange={(value) => {
+            project.set({ description: value });
           }}
           placeholder="Description"
           size="sm"

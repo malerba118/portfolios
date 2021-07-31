@@ -42,6 +42,7 @@ import { observer } from "mobx-react";
 // };
 
 const PortfolioContentEditor = observer(({ width, height, portfolio }) => {
+  console.log(JSON.stringify(portfolio));
   return (
     <Stack p={6} spacing={6}>
       <Section title="About">
