@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
 import {
   Flex,
   Center,
-  IconButton,
   Button,
   ButtonGroup,
   useDisclosure,
@@ -25,6 +24,7 @@ import {
   MdFullscreenExit as ExitFullscreenIcon,
   MdRefresh as RefreshIcon,
 } from "react-icons/md";
+import IconButton from "./IconButton";
 import { useFullscreen } from "./Fullscreen";
 
 const deviceAspectRatios = {
@@ -77,6 +77,7 @@ const Editor = observer(() => {
         >
           <ButtonGroup pos="absolute" left={4}>
             <IconButton
+              tooltip={fullscreen ? "Collapse" : "Expand"}
               onClick={() => setFullscreen(!fullscreen)}
               size="sm"
               fontSize="xl"
@@ -84,6 +85,7 @@ const Editor = observer(() => {
               icon={fullscreen ? <ExitFullscreenIcon /> : <FullscreenIcon />}
             />
             <IconButton
+              tooltip={"Refresh"}
               onClick={() => setRefreshKey((p) => p + 1)}
               size="sm"
               fontSize="xl"

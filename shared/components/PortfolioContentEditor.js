@@ -15,34 +15,7 @@ import * as styles from "../utils/styles";
 import Section from "./Section";
 import { observer } from "mobx-react";
 
-// const Section = ({ title, tooltips, children, canAdd = false, onAdd }) => {
-//   return (
-//     <>
-//       <Box>
-//         <Stack>
-//           <Flex justify="space-between" align="flex-end">
-//             <Heading size="md">{title}</Heading>
-//             {canAdd && (
-//               <Tooltip label={tooltips?.add}>
-//                 <IconButton
-//                   size="sm"
-//                   rounded="4px"
-//                   icon={<MdAdd />}
-//                   onClick={() => onAdd?.()}
-//                 />
-//               </Tooltip>
-//             )}
-//           </Flex>
-//           <Box>{children}</Box>
-//         </Stack>
-//       </Box>
-//       {/* <Box h="2px" bg="gray.200" /> */}
-//     </>
-//   );
-// };
-
 const PortfolioContentEditor = observer(({ width, height, portfolio }) => {
-  console.log(JSON.stringify(portfolio));
   return (
     <Stack p={6} spacing={6}>
       <Section title="About">

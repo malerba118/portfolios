@@ -1,4 +1,5 @@
 import { types } from "mobx-state-tree";
+import { nanoid } from "nanoid";
 
 // All percentages
 export const Crop = types.model("Crop", {
@@ -71,9 +72,12 @@ export const Template = types.model("Template", {
 
 export const About = types
   .model("About", {
-    firstName: types.maybe(types.string),
-    lastName: types.maybe(types.string),
-    title: types.maybe(types.string),
+    firstName: types.optional(types.string, ""),
+    lastName: types.optional(types.string, ""),
+    title: types.optional(types.string, ""),
+    summary: types.optional(types.string, ""),
+    description: types.optional(types.string, ""),
+    images: types.optional(Medias, { items: [] }),
   })
   .actions((self) => ({
     set: (patch) => {
@@ -87,13 +91,13 @@ export const About = types
 
 export const Project = types
   .model("Project", {
-    id: types.optional(types.string, () => String(Math.random())),
-    name: types.maybe(types.string),
-    summary: types.maybe(types.string),
-    description: types.maybe(types.string),
-    images: Medias,
-    startDate: types.maybeNull(types.Date),
-    endDate: types.maybeNull(types.Date),
+    id: types.optional(types.string, () => nanoid()),
+    name: types.optional(types.string, ""),
+    summary: types.optional(types.string, ""),
+    description: types.optional(types.string, ""),
+    images: types.optional(Medias, { items: [] }),
+    startDate: types.optional(types.maybeNull(types.Date), null),
+    endDate: types.optional(types.maybeNull(types.Date), null),
   })
   .actions((self) => ({
     set: (patch) => {
@@ -113,14 +117,12 @@ export const Content = types
   .actions((self) => ({
     addProject() {
       self.projects.unshift({
-        name: "",
-        summary: "",
-        description: "",
-        images: {
-          items: [],
-        },
-        startDate: null,
-        endDate: null,
+        name: undefined,
+        summary: undefined,
+        description: undefined,
+        images: undefined,
+        startDate: undefined,
+        endDate: undefined,
       });
     },
     removeProject(id) {
@@ -152,13 +154,3 @@ export const Portfolio = types
     published: types.maybeNull(PortfolioData),
   })
   .actions((self) => ({}));
-
-// export const MediaStore = types
-//   .model("MediaStore", {
-//     images: MediaArray,
-//   })
-//   .actions((self) => ({
-//     addImage: (media) => {
-//       self.images.push(media);
-//     },
-//   }));

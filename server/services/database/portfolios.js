@@ -9,6 +9,28 @@ import { nanoid } from "nanoid";
 import { ResourceNotFoundError, UnauthorizedError } from "./errors";
 import joi from "joi";
 
+const MediasSchema = joi.object({
+  items: joi.array().items(
+    joi.object({
+      id: joi.string().required(),
+      rawUrl: joi.string().allow(null),
+      processedUrl: joi.string().allow(null),
+      crop: joi
+        .object({
+          unit: joi.string(),
+          x: joi.number(),
+          y: joi.number(),
+          width: joi.number(),
+          height: joi.number(),
+        })
+        .allow(null),
+      zoom: joi.number().allow(null),
+      width: joi.number().allow(null),
+      height: joi.number().allow(null),
+    })
+  ),
+});
+
 const schemas = {
   updateDraft: joi.object({
     template: joi.object({
@@ -20,6 +42,9 @@ const schemas = {
         firstName: joi.string().required().allow(""),
         lastName: joi.string().required().allow(""),
         title: joi.string().required().allow(""),
+        summary: joi.string().required().allow(""),
+        description: joi.string().required().allow(""),
+        images: MediasSchema,
       }),
       projects: joi.array().items(
         joi.object({
@@ -27,29 +52,9 @@ const schemas = {
           name: joi.string().required().allow(""),
           summary: joi.string().required().allow(""),
           description: joi.string().required().allow(""),
-          images: joi.object({
-            items: joi.array().items(
-              joi.object({
-                id: joi.string().required(),
-                rawUrl: joi.string().allow(null),
-                processedUrl: joi.string().allow(null),
-                crop: joi
-                  .object({
-                    unit: joi.string(),
-                    x: joi.number(),
-                    y: joi.number(),
-                    width: joi.number(),
-                    height: joi.number(),
-                  })
-                  .allow(null),
-                zoom: joi.number().allow(null),
-                width: joi.number().allow(null),
-                height: joi.number().allow(null),
-              })
-            ),
-          }),
-          startDate: joi.date().allow(null),
-          endDate: joi.date().allow(null),
+          startDate: joi.date().required().allow(null),
+          endDate: joi.date().required().allow(null),
+          images: MediasSchema,
         })
       ),
     }),
@@ -74,6 +79,11 @@ const getDefaultPortfolio = ({ user }) => {
           firstName: "",
           lastName: "",
           title: "",
+          summary: "",
+          description: "",
+          images: {
+            items: [],
+          },
         },
         projects: [
           {
@@ -81,11 +91,11 @@ const getDefaultPortfolio = ({ user }) => {
             name: "",
             summary: "",
             description: "",
+            startDate: null,
+            endDate: null,
             images: {
               items: [],
             },
-            startDate: null,
-            endDate: null,
           },
         ],
       },

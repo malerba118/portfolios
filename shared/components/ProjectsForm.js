@@ -25,6 +25,8 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
     <Stack visibility={expanded ? "visible" : "hidden"} spacing={4}>
       <InputContainer label="Name">
         <Input
+          type="text"
+          name="project-name"
           value={project.name}
           onChange={(e) => {
             project.set({ name: e.target.value });
@@ -35,6 +37,8 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
       </InputContainer>
       <InputContainer label="Summary">
         <Input
+          name="project-summary"
+          autoComplete="off"
           value={project.summary}
           onChange={(e) => {
             project.set({ summary: e.target.value });
@@ -66,7 +70,6 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
         </InputContainer>
       </HStack>
       <InputContainer label="Description">
-        {/* <Text>{project.description}</Text> */}
         <Textarea
           value={project.description}
           onChange={(value) => {
