@@ -11,6 +11,7 @@ import { MdEdit, MdDelete, MdAdd } from "react-icons/md";
 import FormSection from "./FormSection";
 import AboutForm from "./AboutForm";
 import ProjectsForm from "./ProjectsForm";
+import ContactForm from "./ContactForm";
 import * as styles from "../utils/styles";
 import Section from "./Section";
 import { observer } from "mobx-react";
@@ -38,9 +39,9 @@ const PortfolioContentEditor = observer(({ width, height, portfolio }) => {
           />
         )}
       </Section>
-      {/* <Section title="Work">
-        <FormSection canDelete />
-      </Section> */}
+      <Section title="Contact">
+        <ContactForm contact={portfolio.content.contact} />
+      </Section>
     </Stack>
   );
 });

@@ -7,8 +7,13 @@ export default ({ user }) => {
     return isAuthenticated() && user.roles.includes("admin");
   };
 
+  const isSuperAdmin = () => {
+    return isAuthenticated() && user.roles.includes("superadmin");
+  };
+
   return {
     isAuthenticated,
     isAdmin,
+    isSuperAdmin,
   };
 };

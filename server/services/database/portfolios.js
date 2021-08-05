@@ -46,6 +46,10 @@ const schemas = {
         description: joi.string().required().allow(""),
         images: MediasSchema,
       }),
+      contact: joi.object({
+        email: joi.string().required().allow(""),
+        phone: joi.string().required().allow(""),
+      }),
       projects: joi.array().items(
         joi.object({
           id: joi.string().required(),
@@ -84,6 +88,10 @@ const getDefaultPortfolio = ({ user }) => {
           images: {
             items: [],
           },
+        },
+        contact: {
+          email: "",
+          phone: "",
         },
         projects: [
           {
@@ -133,6 +141,9 @@ export default ({ db, user }) => {
     let portfolioDoc = portfoliosSnapshot.docs[0];
     assertResourceExists(portfolioDoc);
     const data = portfolioDoc.data();
+    if (db.auth.isSuperAdmin()) {
+      return toData(portfolioDoc);
+    }
     if (data.owner !== user.id && data.live !== true) {
       throw new ResourceNotFoundError();
     }

@@ -10,6 +10,11 @@ const Database = async ({ token } = {}) => {
     var decodedToken = await verifyToken(token);
     user = await getOrCreateUser(decodedToken);
   }
+  if (token === null) {
+    user = {
+      roles: ["superadmin"],
+    };
+  }
 
   let db = { user };
   db.auth = authService({ db, user });

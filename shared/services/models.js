@@ -89,6 +89,21 @@ export const About = types
     },
   }));
 
+export const Contact = types
+  .model("Contact", {
+    email: types.optional(types.string, ""),
+    phone: types.optional(types.string, ""),
+  })
+  .actions((self) => ({
+    set: (patch) => {
+      Object.entries(patch).forEach(([key, val]) => {
+        if (val !== undefined) {
+          self[key] = val;
+        }
+      });
+    },
+  }));
+
 export const Project = types
   .model("Project", {
     id: types.optional(types.string, () => nanoid()),
@@ -111,8 +126,9 @@ export const Project = types
 
 export const Content = types
   .model("Content", {
-    about: About,
-    projects: types.array(Project),
+    about: types.optional(About, {}),
+    contact: types.optional(Contact, {}),
+    projects: types.optional(types.array(Project), [{}]),
   })
   .actions((self) => ({
     addProject() {
@@ -140,7 +156,7 @@ export const Content = types
 
 export const PortfolioData = types
   .model("PortfolioData", {
-    content: Content,
+    content: types.optional(Content, {}),
     template: Template,
   })
   .actions((self) => ({}));
