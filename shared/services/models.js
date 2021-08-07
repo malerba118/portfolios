@@ -159,7 +159,15 @@ export const PortfolioData = types
     content: types.optional(Content, {}),
     template: Template,
   })
-  .actions((self) => ({}));
+  .actions((self) => ({
+    set: (patch) => {
+      Object.entries(patch).forEach(([key, val]) => {
+        if (val !== undefined) {
+          self[key] = val;
+        }
+      });
+    },
+  }));
 
 export const Portfolio = types
   .model("Portfolio", {

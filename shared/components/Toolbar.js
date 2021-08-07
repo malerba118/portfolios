@@ -8,7 +8,8 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Button,
+  Text,
+  Image,
 } from "@chakra-ui/react";
 import User from "./User";
 import { useAuth } from "client/useAuth";
@@ -33,7 +34,11 @@ const Toolbar = () => {
       overflow="hidden"
       {...styles.borders({ bottom: true })}
     >
-      <Heading size="sm">Vernos</Heading>
+      <Heading size="sm">
+        <Link href="/">
+          <Image cursor="pointer" src="/vernos-4.svg" w={"68px"} />
+        </Link>
+      </Heading>
       <Box flex={1} />
       {user && (
         <Menu>

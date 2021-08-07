@@ -3,7 +3,7 @@ export const borders = ({
   bottom,
   left,
   right,
-  color = "gray.200",
+  color = "var(--chakra-colors-gray-200) !important",
   style = "2px solid",
 }) => {
   const props = {};

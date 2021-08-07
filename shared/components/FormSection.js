@@ -11,11 +11,21 @@ const FormSection = ({
   onDelete,
   tooltips,
   expanded = true,
+  borderColor,
+  borderStyle,
   ...otherProps
 }) => {
+  const borderOverrides = {};
+  if (borderColor) {
+    borderOverrides.borderColor = borderColor;
+  }
+  if (borderStyle) {
+    borderOverrides.borderStyle = borderStyle;
+  }
   return (
     <MotionBox
       {...styles.borders({ top: true, right: true, bottom: true, left: true })}
+      {...borderOverrides}
       p={6}
       rounded="md"
       position="relative"

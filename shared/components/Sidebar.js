@@ -52,7 +52,9 @@ const Sidebar = observer(({ portfolio }) => {
         {selectedTab === "content" && (
           <PortfolioContentEditor portfolio={portfolio.draft} />
         )}
-        {selectedTab === "templates" && <Templates />}
+        {selectedTab === "templates" && (
+          <Templates portfolio={portfolio.draft} />
+        )}
       </Box>
     </MotionFlex>
   );
