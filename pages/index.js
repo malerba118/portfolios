@@ -5,7 +5,12 @@ import Database from "server/services/database";
 import Landing from "shared/components/Landing";
 import Toolbar from "shared/components/Toolbar";
 import Layout from "shared/components/Layout";
-import { Editor } from "shared/components";
+// import { Editor } from "shared/components";
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(() => import("shared/components/Editor"), {
+  ssr: false,
+});
 
 export const getServerSideProps = async (ctx) => {
   try {

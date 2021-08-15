@@ -22,6 +22,8 @@ const Select = ({
   onClick,
   children,
   header,
+  size = "sm",
+  listProps,
   ...otherProps
 }) => {
   const selected = React.Children.toArray(children).find(
@@ -33,7 +35,6 @@ const Select = ({
       closeOnSelect={closeOnSelect}
       closeOnBlur={closeOnBlur}
       autoSelect={false}
-      w="100%"
     >
       {(args) => (
         <>
@@ -41,8 +42,9 @@ const Select = ({
             className={_styles.menuButton}
             bg="white"
             variant="outline"
-            fontSize="xs"
             as={Button}
+            fontWeight="400"
+            size={size}
             rightIcon={<BiChevronDown />}
             onClick={(e) => {
               e.stopPropagation();
@@ -72,7 +74,6 @@ const Select = ({
             minWidth={24}
             py={0}
             overflow="hidden"
-            _focusVisible={{}}
             tabIndex={-1}
             {...styles.borders({
               top: true,
@@ -80,6 +81,7 @@ const Select = ({
               right: true,
               bottom: true,
             })}
+            {...listProps}
           >
             {header?.(args)}
             <Box maxHeight={36} overflow="auto">
@@ -129,7 +131,9 @@ export const Option = ({ value, label, onSelect }) => {
       }}
       cursor="pointer"
     >
-      {label}
+      <Text title={label} w="100%" isTruncated>
+        {label}
+      </Text>
     </Flex>
   );
 };

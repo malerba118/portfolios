@@ -5,7 +5,7 @@ import * as fonts from "client/fonts";
 // import styles from "./FontSelector.module.css";
 import Select, { Option } from "./Select";
 
-const loadOptions = async () => {
+const loadFontOptions = async () => {
   const fontList = await fonts.list();
   return fontList.map((font) => ({
     value: font.family,
@@ -13,8 +13,8 @@ const loadOptions = async () => {
   }));
 };
 
-const FontSelector = () => {
-  const query = useQuery("fonts", loadOptions);
+const FontSelector = ({ limit = 25 }) => {
+  const query = useQuery("fonts", loadFontOptions);
   const [value, setValue] = useState();
   const [search, setSearch] = useState("");
 
@@ -22,7 +22,7 @@ const FontSelector = () => {
     ?.filter((option) =>
       option.label.toLowerCase().includes(search.toLowerCase())
     )
-    .slice(0, 20);
+    .slice(0, limit);
 
   return (
     <Select
@@ -39,6 +39,10 @@ const FontSelector = () => {
           }}
         />
       )}
+      size="sm"
+      listProps={{
+        width: 48,
+      }}
     >
       {query.isLoading && <Box>Loading...</Box>}
       {results?.map((font) => (
@@ -55,14 +59,14 @@ const Search = ({ autoFocus, value, onChange }) => {
     if (autoFocus) {
       setTimeout(() => {
         inputRef.current?.focus();
-      }, 0);
+      }, 50);
     }
   }, [autoFocus]);
 
   return (
     <Input
       ref={inputRef}
-      h={10}
+      h={8}
       px={3}
       borderTop="none"
       borderLeft="none"

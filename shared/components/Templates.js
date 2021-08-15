@@ -5,11 +5,7 @@ import Section from "./Section";
 import FormSection from "./FormSection";
 import Select, { Option } from "./Select";
 import InputContainer from "./InputContainer";
-import dynamic from "next/dynamic";
 import FontSelector from "./FontSelector";
-// const FontSelector = dynamic(() => import("./FontSelector"), {
-//   ssr: false,
-// });
 
 const templates = [
   {
@@ -60,6 +56,9 @@ const Templates = observer(({ portfolio }) => {
             <InputContainer label="Bar">
               <FontSelector />
             </InputContainer>
+            <InputContainer label="Baz">
+              <FontSelector />
+            </InputContainer>
           </Stack>
         </FormSection>
       </Section>
@@ -102,6 +101,7 @@ const Templates = observer(({ portfolio }) => {
                       }}
                       value={version}
                       size="sm"
+                      fontSize="xs"
                     >
                       {template.versions.map((version) => (
                         <Option

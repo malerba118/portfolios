@@ -4,14 +4,9 @@ import PortfolioContentEditor from "./PortfolioContentEditor";
 import * as styles from "../utils/styles";
 import { observer } from "mobx-react";
 import { Tabs, TabList, Tab } from "./Tabs";
-// import Templates from "./Templates";
+import Templates from "./Templates";
 import { useFullscreen } from "./Fullscreen";
 import { MotionFlex, transitions } from "./animation";
-import dynamic from "next/dynamic";
-
-const Templates = dynamic(() => import("./Templates"), {
-  ssr: false,
-});
 
 const tabs = ["content", "templates"];
 const labels = {
