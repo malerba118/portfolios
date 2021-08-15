@@ -1,0 +1,20 @@
+/* .react-select__container {
+  height: var(--chakra-sizes-8) !important;
+} */
+
+/* .react-select__control {
+  width: 100%;
+  min-width: 0px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  position: relative;
+  transition-property: var(--chakra-transition-property-common);
+  transition-duration: var(--chakra-transition-duration-normal);
+  border-width: 2px !important;
+  font-size: var(--chakra-fontSizes-sm);
+  height: var(--chakra-sizes-8) !important;
+  border-radius: var(--chakra-radii-sm);
+  border: 1px solid;
+  border-color: inherit;
+  background: inherit;
+} */

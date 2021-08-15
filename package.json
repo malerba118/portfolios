@@ -41,13 +41,15 @@
     "react-image-crop": "^8.6.12",
     "react-query": "^3.17.2",
     "react-resize-detector": "^6.7.2",
+    "react-select": "^4.3.1",
     "slate": "^0.63.0",
     "slate-history": "^0.62.0",
     "slate-react": "^0.65.2",
     "stripe": "^8.155.0",
     "superjson": "^1.7.4",
     "use-debounce": "^7.0.0",
-    "use-image": "^1.0.7"
+    "use-image": "^1.0.7",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "eslint": "7.28.0",

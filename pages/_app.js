@@ -6,6 +6,7 @@ import "@fontsource/josefin-sans/400.css";
 import "@fontsource/karla/400.css";
 import "../styles/globals.css";
 import "../shared/components/Datepicker.css";
+import "../shared/components/FontSelector.css";
 
 const queryClient = new QueryClient();
 

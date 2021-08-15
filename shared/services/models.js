@@ -128,7 +128,7 @@ export const Content = types
   .model("Content", {
     about: types.optional(About, {}),
     contact: types.optional(Contact, {}),
-    projects: types.optional(types.array(Project), [{}]),
+    projects: types.optional(types.array(Project), []),
   })
   .actions((self) => ({
     addProject() {

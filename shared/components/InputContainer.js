@@ -1,9 +1,10 @@
 import React from "react";
 import { Stack, Text } from "@chakra-ui/react";
 
-const InputContainer = ({ label, children }) => {
+const InputContainer = ({ label, children, ...otherProps }) => {
   return (
     <Stack
+      {...otherProps}
       as={"form"}
       autoComplete="off"
       onSubmit={(e) => {

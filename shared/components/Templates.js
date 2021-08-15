@@ -1,9 +1,15 @@
-import { Box, Stack, Flex, Text, Image } from "@chakra-ui/react";
+import { Box, Stack, Flex, Text, Image, HStack } from "@chakra-ui/react";
 import React from "react";
 import { observer } from "mobx-react";
 import Section from "./Section";
 import FormSection from "./FormSection";
 import Select, { Option } from "./Select";
+import InputContainer from "./InputContainer";
+import dynamic from "next/dynamic";
+import FontSelector from "./FontSelector";
+// const FontSelector = dynamic(() => import("./FontSelector"), {
+//   ssr: false,
+// });
 
 const templates = [
   {
@@ -31,6 +37,32 @@ const templates = [
 const Templates = observer(({ portfolio }) => {
   return (
     <Stack p={6} spacing={6}>
+      <Section title="Theme">
+        <FormSection>
+          <Stack spacing={4}>
+            <HStack spacing={4}>
+              <InputContainer
+                label="Heading Font"
+                w="calc(50% - var(--chakra-sizes-2))"
+              >
+                <FontSelector />
+              </InputContainer>
+              <InputContainer
+                label="Paragraph Font"
+                w="calc(50% - var(--chakra-sizes-2))"
+              >
+                <FontSelector />
+              </InputContainer>
+            </HStack>
+            <InputContainer label="Foo">
+              <FontSelector />
+            </InputContainer>
+            <InputContainer label="Bar">
+              <FontSelector />
+            </InputContainer>
+          </Stack>
+        </FormSection>
+      </Section>
       <Section title="Templates">
         <Stack spacing={6}>
           {templates.map((template) => {
