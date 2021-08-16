@@ -15,7 +15,7 @@ const loadFontOptions = async () => {
 
 const FontSelector = ({ limit = 25 }) => {
   const query = useQuery("fonts", loadFontOptions);
-  const [value, setValue] = useState();
+  const [value, setValue] = useState("Montserrat");
   const [search, setSearch] = useState("");
 
   const results = query?.data

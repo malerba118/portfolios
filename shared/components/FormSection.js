@@ -11,28 +11,27 @@ const FormSection = ({
   onDelete,
   tooltips,
   expanded = true,
-  borderColor,
-  borderStyle,
+  isSelected,
+  canSelect,
   ...otherProps
 }) => {
-  const borderOverrides = {};
-  if (borderColor) {
-    borderOverrides.borderColor = borderColor;
-  }
-  if (borderStyle) {
-    borderOverrides.borderStyle = borderStyle;
-  }
   return (
     <MotionBox
-      {...styles.borders({ top: true, right: true, bottom: true, left: true })}
-      {...borderOverrides}
+      {...styles.borders({
+        top: true,
+        right: true,
+        bottom: true,
+        left: true,
+        isSelected,
+        canSelect,
+      })}
       p={6}
       rounded="md"
       position="relative"
       className={_styles.showOnHoverTrigger}
       initial={{ height: expanded ? "auto" : "68px" }}
       overflow="hidden"
-      bg="white"
+      bg={isSelected ? "purple.50" : "white"}
       animate={{
         height: expanded ? "auto" : "68px",
         transition: transitions.two(0.3),

@@ -5,6 +5,8 @@ export const borders = ({
   right,
   color = "var(--chakra-colors-gray-200) !important",
   style = "2px solid",
+  isSelected = false,
+  canSelect = false,
 }) => {
   const props = {};
   if (top) {
@@ -20,7 +22,16 @@ export const borders = ({
     props.borderRight = style;
   }
   props.borderColor = color;
-
+  if (canSelect) {
+    props._hover = {
+      borderColor: isSelected
+        ? "var(--chakra-colors-purple-300) !important"
+        : "var(--chakra-colors-gray-300) !important",
+    };
+  }
+  if (isSelected) {
+    props.borderColor = "var(--chakra-colors-purple-300) !important";
+  }
   return props;
 };
 

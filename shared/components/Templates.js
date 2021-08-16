@@ -1,11 +1,12 @@
+import React, { useState } from "react";
 import { Box, Stack, Flex, Text, Image, HStack } from "@chakra-ui/react";
-import React from "react";
 import { observer } from "mobx-react";
 import Section from "./Section";
 import FormSection from "./FormSection";
 import Select, { Option } from "./Select";
 import InputContainer from "./InputContainer";
 import FontSelector from "./FontSelector";
+import PaletteSelector from "./PaletteSelector";
 
 const templates = [
   {
@@ -31,6 +32,8 @@ const templates = [
 ];
 
 const Templates = observer(({ portfolio }) => {
+  const [palette, setPalette] = useState();
+
   return (
     <Stack p={6} spacing={6}>
       <Section title="Theme">
@@ -50,14 +53,8 @@ const Templates = observer(({ portfolio }) => {
                 <FontSelector />
               </InputContainer>
             </HStack>
-            <InputContainer label="Foo">
-              <FontSelector />
-            </InputContainer>
-            <InputContainer label="Bar">
-              <FontSelector />
-            </InputContainer>
-            <InputContainer label="Baz">
-              <FontSelector />
+            <InputContainer label="Palette">
+              <PaletteSelector value={palette} onChange={setPalette} />
             </InputContainer>
           </Stack>
         </FormSection>
@@ -72,8 +69,6 @@ const Templates = observer(({ portfolio }) => {
             return (
               <FormSection
                 key={template.name}
-                borderColor={isSelected ? "purple.300" : undefined}
-                // borderStyle={isSelected ? "dashed" : undefined}
                 onClick={(e) => {
                   portfolio.set({
                     template: {
@@ -83,7 +78,8 @@ const Templates = observer(({ portfolio }) => {
                   });
                 }}
                 cursor="pointer"
-                bg={isSelected ? "purple.50" : "white"}
+                isSelected={isSelected}
+                canSelect={true}
               >
                 <Stack spacing={2}>
                   <Flex justify="space-between" align="center">
