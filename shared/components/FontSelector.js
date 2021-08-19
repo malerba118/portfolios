@@ -13,9 +13,8 @@ const loadFontOptions = async () => {
   }));
 };
 
-const FontSelector = ({ limit = 25 }) => {
+const FontSelector = ({ limit = 25, value, onChange }) => {
   const query = useQuery("fonts", loadFontOptions);
-  const [value, setValue] = useState("Montserrat");
   const [search, setSearch] = useState("");
 
   const results = query?.data
@@ -29,7 +28,7 @@ const FontSelector = ({ limit = 25 }) => {
       closeOnSelect={false}
       label={value}
       value={value}
-      onChange={setValue}
+      onChange={(val) => onChange(val)}
       header={({ isOpen }) => (
         <Search
           autoFocus={isOpen}

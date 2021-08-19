@@ -32,8 +32,6 @@ const templates = [
 ];
 
 const Templates = observer(({ portfolio }) => {
-  const [palette, setPalette] = useState();
-
   return (
     <Stack p={6} spacing={6}>
       <Section title="Theme">
@@ -44,17 +42,32 @@ const Templates = observer(({ portfolio }) => {
                 label="Heading Font"
                 w="calc(50% - var(--chakra-sizes-2))"
               >
-                <FontSelector />
+                <FontSelector
+                  value={portfolio.theme.headingFont}
+                  onChange={(font) => {
+                    portfolio.theme.set({ headingFont: font });
+                  }}
+                />
               </InputContainer>
               <InputContainer
                 label="Paragraph Font"
                 w="calc(50% - var(--chakra-sizes-2))"
               >
-                <FontSelector />
+                <FontSelector
+                  value={portfolio.theme.paragraphFont}
+                  onChange={(font) => {
+                    portfolio.theme.set({ paragraphFont: font });
+                  }}
+                />
               </InputContainer>
             </HStack>
             <InputContainer label="Palette">
-              <PaletteSelector value={palette} onChange={setPalette} />
+              <PaletteSelector
+                value={portfolio.theme.palette}
+                onChange={(palette) => {
+                  portfolio.theme.set({ palette });
+                }}
+              />
             </InputContainer>
           </Stack>
         </FormSection>

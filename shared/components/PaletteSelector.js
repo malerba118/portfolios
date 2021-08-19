@@ -19,7 +19,7 @@ const PALETTES = [
     },
   },
   {
-    id: "blue-purple",
+    id: "desert",
     colors: {
       primary: "blue.800",
       secondary: "cyan.200",
@@ -28,18 +28,16 @@ const PALETTES = [
   },
 ];
 
-borders;
-
 const PaletteSelector = ({ palettes = PALETTES, value, onChange }) => {
   return (
     <Stack>
       {palettes.map((palette, i) => {
-        const isSelected = palette.id === value?.id;
+        const isSelected = palette.id === value;
         return (
           <Box
             cursor="pointer"
             onClick={() => {
-              onChange?.(palette);
+              onChange?.(palette?.id);
             }}
             key={i}
             p={2}

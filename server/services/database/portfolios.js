@@ -37,6 +37,11 @@ const schemas = {
       name: joi.string().required(),
       version: joi.string().required(),
     }),
+    theme: joi.object({
+      headingFont: joi.string().required(),
+      paragraphFont: joi.string().required(),
+      palette: joi.string().required(),
+    }),
     content: joi.object({
       about: joi.object({
         firstName: joi.string().required().allow(""),
