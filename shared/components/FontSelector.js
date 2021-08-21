@@ -13,7 +13,7 @@ const loadFontOptions = async () => {
   }));
 };
 
-const FontSelector = ({ limit = 25, value, onChange }) => {
+const FontSelector = ({ limit = 75, value, onChange }) => {
   const query = useQuery("fonts", loadFontOptions);
   const [search, setSearch] = useState("");
 
