@@ -5,6 +5,7 @@ import Database from "server/services/database";
 import Landing from "shared/components/Landing";
 import Toolbar from "shared/components/Toolbar";
 import Layout from "shared/components/Layout";
+import * as unauthed from "shared/components/unauthed";
 // import { Editor } from "shared/components";
 import dynamic from "next/dynamic";
 
@@ -37,7 +38,7 @@ export const getServerSideProps = async (ctx) => {
 
 const Home = (props) => {
   if (!props.isAuthenticated) {
-    return <Layout toolbar={<Toolbar />} content={<Landing />} />;
+    return <Landing />;
   } else {
     return <Layout fitWindow toolbar={<Toolbar />} content={<Editor />} />;
   }

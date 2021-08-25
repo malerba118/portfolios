@@ -10,6 +10,7 @@ import {
   MenuList,
   Text,
   Image,
+  HStack,
 } from "@chakra-ui/react";
 import User from "./User";
 import { useAuth } from "client/useAuth";
@@ -58,7 +59,6 @@ const Toolbar = () => {
           </MenuList>
         </Menu>
       )}
-      {!user && <Link href="/login">log in</Link>}
     </MotionFlex>
   );
 };
