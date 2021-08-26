@@ -4587,6 +4587,11 @@ postcss@8.2.13:
     nanoid "^3.1.22"
     source-map "^0.6.1"
 
+preload-it@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/preload-it/-/preload-it-1.4.0.tgz#39dd789e136e33b23ffd8421e23f55bebb6cdeef"
+  integrity sha512-eajVQ5/peLtsUU4TjYz3xmL/hDnMVs5BMjl3Pv6/d9uDy8ztpCE8iI3yNjXxmIR+8y2YJGaOvrpIadUdVxFzsg==
+
 prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"

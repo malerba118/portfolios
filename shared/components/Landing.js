@@ -22,7 +22,11 @@ const useRefFromId = (id, defaultValue) => {
 const Landing = ({}) => {
   const ref = useRefFromId("parallax-scroll-container");
   const scroll = useElementScroll(ref);
-  const scale = useTransform(scroll.scrollYProgress, [0, 0.2], [0.7, 1]);
+  const scale = useTransform(
+    scroll.scrollYProgress,
+    [0.0001, 0.075],
+    [0.85, 1]
+  );
   const springs = {
     scale: useSpring(scale, { mass: 0.02 }),
   };
@@ -30,7 +34,7 @@ const Landing = ({}) => {
   return (
     <Parallax
       id="parallax-scroll-container"
-      pages={4}
+      pages={11}
       style={{
         height: "100vh",
         backgroundColor: "var(--chakra-colors-purple-600)",
@@ -43,9 +47,9 @@ const Landing = ({}) => {
       <ParallaxLayer offset={0} speed={0}>
         <Box pos="absolute" inset={0}>
           <Toolbar />
-          <Box px={24} py={16} color="white">
+          <Box px={24} py={24} color="white">
             <Heading fontWeight="900" fontSize="7xl">
-              Build Your Portfolio Site in Seconds
+              Build a Portfolio Site in Seconds
             </Heading>
             <Heading my={2} fontWeight="900" fontSize="2xl">
               Vernos is the portfolio builder with no learning curve.
@@ -61,8 +65,89 @@ const Landing = ({}) => {
           </Box>
         </Box>
       </ParallaxLayer>
-      <ParallaxLayer offset={1} speed={0} sticky={{ start: 1, end: 10 }}>
-        <Box pos="absolute" inset={0} bg="purple.500"></Box>
+      <ParallaxLayer offset={1} speed={0} sticky={{ start: 1, end: 4 }}>
+        <Box pos="absolute" inset={0} bg="purple.500" color="white">
+          <Stack pos="absolute" top={8} left={8} spacing={0}>
+            <Heading mx={2} mb={-2} fontSize="3xl">
+              STEP
+            </Heading>
+            <Heading
+              fontSize="9xl"
+              color="purple.500"
+              textShadow="0px 0px 2px white"
+            >
+              01
+            </Heading>
+          </Stack>
+          <Box pos="absolute" bottom={"36vw"} left={0} right={0}>
+            <Heading textAlign="center" fontSize="7xl" color="white">
+              Add Your Content
+            </Heading>
+          </Box>
+        </Box>
+      </ParallaxLayer>
+      <ParallaxLayer sticky={{ start: 4, end: 7 }}>
+        <Box pos="absolute" inset={0} bg="purple.600" color="white">
+          <Stack pos="absolute" top={8} left={8} spacing={0}>
+            <Heading mx={2} mb={-2} fontSize="3xl">
+              STEP
+            </Heading>
+            <Heading
+              fontSize="9xl"
+              color="purple.600"
+              textShadow="0px 0px 2px white"
+            >
+              02
+            </Heading>
+          </Stack>
+          <Box pos="absolute" bottom={"36vw"} left={0} right={0}>
+            <Heading textAlign="center" fontSize="7xl" color="white">
+              Choose a Template
+            </Heading>
+          </Box>
+        </Box>
+      </ParallaxLayer>
+      <ParallaxLayer sticky={{ start: 7, end: 10 }}>
+        <Box pos="absolute" inset={0} bg="purple.500" color="white">
+          <Stack pos="absolute" top={8} left={8} spacing={0}>
+            <Heading mx={2} mb={-2} fontSize="3xl">
+              STEP
+            </Heading>
+            <Heading
+              fontSize="9xl"
+              color="purple.500"
+              textShadow="0px 0px 2px white"
+            >
+              03
+            </Heading>
+          </Stack>
+          <Box pos="absolute" bottom={"36vw"} left={0} right={0}>
+            <Heading textAlign="center" fontSize="7xl" color="white">
+              Publish
+            </Heading>
+          </Box>
+        </Box>
+      </ParallaxLayer>
+      <ParallaxLayer sticky={{ start: 10, end: 11 }}>
+        <Box pos="absolute" inset={0} bg="purple.600" color="white">
+          {/* <Stack pos="absolute" top={8} left={8} spacing={0}>
+            <Heading mx={2} mb={-2} fontSize="3xl">
+              STEP
+            </Heading>
+            <Heading
+              fontSize="9xl"
+              color="purple.600"
+              textShadow="0px 0px 2px white"
+            >
+              03
+            </Heading>
+          </Stack> */}
+          <Box pos="absolute" bottom={"36vw"} left={0} right={0}>
+            <Heading textAlign="center" fontSize="7xl" color="white">
+              That's it!
+            </Heading>
+          </Box>
+        </Box>
       </ParallaxLayer>
       <ParallaxLayer
         style={{ pointerEvents: "none" }}
@@ -71,11 +156,23 @@ const Landing = ({}) => {
         <Flex pos="absolute" inset={0} justify="center">
           <MotionBox
             pos="absolute"
-            w="100vh"
-            bottom="64px"
+            w="54vw"
+            bottom="32px"
             style={{ scale: springs.scale }}
           >
-            <MockBrowser />
+            <MockBrowser>
+              <video
+                ref={(el) => {
+                  if (el) {
+                    el.playbackRate = 1.5;
+                  }
+                }}
+                autoPlay
+                muted
+              >
+                <source src={"/vernos-add-content.mov"} />
+              </video>
+            </MockBrowser>
           </MotionBox>
         </Flex>
       </ParallaxLayer>
