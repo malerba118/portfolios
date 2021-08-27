@@ -14,11 +14,9 @@ const MockBrowser = ({ children, ...otherProps }) => {
         </HStack>
         <Box h="24px" bg="blackAlpha.200" borderRadius="md"></Box>
       </HStack>
-      <AspectRatio ratio={16 / 9} w="100%">
-        <Box h="100%" w="100%" bg="gray.100">
-          {children}
-        </Box>
-      </AspectRatio>
+      <Box w="100%" bg="gray.100">
+        {children}
+      </Box>
     </Box>
   );
 };

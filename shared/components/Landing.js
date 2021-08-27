@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Box, Stack, Flex, Text, Heading, Button } from "@chakra-ui/react";
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import Section from "./Section";
 import FormSection from "./FormSection";
 import InputContainer from "./InputContainer";
@@ -8,6 +8,32 @@ import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { Toolbar, MockBrowser } from "./unauthed";
 import { useElementScroll, useTransform, useSpring } from "framer-motion";
 import { MotionBox } from "./animation";
+import Preload from "preload-it";
+
+const preload = Preload();
+
+const createPageManager = (numPages) => {
+  const pageSize = 1 / numPages;
+  return {
+    getPage(progress) {
+      return Math.floor(progress / pageSize);
+    },
+  };
+};
+
+const pageManager = createPageManager(11);
+
+const getVideoSrc = (page) => {
+  if (page <= 4) {
+    return "/vernos-content.webm";
+  } else if (page <= 7) {
+    return "/vernos-templates.webm";
+  } else if (page <= 10) {
+    return "/vernos-publish.webm";
+  } else {
+    return "/vernos-live.webm";
+  }
+};
 
 const useRefFromId = (id, defaultValue) => {
   const ref = useRef(defaultValue);
@@ -21,15 +47,39 @@ const useRefFromId = (id, defaultValue) => {
 
 const Landing = ({}) => {
   const ref = useRefFromId("parallax-scroll-container");
+  const videoRef = useRef(null);
   const scroll = useElementScroll(ref);
-  const scale = useTransform(
-    scroll.scrollYProgress,
-    [0.0001, 0.075],
-    [0.85, 1]
-  );
+  const [page, setPage] = useState(0);
+  const scale = useTransform(scroll.scrollYProgress, [0.032, 0.075], [0.85, 1]);
   const springs = {
     scale: useSpring(scale, { mass: 0.02 }),
   };
+
+  useEffect(() => {
+    preload.fetch([
+      "/vernos-content.webm",
+      "/vernos-templates.webm",
+      "/vernos-publish.webm",
+      "/vernos-live.webm",
+    ]);
+  }, []);
+
+  useEffect(() => {
+    return scroll.scrollYProgress.onChange((progress) => {
+      setPage(pageManager.getPage(progress));
+    });
+  }, []);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (page > 0) {
+        videoRef.current.play();
+      } else {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+      }
+    }
+  }, [page]);
 
   return (
     <Parallax
@@ -51,8 +101,9 @@ const Landing = ({}) => {
             <Heading fontWeight="900" fontSize="7xl">
               Build a Portfolio Site in Seconds
             </Heading>
-            <Heading my={2} fontWeight="900" fontSize="2xl">
-              Vernos is the portfolio builder with no learning curve.
+            <Heading w="75%" my={2} fontWeight="900" fontSize="2xl">
+              You shouldn't have to spend your time learning how to build a
+              website. That's why Vernos will just do it for you.
             </Heading>
             <Button
               my={4}
@@ -156,21 +207,23 @@ const Landing = ({}) => {
         <Flex pos="absolute" inset={0} justify="center">
           <MotionBox
             pos="absolute"
-            w="54vw"
+            w="60vw"
             bottom="32px"
             style={{ scale: springs.scale }}
           >
             <MockBrowser>
               <video
+                key={getVideoSrc(page)}
                 ref={(el) => {
                   if (el) {
                     el.playbackRate = 1.5;
                   }
+                  videoRef.current = el;
                 }}
-                autoPlay
+                autoPlay={page > 0}
                 muted
               >
-                <source src={"/vernos-add-content.mov"} />
+                <source key={getVideoSrc(page)} src={getVideoSrc(page)} />
               </video>
             </MockBrowser>
           </MotionBox>
