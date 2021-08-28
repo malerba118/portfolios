@@ -6,6 +6,8 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
+  InputLeftAddon,
+  InputRightAddon,
   InputRightElement,
   InputGroup,
   Input,
@@ -93,30 +95,22 @@ function PublishModal({ defaultValue, isOpen, onSuccess, onClose }) {
           <FormSection>
             <InputContainer label="Choose a Subdomain">
               <InputGroup>
+                <InputLeftAddon bg="gray.100" px={2} children="https://" />
                 <Input
                   value={subdomain}
                   onChange={(e) => setSubdomain(e.target.value)}
                   ref={initialRef}
-                  placeholder="Subdomain"
+                  placeholder="subdomain"
                 />
-                {debouncedSubdomain && !query.isFetching && (
-                  <InputRightElement>
-                    {query.data?.available === true && (
-                      <Icon
-                        as={AvailableIcon}
-                        fontSize={24}
-                        color="purple.400"
-                      />
-                    )}
-                    {query.data?.available === false && (
-                      <Icon
-                        as={UnavailableIcon}
-                        fontSize={24}
-                        color="red.400"
-                      />
-                    )}
-                  </InputRightElement>
-                )}
+                <InputRightAddon bg="gray.100" px={2} children=".vernos.us" />
+                <InputRightElement px={2} mr={"85px"} bg="transparent">
+                  {query.data?.available === true && (
+                    <Icon as={AvailableIcon} fontSize={24} color="purple.400" />
+                  )}
+                  {query.data?.available === false && (
+                    <Icon as={UnavailableIcon} fontSize={24} color="red.400" />
+                  )}
+                </InputRightElement>
               </InputGroup>
             </InputContainer>
           </FormSection>

@@ -12,7 +12,7 @@
     "@chakra-ui/react": "^1.6.4",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "@fontsource/josefin-sans": "^4.4.5",
+    "@fontsource/josefin-sans": "^4.5.0",
     "@fontsource/karla": "^4.4.5",
     "@react-spring/parallax": "^9.2.4",
     "@sendgrid/mail": "^7.4.5",

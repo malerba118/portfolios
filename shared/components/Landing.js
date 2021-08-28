@@ -1,5 +1,13 @@
 import Link from "next/link";
-import { Box, Stack, Flex, Text, Heading, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Stack,
+  Flex,
+  Text,
+  Heading,
+  Button,
+  Progress,
+} from "@chakra-ui/react";
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import Section from "./Section";
 import FormSection from "./FormSection";
@@ -18,17 +26,20 @@ const createPageManager = (numPages) => {
     getPage(progress) {
       return Math.floor(progress / pageSize);
     },
+    getProgress(page) {
+      return page / numPages;
+    },
   };
 };
 
-const pageManager = createPageManager(11);
+const pageManager = createPageManager(10);
 
 const getVideoSrc = (page) => {
-  if (page <= 4) {
+  if (page < 4) {
     return "/vernos-content.webm";
-  } else if (page <= 7) {
+  } else if (page < 7) {
     return "/vernos-templates.webm";
-  } else if (page <= 10) {
+  } else if (page < 10) {
     return "/vernos-publish.webm";
   } else {
     return "/vernos-live.webm";
@@ -45,12 +56,84 @@ const useRefFromId = (id, defaultValue) => {
   return ref;
 };
 
+const useMotionValueState = (motionValue) => {
+  const [state, setState] = useState(motionValue.get());
+
+  useEffect(() => {
+    return motionValue.onChange((val) => setState(val));
+  }, [motionValue]);
+
+  return state;
+};
+
+const ProgressBar = ({ controller }) => {
+  const progress = useMotionValueState(controller);
+  return (
+    <Progress
+      pos="absolute"
+      top="0"
+      width="100%"
+      colorScheme="purple"
+      bg="purple.300"
+      size="xs"
+      value={progress}
+    />
+  );
+};
+
+const Video = ({ src, isActive, autoPlay }) => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      if (isActive && autoPlay) {
+        ref.current.play();
+      } else {
+        ref.current.pause();
+        ref.current.currentTime = 0;
+      }
+    }
+  }, [isActive, autoPlay]);
+
+  return (
+    <video
+      src={src}
+      style={{ display: isActive ? "block" : "none" }}
+      ref={(el) => {
+        if (el) {
+          el.playbackRate = 1.5;
+        }
+        ref.current = el;
+      }}
+      muted
+      loop
+    />
+  );
+};
+
 const Landing = ({}) => {
   const ref = useRefFromId("parallax-scroll-container");
-  const videoRef = useRef(null);
   const scroll = useElementScroll(ref);
   const [page, setPage] = useState(0);
   const scale = useTransform(scroll.scrollYProgress, [0.032, 0.075], [0.85, 1]);
+  const progress = {
+    page1: useTransform(
+      scroll.scrollYProgress,
+      [pageManager.getProgress(1), pageManager.getProgress(4)],
+      [0, 100]
+    ),
+    page2: useTransform(
+      scroll.scrollYProgress,
+      [pageManager.getProgress(4), pageManager.getProgress(7)],
+      [0, 100]
+    ),
+    page3: useTransform(
+      scroll.scrollYProgress,
+      [pageManager.getProgress(7), pageManager.getProgress(10)],
+      [0, 100]
+    ),
+  };
+
   const springs = {
     scale: useSpring(scale, { mass: 0.02 }),
   };
@@ -69,17 +152,6 @@ const Landing = ({}) => {
       setPage(pageManager.getPage(progress));
     });
   }, []);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      if (page > 0) {
-        videoRef.current.play();
-      } else {
-        videoRef.current.pause();
-        videoRef.current.currentTime = 0;
-      }
-    }
-  }, [page]);
 
   return (
     <Parallax
@@ -118,6 +190,7 @@ const Landing = ({}) => {
       </ParallaxLayer>
       <ParallaxLayer offset={1} speed={0} sticky={{ start: 1, end: 4 }}>
         <Box pos="absolute" inset={0} bg="purple.500" color="white">
+          <ProgressBar controller={progress.page1} />
           <Stack pos="absolute" top={8} left={8} spacing={0}>
             <Heading mx={2} mb={-2} fontSize="3xl">
               STEP
@@ -130,7 +203,7 @@ const Landing = ({}) => {
               01
             </Heading>
           </Stack>
-          <Box pos="absolute" bottom={"36vw"} left={0} right={0}>
+          <Box pos="absolute" bottom={"37vw"} left={0} right={0}>
             <Heading textAlign="center" fontSize="7xl" color="white">
               Add Your Content
             </Heading>
@@ -139,6 +212,7 @@ const Landing = ({}) => {
       </ParallaxLayer>
       <ParallaxLayer sticky={{ start: 4, end: 7 }}>
         <Box pos="absolute" inset={0} bg="purple.600" color="white">
+          <ProgressBar controller={progress.page2} />
           <Stack pos="absolute" top={8} left={8} spacing={0}>
             <Heading mx={2} mb={-2} fontSize="3xl">
               STEP
@@ -151,7 +225,7 @@ const Landing = ({}) => {
               02
             </Heading>
           </Stack>
-          <Box pos="absolute" bottom={"36vw"} left={0} right={0}>
+          <Box pos="absolute" bottom={"37vw"} left={0} right={0}>
             <Heading textAlign="center" fontSize="7xl" color="white">
               Choose a Template
             </Heading>
@@ -160,6 +234,7 @@ const Landing = ({}) => {
       </ParallaxLayer>
       <ParallaxLayer sticky={{ start: 7, end: 10 }}>
         <Box pos="absolute" inset={0} bg="purple.500" color="white">
+          <ProgressBar controller={progress.page3} />
           <Stack pos="absolute" top={8} left={8} spacing={0}>
             <Heading mx={2} mb={-2} fontSize="3xl">
               STEP
@@ -172,7 +247,7 @@ const Landing = ({}) => {
               03
             </Heading>
           </Stack>
-          <Box pos="absolute" bottom={"36vw"} left={0} right={0}>
+          <Box pos="absolute" bottom={"37vw"} left={0} right={0}>
             <Heading textAlign="center" fontSize="7xl" color="white">
               Publish
             </Heading>
@@ -193,7 +268,7 @@ const Landing = ({}) => {
               03
             </Heading>
           </Stack> */}
-          <Box pos="absolute" bottom={"36vw"} left={0} right={0}>
+          <Box pos="absolute" bottom={"37vw"} left={0} right={0}>
             <Heading textAlign="center" fontSize="7xl" color="white">
               That's it!
             </Heading>
@@ -208,23 +283,29 @@ const Landing = ({}) => {
           <MotionBox
             pos="absolute"
             w="60vw"
-            bottom="32px"
+            bottom="48px"
             style={{ scale: springs.scale }}
           >
-            <MockBrowser>
-              <video
-                key={getVideoSrc(page)}
-                ref={(el) => {
-                  if (el) {
-                    el.playbackRate = 1.5;
-                  }
-                  videoRef.current = el;
-                }}
-                autoPlay={page > 0}
-                muted
-              >
-                <source key={getVideoSrc(page)} src={getVideoSrc(page)} />
-              </video>
+            <MockBrowser
+              url={
+                page >= 10
+                  ? "https://austinmalerba.vernos.us"
+                  : "https://vernos.app"
+              }
+            >
+              {[
+                "/vernos-content.webm",
+                "/vernos-templates.webm",
+                "/vernos-publish.webm",
+                "/vernos-live.webm",
+              ].map((src) => (
+                <Video
+                  key={src}
+                  src={src}
+                  isActive={getVideoSrc(page) === src}
+                  autoPlay={page > 0}
+                />
+              ))}
             </MockBrowser>
           </MotionBox>
         </Flex>
