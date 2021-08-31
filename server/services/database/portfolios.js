@@ -31,17 +31,24 @@ const MediasSchema = joi.object({
   ),
 });
 
+const TemplateSettingsSchema = joi.object({
+  version: joi.string(),
+  headingFont: joi.string(),
+  paragraphFont: joi.string(),
+  palette: joi.string(),
+});
+
+const ResumeSchema = joi.object({
+  name: joi.string(),
+  url: joi.string(),
+});
+
 const schemas = {
   updateDraft: joi.object({
-    template: joi.object({
-      name: joi.string().required(),
-      version: joi.string().required(),
-    }),
-    theme: joi.object({
-      headingFont: joi.string().required(),
-      paragraphFont: joi.string().required(),
-      palette: joi.string().required(),
-    }),
+    template: joi.string(),
+    templateSettingsMap: joi
+      .object()
+      .pattern(joi.string(), TemplateSettingsSchema),
     content: joi.object({
       about: joi.object({
         firstName: joi.string().required().allow(""),
@@ -50,6 +57,7 @@ const schemas = {
         summary: joi.string().required().allow(""),
         description: joi.string().required().allow(""),
         images: MediasSchema,
+        resume: ResumeSchema,
       }),
       contact: joi.object({
         email: joi.string().required().allow(""),
@@ -79,10 +87,7 @@ const getDefaultPortfolio = ({ user }) => {
     subdomain: null,
     owner: user.id,
     draft: {
-      template: {
-        name: "venice",
-        version: "v1",
-      },
+      template: "madrid",
       content: {
         about: {
           firstName: "",
@@ -93,6 +98,7 @@ const getDefaultPortfolio = ({ user }) => {
           images: {
             items: [],
           },
+          resume: null,
         },
         contact: {
           email: "",

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, IconButton, Tooltip, Icon } from "@chakra-ui/react";
 import { IoMdTrash as RemoveIcon } from "react-icons/io";
+import { MdEdit as EditIcon } from "react-icons/md";
 import * as styles from "../utils/styles";
 import _styles from "./FormSection.module.css";
 import { MotionBox, transitions } from "./animation";
@@ -9,6 +10,8 @@ const FormSection = ({
   children,
   canDelete,
   onDelete,
+  canEdit,
+  onEdit,
   tooltips,
   expanded = true,
   isSelected,
@@ -46,7 +49,23 @@ const FormSection = ({
         borderBottomStartRadius={3}
         borderTopEndRadius={3}
         overflow="hidden"
+        zIndex={1}
       >
+        {canEdit && (
+          <Tooltip label={tooltips?.edit}>
+            <IconButton
+              size="sm"
+              fontSize="sm"
+              variant="solid"
+              borderRadius={0}
+              icon={<Icon as={EditIcon} />}
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit?.();
+              }}
+            />
+          </Tooltip>
+        )}
         {canDelete && (
           <Tooltip label={tooltips?.delete}>
             <IconButton
@@ -55,7 +74,10 @@ const FormSection = ({
               variant="solid"
               borderRadius={0}
               icon={<Icon as={RemoveIcon} color="orange.500" />}
-              onClick={() => onDelete?.()}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete?.();
+              }}
             />
           </Tooltip>
         )}

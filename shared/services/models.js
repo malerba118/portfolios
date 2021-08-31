@@ -1,5 +1,7 @@
 import { types } from "mobx-state-tree";
 import { nanoid } from "nanoid";
+import _ from "lodash";
+import { templates } from "shared/utils/data";
 
 // All percentages
 export const Crop = types.model("Crop", {
@@ -65,16 +67,12 @@ export const Medias = types
     },
   }));
 
-export const Template = types.model("Template", {
-  name: types.string,
-  version: types.string,
-});
-
-export const Theme = types
-  .model("Theme", {
-    headingFont: types.optional(types.string, "Lato"),
-    paragraphFont: types.optional(types.string, "Karla"),
-    palette: types.optional(types.string, "offwhite"),
+const TemplateSettings = types
+  .model("TemplateSettings", {
+    version: types.maybe(types.string),
+    headingFont: types.string,
+    paragraphFont: types.string,
+    palette: types.string,
   })
   .actions((self) => ({
     set: (patch) => {
@@ -86,6 +84,26 @@ export const Theme = types
     },
   }));
 
+const TemplateSettingsMap = types
+  .model("TemplateSettingsMap", {
+    madrid: types.optional(TemplateSettings, templates.madrid.defaults),
+    venice: types.optional(TemplateSettings, templates.venice.defaults),
+  })
+  .actions((self) => ({
+    set: (patch) => {
+      Object.entries(patch).forEach(([key, val]) => {
+        if (val !== undefined) {
+          self[key] = val;
+        }
+      });
+    },
+  }));
+
+const Resume = types.model("Resume", {
+  name: types.string,
+  url: types.string,
+});
+
 export const About = types
   .model("About", {
     firstName: types.optional(types.string, ""),
@@ -94,6 +112,7 @@ export const About = types
     summary: types.optional(types.string, ""),
     description: types.optional(types.string, ""),
     images: types.optional(Medias, { items: [] }),
+    resume: types.maybeNull(Resume),
   })
   .actions((self) => ({
     set: (patch) => {
@@ -173,8 +192,8 @@ export const Content = types
 export const PortfolioData = types
   .model("PortfolioData", {
     content: types.optional(Content, {}),
-    template: Template,
-    theme: types.optional(Theme, {}),
+    template: types.optional(types.string, "madrid"),
+    templateSettingsMap: types.optional(TemplateSettingsMap, {}),
   })
   .actions((self) => ({
     set: (patch) => {

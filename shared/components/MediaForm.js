@@ -4,27 +4,24 @@ import { isDev } from "shared/utils/runtime";
 import { observer } from "mobx-react";
 import firebaseClient from "client/firebase";
 import * as styles from "../utils/styles";
-import Dropzone from "react-dropzone";
 import { nanoid } from "nanoid";
 import { IoMdTrash as RemoveIcon } from "react-icons/io";
 import { MdAdd, MdEdit, MdRemove } from "react-icons/md";
 import {
-  Wrap,
   Box,
   Center,
-  Icon,
   Spinner,
   Flex,
   Tooltip,
   IconButton,
-  useDisclosure,
-  Alert,
 } from "@chakra-ui/react";
 import { useAuth } from "client/useAuth";
 import Img from "./Img";
 import ReorderableList from "./ReorderableList";
 import compress from "browser-image-compression";
 import MediaEditorModal from "./MediaEditorModal";
+import FileUploader from "./FileUploader";
+import useStorageRef from "shared/hooks/useStorageRef";
 import _styles from "./MediaForm.module.css";
 
 const getFileDimensions = (file) =>
@@ -49,62 +46,11 @@ const options = {
   useWebWorker: true,
 };
 
-const useStorageRef = () => {
-  const storageRef = useRef();
-
-  useEffect(() => {
-    storageRef.current = firebaseClient.storage().ref();
-  }, []);
-
-  return storageRef;
-};
-
 const processFile = async (file) => {
   return compress(file, options).catch((err) => {
     console.log("compression error", err);
     return Promise.resolve(file);
   });
-};
-
-const FileUploader = ({ onFiles, accept }) => {
-  const handleDrop = (files) => {
-    onFiles(files);
-  };
-
-  return (
-    <Dropzone accept={accept} onDrop={handleDrop}>
-      {({ getRootProps, getInputProps }) => (
-        <Box
-          {...getRootProps()}
-          h={THUMBNAIL_SIZE}
-          w={THUMBNAIL_SIZE}
-          rounded="md"
-          position="relative"
-          {...styles.borders({
-            top: true,
-            right: true,
-            bottom: true,
-            left: true,
-          })}
-        >
-          <input
-            {...getInputProps()}
-            style={{
-              width: 78,
-              height: 78,
-              opacity: 0,
-              cursor: "pointer",
-            }}
-          />
-          <Tooltip label="Upload Files">
-            <Center pos="absolute" inset="0" cursor="pointer">
-              <Icon as={MdAdd} color="gray.400" />
-            </Center>
-          </Tooltip>
-        </Box>
-      )}
-    </Dropzone>
-  );
 };
 
 const MediaForm = observer(({ medias, accept }) => {
@@ -148,7 +94,13 @@ const MediaForm = observer(({ medias, accept }) => {
           />
         )}
       </ReorderableList>
-      <FileUploader accept={accept} onFiles={handleFiles} />
+      <FileUploader
+        height={THUMBNAIL_SIZE}
+        width={THUMBNAIL_SIZE}
+        accept={accept}
+        onFiles={handleFiles}
+        tooltip="Upload Photos"
+      />
     </Flex>
   );
 });
@@ -159,7 +111,6 @@ const MediaForm = observer(({ medias, accept }) => {
 const MediaManager = observer(
   ({ media, file, onDelete, onUploadComplete, onUploadError, folder = "" }) => {
     const [loading, setLoading] = useState(false);
-    const [hovered, setHovered] = useState(false);
     const [editing, setEditing] = useState(false);
     const storageRef = useStorageRef();
 

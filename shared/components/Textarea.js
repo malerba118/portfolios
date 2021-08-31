@@ -245,7 +245,7 @@ const DEFAULT_VALUE = JSON.stringify([
   { type: "paragraph", children: [{ text: "" }] },
 ]);
 
-const Textarea = ({ size, value, onChange }) => {
+const Textarea = ({ size, value, onChange, placeholder = "Description" }) => {
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const [editor] = useState(
@@ -295,7 +295,7 @@ const Textarea = ({ size, value, onChange }) => {
           overflow="auto"
           renderElement={renderElement}
           renderLeaf={renderLeaf}
-          placeholder="Description…"
+          placeholder={placeholder}
           spellCheck={false}
           onKeyDown={(event) => {
             for (const hotkey in HOTKEYS) {

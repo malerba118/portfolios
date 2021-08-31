@@ -1,12 +1,17 @@
 import React, { useState } from "react";
-import { Stack, Input, HStack } from "@chakra-ui/react";
+import { Stack, Input, HStack, Box } from "@chakra-ui/react";
+import { useAuth } from "client/useAuth";
 import FormSection from "./FormSection";
 import { observer } from "mobx-react";
 import InputContainer from "./InputContainer";
 import Textarea from "./Textarea";
 import MediaForm from "./MediaForm";
+import FileUploader from "./FileUploader";
+import ResumeUploader from "./ResumeUploader";
 
 const AboutForm = observer(({ about }) => {
+  const user = useAuth();
+
   return (
     <FormSection>
       <Stack spacing={4}>
@@ -34,13 +39,13 @@ const AboutForm = observer(({ about }) => {
             />
           </InputContainer>
         </HStack>
-        <InputContainer label="Title">
+        <InputContainer w="100%" label="Title">
           <Input
             value={about.title}
             onChange={(e) => {
               about.set({ title: e.target.value });
             }}
-            placeholder="Occupation"
+            placeholder="Your occupation"
             size="sm"
           />
         </InputContainer>
@@ -50,7 +55,7 @@ const AboutForm = observer(({ about }) => {
             onChange={(e) => {
               about.set({ summary: e.target.value });
             }}
-            placeholder="Summary"
+            placeholder="Tell us about you in a sentence"
             size="sm"
           />
         </InputContainer>
@@ -60,8 +65,20 @@ const AboutForm = observer(({ about }) => {
             onChange={(value) => {
               about.set({ description: value });
             }}
-            placeholder="About"
+            placeholder="Tell us all about you"
             size="sm"
+          />
+        </InputContainer>
+        <InputContainer w="100%" label="Resume">
+          <ResumeUploader
+            folder={`users/${user?.uid}/public/`}
+            height={"32px"}
+            width="auto"
+            rounded="sm"
+            resume={about.resume}
+            onChange={(resume) => {
+              about.set({ resume });
+            }}
           />
         </InputContainer>
         <InputContainer label="Photos">

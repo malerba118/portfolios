@@ -43,7 +43,7 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
           onChange={(e) => {
             project.set({ summary: e.target.value });
           }}
-          placeholder="Summary"
+          placeholder="Tell us about your project in a sentence"
           size="sm"
         />
       </InputContainer>
@@ -75,7 +75,7 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
           onChange={(value) => {
             project.set({ description: value });
           }}
-          placeholder="Description"
+          placeholder="Tell us all about your project"
           size="sm"
         />
       </InputContainer>

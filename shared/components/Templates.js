@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Box, Stack, Flex, Text, Image, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Stack,
+  Flex,
+  Text,
+  Image,
+  HStack,
+  Heading,
+} from "@chakra-ui/react";
 import { observer } from "mobx-react";
 import Section from "./Section";
 import FormSection from "./FormSection";
@@ -7,11 +15,19 @@ import Select, { Option } from "./Select";
 import InputContainer from "./InputContainer";
 import FontSelector from "./FontSelector";
 import PaletteSelector from "./PaletteSelector";
+import IconButton from "./IconButton";
+import { MdKeyboardBackspace } from "react-icons/md";
+import * as data from "shared/utils/data";
 
 const templates = [
   {
     name: "venice",
     label: "Venice",
+    defaults: {
+      headingFont: "Ubuntu",
+      paragraphFont: "Ubuntu",
+      palette: "ocean",
+    },
     versions: [
       {
         label: "Version 1",
@@ -22,6 +38,11 @@ const templates = [
   {
     name: "madrid",
     label: "Madrid",
+    defaults: {
+      headingFont: "Montserrat",
+      paragraphFont: "Lato",
+      palette: "desert",
+    },
     versions: [
       {
         label: "Version 1",
@@ -32,20 +53,142 @@ const templates = [
 ];
 
 const Templates = observer(({ portfolio }) => {
+  const [editing, setEditing] = useState(null);
+
   return (
     <Stack p={6} spacing={6}>
-      <Section title="Theme">
+      {editing && (
+        <TemplateSettings
+          onBack={() => setEditing(null)}
+          template={editing}
+          settings={portfolio.templateSettingsMap[editing]}
+        />
+      )}
+      {!editing && (
+        <Section title="Templates">
+          <Stack spacing={6}>
+            {templates.map((template) => {
+              const isSelected = template.name === portfolio.template;
+              return (
+                <FormSection
+                  key={template.name}
+                  onClick={(e) => {
+                    portfolio.set({
+                      template: template.name,
+                    });
+                  }}
+                  cursor="pointer"
+                  isSelected={isSelected}
+                  canSelect={true}
+                  canEdit
+                  onEdit={() => setEditing(template.name)}
+                >
+                  <Stack spacing={2}>
+                    <Flex justify="space-between" align="center">
+                      <Text fontSize="sm" fontWeight={600}>
+                        {template.label}
+                      </Text>
+                    </Flex>
+                    <Image
+                      objectFit="cover"
+                      src={`/templates/${template.name}.png`}
+                      w="100%"
+                      h="200px"
+                      bg="gray.200"
+                      rounded="md"
+                    />
+                  </Stack>
+                </FormSection>
+              );
+            })}
+          </Stack>
+        </Section>
+      )}
+    </Stack>
+  );
+});
+
+const TemplateCard = ({ template }) => {
+  return (
+    <Box
+      className={_styles.showOnHover}
+      position="absolute"
+      top="0px"
+      right="0px"
+      borderBottomStartRadius={3}
+      borderTopEndRadius={3}
+      overflow="hidden"
+    >
+      {canDelete && (
+        <Tooltip label={tooltips?.delete}>
+          <IconButton
+            size="sm"
+            fontSize="sm"
+            variant="solid"
+            borderRadius={0}
+            icon={<Icon as={RemoveIcon} color="orange.500" />}
+            onClick={() => onDelete?.()}
+          />
+        </Tooltip>
+      )}
+    </Box>
+  );
+};
+
+const TemplateSettings = observer(({ template, settings, onBack }) => {
+  const templateOptions = data.templates[template];
+  return (
+    <>
+      <Section
+        title={
+          <Flex display="flex" align="center">
+            <IconButton
+              size="xs"
+              tooltip="Back to Templates"
+              rounded="sm"
+              onClick={() => onBack?.()}
+              icon={<MdKeyboardBackspace />}
+              mr={2}
+            />
+            <Text>{templateOptions.label} Settings</Text>
+          </Flex>
+        }
+      >
         <FormSection>
           <Stack spacing={4}>
+            <InputContainer label="Template Version">
+              <Select
+                onChange={(version) => {
+                  settings.set({
+                    version,
+                  });
+                }}
+                value={
+                  settings.version ||
+                  templateOptions.versions.slice().pop().value
+                }
+                size="sm"
+              >
+                {templateOptions.versions.map((version) => (
+                  <Option
+                    key={version.value}
+                    value={version.value}
+                    label={version.label}
+                  />
+                ))}
+              </Select>
+            </InputContainer>
             <HStack spacing={4}>
               <InputContainer
                 label="Heading Font"
                 w="calc(50% - var(--chakra-sizes-2))"
               >
                 <FontSelector
-                  value={portfolio.theme.headingFont}
+                  value={
+                    settings.headingFont || templateOptions.defaults.headingFont
+                  }
                   onChange={(font) => {
-                    portfolio.theme.set({ headingFont: font });
+                    settings.set({ headingFont: font });
                   }}
                 />
               </InputContainer>
@@ -54,88 +197,28 @@ const Templates = observer(({ portfolio }) => {
                 w="calc(50% - var(--chakra-sizes-2))"
               >
                 <FontSelector
-                  value={portfolio.theme.paragraphFont}
+                  value={
+                    settings.paragraphFont ||
+                    templateOptions.defaults.paragraphFont
+                  }
                   onChange={(font) => {
-                    portfolio.theme.set({ paragraphFont: font });
+                    settings.set({ paragraphFont: font });
                   }}
                 />
               </InputContainer>
             </HStack>
             <InputContainer label="Palette">
               <PaletteSelector
-                value={portfolio.theme.palette}
+                value={settings.palette || templateOptions.defaults.palette}
                 onChange={(palette) => {
-                  portfolio.theme.set({ palette });
+                  settings.set({ palette });
                 }}
               />
             </InputContainer>
           </Stack>
         </FormSection>
       </Section>
-      <Section title="Templates">
-        <Stack spacing={6}>
-          {templates.map((template) => {
-            const isSelected = template.name === portfolio.template.name;
-            const version = isSelected
-              ? portfolio.template.version
-              : template.versions.slice().pop().value;
-            return (
-              <FormSection
-                key={template.name}
-                onClick={(e) => {
-                  portfolio.set({
-                    template: {
-                      name: template.name,
-                      version,
-                    },
-                  });
-                }}
-                cursor="pointer"
-                isSelected={isSelected}
-                canSelect={true}
-              >
-                <Stack spacing={2}>
-                  <Flex justify="space-between" align="center">
-                    <Text fontSize="sm" fontWeight={600}>
-                      {template.label}
-                    </Text>
-                    <Select
-                      onChange={(version) => {
-                        portfolio.set({
-                          template: {
-                            name: template.name,
-                            version,
-                          },
-                        });
-                      }}
-                      value={version}
-                      size="sm"
-                      fontSize="xs"
-                    >
-                      {template.versions.map((version) => (
-                        <Option
-                          key={version.value}
-                          value={version.value}
-                          label={version.label}
-                        />
-                      ))}
-                    </Select>
-                  </Flex>
-                  <Image
-                    objectFit="cover"
-                    src={`/templates/${template.name}.png`}
-                    w="100%"
-                    h="200px"
-                    bg="gray.200"
-                    rounded="md"
-                  />
-                </Stack>
-              </FormSection>
-            );
-          })}
-        </Stack>
-      </Section>
-    </Stack>
+    </>
   );
 });
 
