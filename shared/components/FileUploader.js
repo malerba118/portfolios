@@ -5,7 +5,7 @@ import { MdAdd } from "react-icons/md";
 import { Box, Center, Icon, Tooltip, Text } from "@chakra-ui/react";
 
 const FileUploader = ({
-  children,
+  children = <Icon as={MdAdd} color="gray.400" />,
   onFiles,
   accept,
   height,
@@ -43,9 +43,9 @@ const FileUploader = ({
               cursor: "pointer",
             }}
           />
-          <Tooltip label={!children && tooltip}>
+          <Tooltip label={tooltip}>
             <Center pos="absolute" inset="0" cursor="pointer">
-              {children ? children : <Icon as={MdAdd} color="gray.400" />}
+              {children}
             </Center>
           </Tooltip>
         </Box>

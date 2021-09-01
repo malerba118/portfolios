@@ -8,24 +8,42 @@ const ContactForm = observer(({ contact }) => {
   return (
     <FormSection>
       <Stack spacing={4}>
-        <InputContainer label="Email">
+        <InputContainer
+          label="Email"
+          canHide
+          isHidden={contact.email.hidden}
+          onHideChange={(hidden) => {
+            contact.email.set({
+              hidden,
+            });
+          }}
+        >
           <Input
             type="email"
             name="email"
-            value={contact.email}
+            value={contact.email.value}
             onChange={(e) => {
-              contact.set({ email: e.target.value });
+              contact.email.set({ value: e.target.value });
             }}
             placeholder="Email"
             size="sm"
           />
         </InputContainer>
-        <InputContainer label="Phone">
+        <InputContainer
+          label="Phone"
+          canHide
+          isHidden={contact.phone.hidden}
+          onHideChange={(hidden) => {
+            contact.phone.set({
+              hidden,
+            });
+          }}
+        >
           <Input
             type="tel"
-            value={contact.phone}
+            value={contact.phone.value}
             onChange={(e) => {
-              contact.set({ phone: e.target.value });
+              contact.phone.set({ value: e.target.value });
             }}
             placeholder="Phone"
             size="sm"

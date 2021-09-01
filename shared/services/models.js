@@ -3,6 +3,25 @@ import { nanoid } from "nanoid";
 import _ from "lodash";
 import { templates } from "shared/utils/data";
 
+const hideable = (model) =>
+  types.optional(
+    types
+      .model(model.name, {
+        hidden: types.optional(types.boolean, false),
+        value: model,
+      })
+      .actions((self) => ({
+        set: (patch) => {
+          Object.entries(patch).forEach(([key, val]) => {
+            if (val !== undefined) {
+              self[key] = val;
+            }
+          });
+        },
+      })),
+    {}
+  );
+
 // All percentages
 export const Crop = types.model("Crop", {
   unit: types.string,
@@ -126,8 +145,8 @@ export const About = types
 
 export const Contact = types
   .model("Contact", {
-    email: types.optional(types.string, ""),
-    phone: types.optional(types.string, ""),
+    email: hideable(types.optional(types.string, "")),
+    phone: hideable(types.optional(types.string, "")),
   })
   .actions((self) => ({
     set: (patch) => {

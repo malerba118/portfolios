@@ -60,8 +60,14 @@ const schemas = {
         resume: ResumeSchema,
       }),
       contact: joi.object({
-        email: joi.string().required().allow(""),
-        phone: joi.string().required().allow(""),
+        email: joi.object({
+          hidden: joi.boolean().required(),
+          value: joi.string().required().allow(""),
+        }),
+        phone: joi.object({
+          hidden: joi.boolean().required(),
+          value: joi.string().required().allow(""),
+        }),
       }),
       projects: joi.array().items(
         joi.object({
@@ -101,8 +107,14 @@ const getDefaultPortfolio = ({ user }) => {
           resume: null,
         },
         contact: {
-          email: "",
-          phone: "",
+          email: {
+            hidden: false,
+            value: "",
+          },
+          phone: {
+            hidden: false,
+            value: "",
+          },
         },
         projects: [
           {
