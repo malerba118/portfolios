@@ -4,10 +4,15 @@ import firebaseClient from "client/firebase";
 import { useRouter } from "next/router";
 import { Button, Center, Flex } from "@chakra-ui/react";
 import { Toolbar } from "shared/components/unauthed";
-
-// import { Button } from "@chakra-ui/react";
+import { getCommonSsrProps } from "server/utils/ssr";
 
 const provider = new firebaseClient.auth.GoogleAuthProvider();
+
+export const getServerSideProps = async (ctx) => {
+  return {
+    props: await getCommonSsrProps(ctx),
+  };
+};
 
 export default (_props) => {
   const router = useRouter();

@@ -88,7 +88,6 @@ export const Medias = types
 
 const TemplateSettings = types
   .model("TemplateSettings", {
-    version: types.maybe(types.string),
     headingFont: types.string,
     paragraphFont: types.string,
     palette: types.string,

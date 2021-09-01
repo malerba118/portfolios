@@ -34,7 +34,6 @@ const deviceAspectRatios = {
 };
 
 const Editor = observer(() => {
-  const user = useAuth();
   const [refreshKey, setRefreshKey] = useState(0);
   const query = useQuery("portfolio", api.portfolio.get);
   const mutation = useMutation((data) => api.portfolio.updateDraft(data));

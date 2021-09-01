@@ -32,7 +32,6 @@ const MediasSchema = joi.object({
 });
 
 const TemplateSettingsSchema = joi.object({
-  version: joi.string(),
   headingFont: joi.string(),
   paragraphFont: joi.string(),
   palette: joi.string(),

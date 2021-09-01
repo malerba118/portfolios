@@ -5,7 +5,6 @@ const firestore = admin.firestore();
 
 export const getOrCreateUser = async (decodedToken) => {
   let userDoc = await firestore.collection("users").doc(decodedToken.uid).get();
-  console.log(decodedToken);
   if (!userDoc.exists) {
     await firestore
       .collection("users")

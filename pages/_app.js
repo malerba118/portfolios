@@ -12,9 +12,10 @@ import "../shared/components/FontSelector.css";
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }) {
+  console.log(pageProps);
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
+      <AuthProvider user={pageProps.user}>
         <ChakraProvider theme={theme}>
           <Component {...pageProps} />
         </ChakraProvider>

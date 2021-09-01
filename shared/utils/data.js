@@ -6,12 +6,6 @@ export const templates = {
       paragraphFont: "Ubuntu",
       palette: "ocean",
     },
-    versions: [
-      {
-        label: "Version 1",
-        value: "v1",
-      },
-    ],
   },
   madrid: {
     label: "Madrid",
@@ -20,11 +14,5 @@ export const templates = {
       paragraphFont: "Lato",
       palette: "desert",
     },
-    versions: [
-      {
-        label: "Version 1",
-        value: "v1",
-      },
-    ],
   },
 };

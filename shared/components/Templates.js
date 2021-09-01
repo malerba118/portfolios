@@ -28,12 +28,6 @@ const templates = [
       paragraphFont: "Ubuntu",
       palette: "ocean",
     },
-    versions: [
-      {
-        label: "Version 1",
-        value: "v1",
-      },
-    ],
   },
   {
     name: "madrid",
@@ -43,12 +37,6 @@ const templates = [
       paragraphFont: "Lato",
       palette: "desert",
     },
-    versions: [
-      {
-        label: "Version 1",
-        value: "v1",
-      },
-    ],
   },
 ];
 
@@ -156,28 +144,6 @@ const TemplateSettings = observer(({ template, settings, onBack }) => {
       >
         <FormSection>
           <Stack spacing={4}>
-            <InputContainer label="Template Version">
-              <Select
-                onChange={(version) => {
-                  settings.set({
-                    version,
-                  });
-                }}
-                value={
-                  settings.version ||
-                  templateOptions.versions.slice().pop().value
-                }
-                size="sm"
-              >
-                {templateOptions.versions.map((version) => (
-                  <Option
-                    key={version.value}
-                    value={version.value}
-                    label={version.label}
-                  />
-                ))}
-              </Select>
-            </InputContainer>
             <HStack spacing={4}>
               <InputContainer
                 label="Heading Font"

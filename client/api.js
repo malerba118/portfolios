@@ -1,5 +1,12 @@
 import axios from "axios";
 
+export const user = {
+  me: async () => {
+    const res = await axios.get("/api/me");
+    return res.data;
+  },
+};
+
 export const portfolio = {
   get: async () => {
     const res = await axios.get("/api/me/portfolio");
