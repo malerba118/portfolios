@@ -34,7 +34,7 @@ const Toolbar = () => {
       <HStack spacing={8}>
         <Link href="/pricing">Pricing</Link>
         <Link href="/about">About</Link>
-        <Link href="/login">Log In</Link>
+        <Link href="/login">Sign Up</Link>
       </HStack>
     </Flex>
   );

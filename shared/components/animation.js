@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
-import { Box, Image, Flex, Stack, Heading } from "@chakra-ui/react";
+import { Box, Image, Flex, Stack, Heading, Button } from "@chakra-ui/react";
 
 export const MotionBox = motion(Box);
 export const MotionImage = motion(Image);
 export const MotionFlex = motion(Flex);
 export const MotionStack = motion(Stack);
 export const MotionHeading = motion(Heading);
+export const MotionButton = motion(Button);
 
 export const transitions = {
   one: (duration = 0.6) => ({
