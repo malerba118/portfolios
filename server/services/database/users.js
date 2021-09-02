@@ -12,8 +12,8 @@ export const getOrCreateUser = async (decodedToken) => {
       .set({
         id: decodedToken.uid,
         email: decodedToken.email,
-        displayName: decodedToken.name,
-        photoURL: decodedToken.picture,
+        displayName: decodedToken.name || null,
+        photoURL: decodedToken.picture || null,
         roles: decodedToken.roles || ["user"],
         createdAt: now(),
       });

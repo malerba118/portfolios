@@ -16,8 +16,8 @@ const InputContainer = ({
 }) => {
   return (
     <Stack
-      {...otherProps}
       as={"form"}
+      {...otherProps}
       autoComplete="off"
       onSubmit={(e) => {
         e.preventDefault();

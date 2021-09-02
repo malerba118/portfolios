@@ -56,7 +56,7 @@ const schemas = {
         summary: joi.string().required().allow(""),
         description: joi.string().required().allow(""),
         images: MediasSchema,
-        resume: ResumeSchema,
+        resume: ResumeSchema.allow(null),
       }),
       contact: joi.object({
         email: joi.object({

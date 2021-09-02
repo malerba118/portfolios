@@ -177,14 +177,16 @@ const Landing = ({}) => {
               You shouldn't have to spend your time learning how to build a
               website. That's why Vernos will just do it for you.
             </Heading>
-            <Button
-              my={4}
-              alignSelf="start"
-              variant="outline"
-              _hover={{ bg: "whiteAlpha.200" }}
-            >
-              Start for Free
-            </Button>
+            <Link href="/login">
+              <Button
+                my={4}
+                alignSelf="start"
+                variant="outline"
+                _hover={{ bg: "whiteAlpha.200" }}
+              >
+                Start for Free
+              </Button>
+            </Link>
           </Box>
         </Box>
       </ParallaxLayer>

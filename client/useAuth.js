@@ -11,9 +11,14 @@ export function AuthProvider({ user, children }) {
     return firebaseClient.auth().onIdTokenChanged(async (firebaseUser) => {
       if (!firebaseUser) {
         nookies.destroy(null, "token");
+        nookies.set(null, "token", "", {});
       } else {
         const token = await firebaseUser.getIdToken();
+        nookies.destroy(null, "token");
         nookies.set(null, "token", token, {});
+      }
+      if (!!user !== !!firebaseUser) {
+        window.location = "/";
       }
     });
   }, []);
