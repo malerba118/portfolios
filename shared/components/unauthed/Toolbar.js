@@ -1,4 +1,4 @@
-import Link from "next/link";
+import NextLink from "next/link";
 import {
   Avatar,
   Box,
@@ -12,8 +12,7 @@ import {
   Image,
   HStack,
 } from "@chakra-ui/react";
-import * as styles from "../../utils/styles";
-import { MotionFlex, transitions } from "../animation";
+import Link from "../Link";
 
 const Toolbar = () => {
   return (
@@ -26,15 +25,21 @@ const Toolbar = () => {
       fontWeight="bold"
     >
       <Heading size="sm">
-        <Link href="/">
+        <NextLink href="/">
           <Image cursor="pointer" src="/vernos-white.svg" w={"80px"} />
-        </Link>
+        </NextLink>
       </Heading>
       <Box flex={1} />
       <HStack spacing={8}>
-        <Link href="/pricing">Pricing</Link>
-        <Link href="/about">About</Link>
-        <Link href="/login">Sign Up</Link>
+        <NextLink href="/pricing">
+          <Link>Pricing</Link>
+        </NextLink>
+        <NextLink href="/about">
+          <Link>About</Link>
+        </NextLink>
+        <NextLink href="/login">
+          <Link>Sign Up</Link>
+        </NextLink>
       </HStack>
     </Flex>
   );

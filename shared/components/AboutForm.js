@@ -71,7 +71,7 @@ const AboutForm = observer(({ about }) => {
         </InputContainer>
         <InputContainer w="100%" label="Resume">
           <ResumeUploader
-            folder={`users/${user?.uid}/public/`}
+            folder={`users/${user?.id}/public/`}
             height={"32px"}
             width="auto"
             rounded="sm"

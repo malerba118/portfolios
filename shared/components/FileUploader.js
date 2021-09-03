@@ -24,6 +24,10 @@ const FileUploader = ({
           {...getRootProps()}
           h={height}
           w={width}
+          minW={width}
+          maxW={width}
+          minH={height}
+          maxH={height}
           rounded={rounded}
           position="relative"
           {...styles.borders({

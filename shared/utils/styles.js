@@ -47,3 +47,11 @@ export const transitions = {
     normal: { type: "spring", damping: 50, stiffness: 500 },
   },
 };
+
+export const textures = {
+  dots: {
+    backgroundImage:
+      'url("https://www.transparenttextures.com/patterns/worn-dots.png")',
+    backgroundBlendMode: "overlay",
+  },
+};

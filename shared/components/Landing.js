@@ -1,4 +1,4 @@
-import Link from "next/link";
+import NextLink from "next/link";
 import {
   Box,
   Stack,
@@ -17,6 +17,7 @@ import { Toolbar, MockBrowser } from "./unauthed";
 import { useElementScroll, useTransform, useSpring } from "framer-motion";
 import { MotionBox } from "./animation";
 import Preload from "preload-it";
+import { textures } from "shared/utils/styles";
 
 const preload = Preload();
 
@@ -177,7 +178,7 @@ const Landing = ({}) => {
               You shouldn't have to spend your time learning how to build a
               website. That's why Vernos will just do it for you.
             </Heading>
-            <Link href="/login">
+            <NextLink href="/login">
               <Button
                 my={4}
                 alignSelf="start"
@@ -186,12 +187,18 @@ const Landing = ({}) => {
               >
                 Start for Free
               </Button>
-            </Link>
+            </NextLink>
           </Box>
         </Box>
       </ParallaxLayer>
       <ParallaxLayer offset={1} speed={0} sticky={{ start: 1, end: 4 }}>
-        <Box pos="absolute" inset={0} bg="purple.500" color="white">
+        <Box
+          pos="absolute"
+          inset={0}
+          bg="purple.500"
+          color="white"
+          {...textures.dots}
+        >
           <ProgressBar controller={progress.page1} />
           <Stack pos="absolute" top={8} left={8} spacing={0}>
             <Heading mx={2} mb={-2} fontSize="3xl">
@@ -213,7 +220,13 @@ const Landing = ({}) => {
         </Box>
       </ParallaxLayer>
       <ParallaxLayer sticky={{ start: 4, end: 7 }}>
-        <Box pos="absolute" inset={0} bg="purple.600" color="white">
+        <Box
+          pos="absolute"
+          inset={0}
+          bg="purple.600"
+          color="white"
+          {...textures.dots}
+        >
           <ProgressBar controller={progress.page2} />
           <Stack pos="absolute" top={8} left={8} spacing={0}>
             <Heading mx={2} mb={-2} fontSize="3xl">
@@ -235,7 +248,13 @@ const Landing = ({}) => {
         </Box>
       </ParallaxLayer>
       <ParallaxLayer sticky={{ start: 7, end: 10 }}>
-        <Box pos="absolute" inset={0} bg="purple.500" color="white">
+        <Box
+          pos="absolute"
+          inset={0}
+          bg="purple.500"
+          color="white"
+          {...textures.dots}
+        >
           <ProgressBar controller={progress.page3} />
           <Stack pos="absolute" top={8} left={8} spacing={0}>
             <Heading mx={2} mb={-2} fontSize="3xl">
@@ -257,7 +276,13 @@ const Landing = ({}) => {
         </Box>
       </ParallaxLayer>
       <ParallaxLayer sticky={{ start: 10, end: 11 }}>
-        <Box pos="absolute" inset={0} bg="purple.600" color="white">
+        <Box
+          pos="absolute"
+          inset={0}
+          bg="purple.600"
+          color="white"
+          {...textures.dots}
+        >
           {/* <Stack pos="absolute" top={8} left={8} spacing={0}>
             <Heading mx={2} mb={-2} fontSize="3xl">
               STEP

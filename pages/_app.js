@@ -1,7 +1,7 @@
 import { AuthProvider } from "client/useAuth";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ChakraProvider } from "@chakra-ui/react";
-import theme from "shared/utils/theme";
+import { createTheme } from "shared/utils/theme";
 import "@fontsource/josefin-sans/400.css";
 import "@fontsource/josefin-sans/600.css";
 import "@fontsource/karla/400.css";
@@ -16,7 +16,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider user={pageProps.user}>
-        <ChakraProvider theme={theme}>
+        <ChakraProvider
+          theme={createTheme({ isAuthenticated: !!pageProps.user })}
+        >
           <Component {...pageProps} />
         </ChakraProvider>
       </AuthProvider>

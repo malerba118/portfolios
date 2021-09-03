@@ -377,9 +377,11 @@ const Element = ({ attributes, children, element }) => {
       return <UnorderedList {...attributes}>{children}</UnorderedList>;
     case "heading-one":
       return (
-        <Heading size="md" {...attributes}>
-          {children}
-        </Heading>
+        <Box>
+          <Heading size="md" {...attributes}>
+            {children}
+          </Heading>
+        </Box>
       );
     case "heading-two":
       return (
@@ -388,7 +390,11 @@ const Element = ({ attributes, children, element }) => {
         </Heading>
       );
     case "list-item":
-      return <li {...attributes}>{children}</li>;
+      return (
+        <Text as="li" {...attributes}>
+          {children}
+        </Text>
+      );
     case "numbered-list":
       return <OrderedList {...attributes}>{children}</OrderedList>;
     default:

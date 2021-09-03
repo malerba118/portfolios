@@ -164,7 +164,7 @@ export default (_props) => {
   };
 
   return (
-    <Flex direction="column" h="100vh" w="100%" bg="purple.600">
+    <Flex direction="column" h="100vh" w="100%">
       <Toolbar />
       <Center flex={1}>
         <Stack

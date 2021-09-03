@@ -89,7 +89,7 @@ const MediaForm = observer(({ medias, accept }) => {
             key={media.id}
             media={media}
             file={fileMap[media.id]}
-            folder={`users/${user?.uid}/public/`}
+            folder={`users/${user?.id}/public/`}
             onDelete={() => medias.remove(media.id)}
           />
         )}
