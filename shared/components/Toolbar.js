@@ -18,8 +18,10 @@ import firebaseClient from "client/firebase";
 import * as styles from "../utils/styles";
 import { useFullscreen } from "./Fullscreen";
 import { MotionFlex, transitions } from "./animation";
+import { useRouter } from "next/router";
 
 const Toolbar = () => {
+  const router = useRouter();
   const user = useAuth();
   const { fullscreen } = useFullscreen();
 
@@ -48,6 +50,20 @@ const Toolbar = () => {
           </MenuButton>
           <MenuList>
             <MenuItem>Profile</MenuItem>
+            <MenuItem
+              onClick={async () => {
+                router.push("/about");
+              }}
+            >
+              About
+            </MenuItem>
+            <MenuItem
+              onClick={async () => {
+                router.push("/pricing");
+              }}
+            >
+              Pricing
+            </MenuItem>
             <MenuItem
               onClick={async () => {
                 await firebaseClient.auth().signOut();
