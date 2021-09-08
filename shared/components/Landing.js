@@ -9,9 +9,6 @@ import {
   Progress,
 } from "@chakra-ui/react";
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
-import Section from "./Section";
-import FormSection from "./FormSection";
-import InputContainer from "./InputContainer";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { Toolbar, MockBrowser } from "./unauthed";
 import { useElementScroll, useTransform, useSpring } from "framer-motion";
@@ -206,8 +203,10 @@ const Landing = ({}) => {
             </Heading>
             <Heading
               fontSize="9xl"
-              color="purple.500"
-              textShadow="0px 0px 2px white"
+              color="transparent"
+              style={{
+                WebkitTextStroke: "1px white",
+              }}
             >
               01
             </Heading>
@@ -234,8 +233,10 @@ const Landing = ({}) => {
             </Heading>
             <Heading
               fontSize="9xl"
-              color="purple.600"
-              textShadow="0px 0px 2px white"
+              color="transparent"
+              style={{
+                WebkitTextStroke: "1px white",
+              }}
             >
               02
             </Heading>
@@ -262,8 +263,10 @@ const Landing = ({}) => {
             </Heading>
             <Heading
               fontSize="9xl"
-              color="purple.500"
-              textShadow="0px 0px 2px white"
+              color="transparent"
+              style={{
+                WebkitTextStroke: "1px white",
+              }}
             >
               03
             </Heading>

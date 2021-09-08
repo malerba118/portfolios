@@ -12,7 +12,6 @@ import "../shared/components/FontSelector.css";
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }) {
-  console.log(pageProps);
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider user={pageProps.user}>
