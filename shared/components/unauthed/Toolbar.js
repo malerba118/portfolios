@@ -13,8 +13,10 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import Link from "../Link";
+import { useAuth } from "client/useAuth";
 
 const Toolbar = () => {
+  const user = useAuth();
   return (
     <Flex
       px={24}
@@ -37,9 +39,16 @@ const Toolbar = () => {
         <NextLink href="/about">
           <Link>About</Link>
         </NextLink>
-        <NextLink href="/login">
-          <Link>Sign Up</Link>
-        </NextLink>
+        {!user && (
+          <NextLink href="/login">
+            <Link>Sign Up</Link>
+          </NextLink>
+        )}
+        {user && (
+          <NextLink href="/">
+            <Link>Editor</Link>
+          </NextLink>
+        )}
       </HStack>
     </Flex>
   );

@@ -25,6 +25,7 @@ import InputContainer from "./InputContainer";
 import FormSection from "./FormSection";
 import * as api from "client/api";
 import { useDebounce } from "use-debounce";
+import { getHostingUrl } from "shared/utils/url";
 
 function PublishModal({ defaultValue, isOpen, onSuccess, onClose }) {
   const initialRef = React.useRef();
@@ -64,10 +65,10 @@ function PublishModal({ defaultValue, isOpen, onSuccess, onClose }) {
               Check it out at{" "}
               <Link
                 target="_blank"
-                href={`http://localhost:3001?subdomain=${debouncedSubdomain}`}
+                href={getHostingUrl({ subdomain: debouncedSubdomain })}
                 color="purple.400"
               >
-                {`http://localhost:3001?subdomain=${debouncedSubdomain}`}
+                {getHostingUrl({ subdomain: debouncedSubdomain })}
               </Link>
             </Text>
           </ModalBody>

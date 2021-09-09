@@ -3,16 +3,12 @@ import Embed from "./Embed";
 import { isDev } from "shared/utils/runtime";
 import { observer } from "mobx-react";
 import * as styles from "../utils/styles";
+import { getHostingUrl } from "shared/utils/url";
 
 const Previewer = observer(({ width, height, portfolio }) => {
   if (!portfolio) return null;
 
-  let src;
-  if (isDev) {
-    src = "http://localhost:3001?edit=true&subdomain=" + portfolio.subdomain;
-  } else {
-    src = `https://${portfolio.subdomain}.portfolios.us?edit=true`;
-  }
+  let src = getHostingUrl({ subdomain: portfolio.subdomain, edit: true });
 
   return (
     <Embed
