@@ -146,7 +146,7 @@ const SignInForm = ({ form, onChange, error, isLoading, onSubmit }) => {
   );
 };
 
-export default (_props) => {
+const Login = (_props) => {
   const router = useRouter();
   const [mode, setMode] = useState("sign-up");
   const [form, setForm] = useState({
@@ -278,3 +278,5 @@ export default (_props) => {
     </Flex>
   );
 };
+
+export default Login;

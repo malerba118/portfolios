@@ -41,7 +41,7 @@ const ProductCard = ({ children }) => {
   );
 };
 
-export default (props) => {
+const Pricing = (props) => {
   const router = useRouter();
   const user = useAuth();
 
@@ -152,3 +152,5 @@ export default (props) => {
     </Flex>
   );
 };
+
+export default Pricing;
