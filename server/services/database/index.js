@@ -2,6 +2,7 @@
 import authService from "./auth";
 import portfolioService from "./portfolios";
 import subscriptionService from "./subscriptions";
+import meService from "./me";
 import { verifyToken } from "./verify";
 import { getOrCreateUser } from "./users";
 
@@ -21,6 +22,7 @@ const Database = async ({ token } = {}) => {
   db.auth = authService({ db, user });
   db.portfolios = portfolioService({ db, user });
   db.subscriptions = subscriptionService({ db, user });
+  db.me = meService({ db, user });
   return db;
 };
 

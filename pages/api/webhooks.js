@@ -1,5 +1,7 @@
-import stripe from "server/services/stripe";
+import getStripe from "server/services/stripe";
 import Database from "server/services/database";
+
+const stripe = getStripe();
 
 export const toDateTime = (secs) => {
   var t = new Date("1970-01-01T00:30:00Z"); // Unix epoch start.
@@ -39,6 +41,7 @@ const manageSubscriptionStatusChange = async (customerId, subscriptionId) => {
   };
 
   await database.subscriptions.updateSubscription(customerId, subscriptionData);
+  await database.portfolios;
 };
 
 // Stripe requires the raw body to construct the event.

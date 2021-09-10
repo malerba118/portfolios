@@ -15,6 +15,7 @@ const firestore = admin.firestore();
 
 export default ({ db, user }) => {
   const usersCol = firestore.collection("users");
+  const portfoliosCol = firestore.collection("portfolios");
 
   const updateSubscription = async (customerId, subscription) => {
     if (!db.auth.isSuperAdmin()) {
@@ -24,7 +25,14 @@ export default ({ db, user }) => {
       .where("stripeCustomerId", "==", customerId)
       .get();
     const userDoc = userSnapshot.docs[0];
+    let portfolioSnapshot = await portfoliosCol
+      .where("owner", "==", userDoc.id)
+      .get();
+    const portfolioDoc = portfolioSnapshot.docs[0];
     await userDoc.ref.update({ subscription });
+    await portfolioDoc.ref.update({
+      advertisementsDisabled: subscription?.status === "active",
+    });
   };
 
   return {

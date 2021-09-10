@@ -131,7 +131,7 @@ const getDefaultPortfolio = ({ user }) => {
       },
     },
     published: null,
-    live: false,
+    advertisementsDisabled: false,
   };
   assertValid(portfolio.draft, schemas.updateDraft);
   return portfolio;
@@ -166,7 +166,7 @@ export default ({ db, user }) => {
     if (db.auth.isSuperAdmin()) {
       return toData(portfolioDoc);
     }
-    if (data.owner !== user.id && data.live !== true) {
+    if (data.owner !== user.id) {
       throw new ResourceNotFoundError();
     }
     return toData(portfolioDoc);
@@ -220,11 +220,7 @@ export default ({ db, user }) => {
 
   const publish = async (subdomain) => {
     assertAuthenticated(user);
-    let portfolio = await getOrCreate();
-    if (!portfolio.live) {
-      throw new UnauthorizedError();
-    }
-    portfolio = await updateSubdomain(subdomain);
+    let portfolio = await updateSubdomain(subdomain);
     await portfoliosCol.doc(portfolio.id).update({
       ...portfolio,
       published: portfolio.draft,

@@ -4,6 +4,7 @@ import {
   Center,
   Button,
   ButtonGroup,
+  HStack,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useQuery, useMutation } from "react-query";
@@ -26,6 +27,7 @@ import {
 } from "react-icons/md";
 import IconButton from "./IconButton";
 import { useFullscreen } from "./Fullscreen";
+import { useRouter } from "next/router";
 
 const deviceAspectRatios = {
   phone: 9 / 16,
@@ -34,6 +36,8 @@ const deviceAspectRatios = {
 };
 
 const Editor = observer(() => {
+  const user = useAuth();
+  const router = useRouter();
   const [refreshKey, setRefreshKey] = useState(0);
   const query = useQuery("portfolio", api.portfolio.get);
   const mutation = useMutation((data) => api.portfolio.updateDraft(data));
@@ -93,15 +97,25 @@ const Editor = observer(() => {
             />
           </ButtonGroup>
           <DeviceSelector value={device} onChange={setDevice} />
-          <Button
-            onClick={publishModal.onOpen}
-            colorScheme="purple"
-            size="sm"
-            pos="absolute"
-            right={4}
-          >
-            Publish
-          </Button>
+          <HStack pos="absolute" right={4}>
+            {user && user.subscription?.status !== "active" && (
+              <Button
+                onClick={() => router.push("/pricing")}
+                size="sm"
+                colorScheme="purple"
+                variant="outline"
+              >
+                Upgrade
+              </Button>
+            )}
+            <Button
+              onClick={publishModal.onOpen}
+              colorScheme="purple"
+              size="sm"
+            >
+              Publish
+            </Button>
+          </HStack>
         </Flex>
         <ResizeDetector handleWidth handleHeight>
           {({ width, height }) => {

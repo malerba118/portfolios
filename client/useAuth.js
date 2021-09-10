@@ -17,9 +17,9 @@ export function AuthProvider({ user, children }) {
         nookies.destroy(null, "token");
         nookies.set(null, "token", token, {});
       }
-      if (!!user !== !!firebaseUser) {
-        window.location = "/";
-      }
+      // if (!!user !== !!firebaseUser) {
+      //   window.location.reload();
+      // }
     });
   }, []);
 

@@ -19,3 +19,7 @@ export const getHostingUrl = ({ subdomain, edit = false } = {}) => {
     }
   }
 };
+
+export const getAppUrl = () => {
+  return process.env.NEXT_PUBLIC_EDITOR_URL;
+};

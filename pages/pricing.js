@@ -24,6 +24,8 @@ import { Toolbar } from "shared/components/unauthed";
 import { getCommonSsrProps } from "server/utils/ssr";
 import { useAuth } from "client/useAuth";
 import { BiCheckCircle } from "react-icons/bi";
+import * as api from "client/api";
+import getStripe from "client/stripe";
 
 const provider = new firebaseClient.auth.GoogleAuthProvider();
 
@@ -44,6 +46,16 @@ const ProductCard = ({ children }) => {
 const Pricing = (props) => {
   const router = useRouter();
   const user = useAuth();
+
+  const handleUpgradeClick = async (e) => {
+    try {
+      const { sessionId } = await api.account.createCheckoutSession();
+      const stripe = await getStripe();
+      stripe.redirectToCheckout({ sessionId });
+    } catch (error) {
+      return alert(error.message);
+    }
+  };
 
   return (
     <Flex
@@ -99,8 +111,28 @@ const Pricing = (props) => {
                     </Text>
                   </ListItem>
                 </List>
-                {!user && <Button colorScheme="purple">Get Started</Button>}
-                {user && <Button colorScheme="purple">Continue</Button>}
+                {!user && (
+                  <Button
+                    onClick={() => {
+                      router.push(
+                        `/login?from=${encodeURIComponent("/pricing")}`
+                      );
+                    }}
+                    colorScheme="purple"
+                  >
+                    Get Started
+                  </Button>
+                )}
+                {user && (
+                  <Button
+                    onClick={() => {
+                      router.push(`/`);
+                    }}
+                    colorScheme="purple"
+                  >
+                    Continue
+                  </Button>
+                )}
               </Stack>
             </ProductCard>
             <ProductCard>
@@ -142,8 +174,32 @@ const Pricing = (props) => {
                     </Text>
                   </ListItem>
                 </List>
-                {!user && <Button colorScheme="purple">Get Started</Button>}
-                {user && <Button colorScheme="purple">Upgrade</Button>}
+                {!user && (
+                  <Button
+                    onClick={() => {
+                      router.push(
+                        `/login?from=${encodeURIComponent("/pricing")}`
+                      );
+                    }}
+                    colorScheme="purple"
+                  >
+                    Get Started
+                  </Button>
+                )}
+                {user && (
+                  <>
+                    {user.subscription?.status === "active" && (
+                      <Button onClick={() => {}} colorScheme="purple">
+                        Manage Subscription
+                      </Button>
+                    )}
+                    {user.subscription?.status !== "active" && (
+                      <Button onClick={handleUpgradeClick} colorScheme="purple">
+                        Upgrade
+                      </Button>
+                    )}
+                  </>
+                )}
               </Stack>
             </ProductCard>
           </SimpleGrid>

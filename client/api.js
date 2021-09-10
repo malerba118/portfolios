@@ -28,3 +28,13 @@ export const subdomains = {
     return res.data;
   },
 };
+
+export const account = {
+  createCheckoutSession: async () => {
+    const res = await axios.post("/api/create-checkout-session");
+    return res.data;
+  },
+  getPortalLink: async () => {
+    return "";
+  },
+};

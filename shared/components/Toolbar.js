@@ -11,6 +11,8 @@ import {
   Text,
   Image,
   HStack,
+  Button,
+  Spacer,
 } from "@chakra-ui/react";
 import User from "./User";
 import { useAuth } from "client/useAuth";
@@ -43,38 +45,40 @@ const Toolbar = () => {
         </Link>
       </Heading>
       <Box flex={1} />
-      {user && (
-        <Menu>
-          <MenuButton>
-            <User user={user} />
-          </MenuButton>
-          <MenuList>
-            <MenuItem>Profile</MenuItem>
-            <MenuItem
-              onClick={async () => {
-                router.push("/about");
-              }}
-            >
-              About
-            </MenuItem>
-            <MenuItem
-              onClick={async () => {
-                router.push("/pricing");
-              }}
-            >
-              Pricing
-            </MenuItem>
-            <MenuItem
-              onClick={async () => {
-                await firebaseClient.auth().signOut();
-                window.location.href = "/";
-              }}
-            >
-              Log out
-            </MenuItem>
-          </MenuList>
-        </Menu>
-      )}
+      <HStack>
+        {user && (
+          <Menu>
+            <MenuButton>
+              <User user={user} />
+            </MenuButton>
+            <MenuList>
+              <MenuItem>Profile</MenuItem>
+              <MenuItem
+                onClick={async () => {
+                  router.push("/about");
+                }}
+              >
+                About
+              </MenuItem>
+              <MenuItem
+                onClick={async () => {
+                  router.push("/pricing");
+                }}
+              >
+                Pricing
+              </MenuItem>
+              <MenuItem
+                onClick={async () => {
+                  await firebaseClient.auth().signOut();
+                  window.location.href = "/";
+                }}
+              >
+                Log out
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        )}
+      </HStack>
     </MotionFlex>
   );
 };

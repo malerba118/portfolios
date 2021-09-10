@@ -17,7 +17,7 @@ const Previewer = observer(({ width, height, portfolio }) => {
       width={width}
       height={height}
       src={src}
-      data={portfolio.draft.toJSON()}
+      data={portfolio.toJSON()}
     />
   );
 });

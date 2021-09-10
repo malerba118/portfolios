@@ -227,8 +227,8 @@ export const Portfolio = types
   .model("Portfolio", {
     id: types.string,
     subdomain: types.maybeNull(types.string),
-    live: types.boolean,
     draft: PortfolioData,
     published: types.maybeNull(PortfolioData),
+    advertisementsDisabled: types.maybe(types.boolean),
   })
   .actions((self) => ({}));

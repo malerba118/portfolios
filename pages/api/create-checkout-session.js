@@ -1,10 +1,52 @@
-// import { stripe } from '@/utils/stripe';
-// import { getUser } from '@/utils/supabase-admin';
-// import { createOrRetrieveCustomer } from '@/utils/useDatabase';
-// import { getURL } from '@/utils/helpers';
+import { getAppUrl } from "shared/utils/url";
+import Database from "server/services/database";
+import router from "server/utils/router";
+import { token } from "shared/utils/token";
+import getStripe from "server/services/stripe";
+
+const stripe = getStripe();
+
+export default router({
+  post: async (req) => {
+    const { price, metadata = {} } = req.body;
+
+    const db = await Database({ token: token(req) });
+    let user = db.user;
+    if (!user.stripeCustomerId) {
+      const customer = await stripe.customers.create({
+        metadata: {
+          firestoreUserId: user.id,
+          email: user.email,
+        },
+      });
+      user = await db.me.updateCustomer(customer.id);
+    }
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      billing_address_collection: "required",
+      customer: db.user.stripeCustomerId,
+      line_items: [
+        {
+          price: "price_1JXsXlLkdohqnm1L7KBhO9wT",
+          quantity: 1,
+        },
+      ],
+      mode: "subscription",
+      allow_promotion_codes: true,
+      subscription_data: {
+        trial_from_plan: true,
+        metadata,
+      },
+      success_url: `${getAppUrl()}/subscription-success`,
+      cancel_url: `${getAppUrl()}/`,
+    });
+
+    return { sessionId: session.id };
+  },
+});
 
 // const createCheckoutSession = async (req, res) => {
-//   if (req.method === 'POST') {
+//   if (req.method === "POST") {
 //     const token = req.headers.token;
 //     const { price, quantity = 1, metadata = {} } = req.body;
 
@@ -12,27 +54,27 @@
 //       const user = await getUser(token);
 //       const customer = await createOrRetrieveCustomer({
 //         uuid: user.id,
-//         email: user.email
+//         email: user.email,
 //       });
 
 //       const session = await stripe.checkout.sessions.create({
-//         payment_method_types: ['card'],
-//         billing_address_collection: 'required',
+//         payment_method_types: ["card"],
+//         billing_address_collection: "required",
 //         customer,
 //         line_items: [
 //           {
 //             price,
-//             quantity
-//           }
+//             quantity: 1,
+//           },
 //         ],
-//         mode: 'subscription',
+//         mode: "subscription",
 //         allow_promotion_codes: true,
 //         subscription_data: {
 //           trial_from_plan: true,
-//           metadata
+//           metadata,
 //         },
-//         success_url: `${getURL()}/account`,
-//         cancel_url: `${getURL()}/`
+//         success_url: `${getAppUrl()}/subscription-success`,
+//         cancel_url: `${getAppUrl()}/`,
 //       });
 
 //       return res.status(200).json({ sessionId: session.id });
@@ -43,8 +85,8 @@
 //         .json({ error: { statusCode: 500, message: err.message } });
 //     }
 //   } else {
-//     res.setHeader('Allow', 'POST');
-//     res.status(405).end('Method Not Allowed');
+//     res.setHeader("Allow", "POST");
+//     res.status(405).end("Method Not Allowed");
 //   }
 // };
 

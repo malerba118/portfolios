@@ -36,9 +36,6 @@ const Toolbar = () => {
         <NextLink href="/pricing">
           <Link>Pricing</Link>
         </NextLink>
-        <NextLink href="/about">
-          <Link>About</Link>
-        </NextLink>
         {!user && (
           <NextLink href="/login">
             <Link>Sign Up</Link>
