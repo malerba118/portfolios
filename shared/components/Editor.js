@@ -19,6 +19,7 @@ import * as styles from "../utils/styles";
 import * as api from "client/api";
 import { autorun } from "mobx";
 import PublishModal from "./PublishModal";
+import TemplateModal from "./TemplateModal";
 import Sidebar from "./Sidebar";
 import {
   MdFullscreen as FullscreenIcon,
@@ -43,6 +44,7 @@ const Editor = observer(() => {
   const mutation = useMutation((data) => api.portfolio.updateDraft(data));
   const [device, setDevice] = useState("desktop");
   const publishModal = useDisclosure();
+  const templateModal = useDisclosure({ defaultIsOpen: true });
   const { fullscreen, setFullscreen } = useFullscreen();
 
   const updatePortfolio = useMemo(() => {
@@ -150,6 +152,15 @@ const Editor = observer(() => {
         defaultValue={portfolio.subdomain}
         isOpen={publishModal.isOpen}
         onClose={publishModal.onClose}
+      />
+      <TemplateModal
+        key={String(templateModal.isOpen)}
+        isOpen={templateModal.isOpen}
+        onContinue={(templateName) => {
+          portfolio.draft.set({ template: templateName });
+          templateModal.onClose();
+        }}
+        onClose={templateModal.onClose}
       />
     </Flex>
   );

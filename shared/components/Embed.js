@@ -6,7 +6,14 @@ import { transitions } from "shared/utils/styles";
 
 const Iframe = chakra(motion.iframe);
 
-const Embed = ({ data, width, height, debounce = 1000, ...otherProps }) => {
+const Embed = ({
+  data,
+  width,
+  height,
+  scale = 1,
+  debounce = 1000,
+  ...otherProps
+}) => {
   const iframeRef = useRef();
   const [loaded, setLoaded] = useState(false);
   const [debouncedData] = useDebounce(data, debounce);
@@ -20,19 +27,27 @@ const Embed = ({ data, width, height, debounce = 1000, ...otherProps }) => {
   return (
     <Iframe
       ref={iframeRef}
-      onLoad={() => setLoaded(true)}
-      {...otherProps}
       bg="white"
+      {...otherProps}
+      onLoad={() => setLoaded(true)}
+      transform={`scale(${scale})`}
+      transformOrigin="top left"
       initial={{
-        width,
-        height,
-        scale: 0.88,
+        width: `calc(${
+          typeof width === "number" ? width + "px" : width
+        } / ${scale})`,
+        height: `calc(${
+          typeof height === "number" ? height + "px" : height
+        } / ${scale})`,
       }}
       animate={{
+        width: `calc(${
+          typeof width === "number" ? width + "px" : width
+        } / ${scale})`,
+        height: `calc(${
+          typeof height === "number" ? height + "px" : height
+        } / ${scale})`,
         transition: transitions.spring.normal,
-        width,
-        height,
-        scale: 1,
       }}
     />
   );

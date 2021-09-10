@@ -19,26 +19,28 @@ import IconButton from "./IconButton";
 import { MdKeyboardBackspace } from "react-icons/md";
 import * as data from "shared/utils/data";
 
-const templates = [
-  {
-    name: "venice",
-    label: "Venice",
-    defaults: {
-      headingFont: "Ubuntu",
-      paragraphFont: "Ubuntu",
-      palette: "ocean",
-    },
-  },
-  {
-    name: "madrid",
-    label: "Madrid",
-    defaults: {
-      headingFont: "Montserrat",
-      paragraphFont: "Lato",
-      palette: "desert",
-    },
-  },
-];
+// const templates = [
+//   {
+//     name: "venice",
+//     label: "Venice",
+//     defaults: {
+//       headingFont: "Ubuntu",
+//       paragraphFont: "Ubuntu",
+//       palette: "ocean",
+//     },
+//   },
+//   {
+//     name: "madrid",
+//     label: "Madrid",
+//     defaults: {
+//       headingFont: "Montserrat",
+//       paragraphFont: "Lato",
+//       palette: "desert",
+//     },
+//   },
+// ];
+
+const templateNames = data.templateNames;
 
 const Templates = observer(({ portfolio }) => {
   const [editing, setEditing] = useState(null);
@@ -55,31 +57,32 @@ const Templates = observer(({ portfolio }) => {
       {!editing && (
         <Section title="Templates">
           <Stack spacing={6}>
-            {templates.map((template) => {
-              const isSelected = template.name === portfolio.template;
+            {templateNames.map((templateName) => {
+              const templateOptions = data.templates[templateName];
+              const isSelected = templateName === portfolio.template;
               return (
                 <FormSection
-                  key={template.name}
+                  key={templateName}
                   onClick={(e) => {
                     portfolio.set({
-                      template: template.name,
+                      template: templateName,
                     });
                   }}
                   cursor="pointer"
                   isSelected={isSelected}
                   canSelect={true}
                   canEdit
-                  onEdit={() => setEditing(template.name)}
+                  onEdit={() => setEditing(templateName)}
                 >
                   <Stack spacing={2}>
                     <Flex justify="space-between" align="center">
                       <Text fontSize="sm" fontWeight={600}>
-                        {template.label}
+                        {templateOptions.label}
                       </Text>
                     </Flex>
                     <Image
                       objectFit="cover"
-                      src={`/templates/${template.name}.png`}
+                      src={templateOptions.img}
                       w="100%"
                       h="200px"
                       bg="gray.200"

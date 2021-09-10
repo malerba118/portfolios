@@ -1,6 +1,7 @@
 export const templates = {
   venice: {
     label: "Venice",
+    img: `/templates/venice.png`,
     defaults: {
       headingFont: "Ubuntu",
       paragraphFont: "Ubuntu",
@@ -9,6 +10,7 @@ export const templates = {
   },
   madrid: {
     label: "Madrid",
+    img: `/templates/madrid.png`,
     defaults: {
       headingFont: "Montserrat",
       paragraphFont: "Lato",
@@ -16,3 +18,5 @@ export const templates = {
     },
   },
 };
+
+export const templateNames = Object.keys(templates).sort();
