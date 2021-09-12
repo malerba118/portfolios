@@ -44,7 +44,6 @@ const Editor = observer(() => {
   const mutation = useMutation((data) => api.portfolio.updateDraft(data));
   const [device, setDevice] = useState("desktop");
   const publishModal = useDisclosure();
-  const templateModal = useDisclosure({ defaultIsOpen: true });
   const { fullscreen, setFullscreen } = useFullscreen();
 
   const updatePortfolio = useMemo(() => {
@@ -154,13 +153,9 @@ const Editor = observer(() => {
         onClose={publishModal.onClose}
       />
       <TemplateModal
-        key={String(templateModal.isOpen)}
-        isOpen={templateModal.isOpen}
         onContinue={(templateName) => {
           portfolio.draft.set({ template: templateName });
-          templateModal.onClose();
         }}
-        onClose={templateModal.onClose}
       />
     </Flex>
   );

@@ -6,9 +6,7 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  InputRightElement,
-  InputGroup,
-  Input,
+  Center,
   Button,
   Icon,
   Box,
@@ -22,6 +20,7 @@ import {
 import Embed from "./Embed";
 import { getHostingUrl } from "shared/utils/url";
 import { templates, templateNames } from "shared/utils/data";
+import storage from "local-storage";
 import * as styles from "shared/utils/styles";
 
 const TemplateThumbnail = ({ templateName, template, isSelected, onClick }) => {
@@ -46,18 +45,23 @@ const TemplateThumbnail = ({ templateName, template, isSelected, onClick }) => {
   );
 };
 
-const TemplateModal = ({ isOpen, onContinue, onClose }) => {
+const TemplateModal = ({ onContinue, onClose }) => {
+  const [isHidden, setHidden] = useState(storage.get("hide-templates-modal"));
   const initialRef = React.useRef();
   const finalRef = React.useRef();
   const [selectedTemplate, setSelectedTemplate] = useState(templateNames[0]);
+
+  useEffect(() => {
+    storage.set("hide-templates-modal", isHidden);
+  }, [isHidden]);
 
   return (
     <Modal
       isCentered
       initialFocusRef={initialRef}
       finalFocusRef={finalRef}
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={!isHidden}
+      onClose={() => setHidden(true)}
       size="3xl"
     >
       <ModalOverlay />
@@ -66,13 +70,9 @@ const TemplateModal = ({ isOpen, onContinue, onClose }) => {
         <ModalBody p={0}>
           <Stack spacing={0}>
             <Box display="inline-block" pos="relative">
-              <Spinner
-                pos="absolute"
-                top="50%"
-                left="50%"
-                transform="translate(-50%, -50%)"
-                color="purple.300"
-              />
+              <Center pos="absolute" inset={0}>
+                <Spinner color="purple.300" />
+              </Center>
               <AspectRatio w="100%" ratio={20 / 9}>
                 <Embed
                   src={`${getHostingUrl({ template: selectedTemplate })}`}
@@ -100,12 +100,20 @@ const TemplateModal = ({ isOpen, onContinue, onClose }) => {
           </Stack>
         </ModalBody>
         <ModalFooter>
-          <Button onClick={onClose} mr={3}>
+          <Button
+            onClick={() => {
+              setHidden(true);
+            }}
+            mr={3}
+          >
             Skip
           </Button>
           <Button
             colorScheme="purple"
-            onClick={() => onContinue?.(selectedTemplate)}
+            onClick={() => {
+              setHidden(true);
+              onContinue?.(selectedTemplate);
+            }}
           >
             Continue
           </Button>
