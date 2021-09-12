@@ -19,27 +19,6 @@ import IconButton from "./IconButton";
 import { MdKeyboardBackspace } from "react-icons/md";
 import * as data from "shared/utils/data";
 
-// const templates = [
-//   {
-//     name: "venice",
-//     label: "Venice",
-//     defaults: {
-//       headingFont: "Ubuntu",
-//       paragraphFont: "Ubuntu",
-//       palette: "ocean",
-//     },
-//   },
-//   {
-//     name: "madrid",
-//     label: "Madrid",
-//     defaults: {
-//       headingFont: "Montserrat",
-//       paragraphFont: "Lato",
-//       palette: "desert",
-//     },
-//   },
-// ];
-
 const templateNames = data.templateNames;
 
 const Templates = observer(({ portfolio }) => {

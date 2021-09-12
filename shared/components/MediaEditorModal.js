@@ -36,7 +36,6 @@ const MediaEditorModal = observer(({ isOpen, media, onSave, onClose }) => {
     >
       <ModalOverlay />
       <ModalContent>
-        {/* <ModalHeader>Publish Changes</ModalHeader> */}
         <ModalBody p={0}>
           {media && (
             <Flex

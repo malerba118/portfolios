@@ -19,6 +19,7 @@ import { useAuth } from "client/useAuth";
 import Img from "./Img";
 import ReorderableList from "./ReorderableList";
 import compress from "browser-image-compression";
+import heic2any from "heic2any";
 import MediaEditorModal from "./MediaEditorModal";
 import FileUploader from "./FileUploader";
 import useStorageRef from "shared/hooks/useStorageRef";
@@ -49,6 +50,9 @@ const options = {
 const processFile = async (file) => {
   if (file.type === "image/gif") {
     return file;
+  }
+  if (file.type === "image/heic") {
+    file = await heic2any({ blob: file, toType: "image/jpeg" });
   }
   return compress(file, options).catch((err) => {
     console.log("compression error", err);
