@@ -34,6 +34,7 @@ export const Crop = types.model("Crop", {
 export const Media = types
   .model("Media", {
     id: types.string,
+    type: types.maybeNull(types.string),
     rawUrl: types.maybeNull(types.string),
     processedUrl: types.maybeNull(types.string),
     crop: types.maybeNull(Crop),

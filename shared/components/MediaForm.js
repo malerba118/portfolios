@@ -47,6 +47,9 @@ const options = {
 };
 
 const processFile = async (file) => {
+  if (file.type === "image/gif") {
+    return file;
+  }
   return compress(file, options).catch((err) => {
     console.log("compression error", err);
     return Promise.resolve(file);
@@ -228,14 +231,16 @@ const MediaManager = observer(
           borderTopEndRadius={5}
           overflow="hidden"
         >
-          <Tooltip label={"Edit"}>
-            <IconButton
-              size="xs"
-              variant="solid"
-              icon={<MdEdit />}
-              onClick={() => setEditing(true)}
-            />
-          </Tooltip>
+          {media.type !== "image/gif" && (
+            <Tooltip label={"Edit"}>
+              <IconButton
+                size="xs"
+                variant="solid"
+                icon={<MdEdit />}
+                onClick={() => setEditing(true)}
+              />
+            </Tooltip>
+          )}
           <Tooltip label={"Delete"}>
             <IconButton
               size="xs"

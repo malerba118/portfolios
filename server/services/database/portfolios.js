@@ -13,6 +13,7 @@ const MediasSchema = joi.object({
   items: joi.array().items(
     joi.object({
       id: joi.string().required(),
+      type: joi.string().allow(null),
       rawUrl: joi.string().allow(null),
       processedUrl: joi.string().allow(null),
       crop: joi
