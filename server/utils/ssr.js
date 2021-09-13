@@ -1,5 +1,6 @@
 import nookies from "nookies";
 import Database from "server/services/database";
+import { serialize } from "./data";
 
 export const getCommonSsrProps = async (ctx) => {
   try {
@@ -11,7 +12,7 @@ export const getCommonSsrProps = async (ctx) => {
     }
 
     return {
-      user: JSON.parse(JSON.stringify(db.user)),
+      user: serialize(db.user),
       portfolio,
     };
   } catch (err) {

@@ -52,16 +52,15 @@ const Toolbar = () => {
               <User user={user} />
             </MenuButton>
             <MenuList>
-              <MenuItem>Profile</MenuItem>
               <MenuItem
-                onClick={async () => {
-                  router.push("/about");
+                onClick={() => {
+                  router.push("/profile");
                 }}
               >
-                About
+                Profile
               </MenuItem>
               <MenuItem
-                onClick={async () => {
+                onClick={() => {
                   router.push("/pricing");
                 }}
               >

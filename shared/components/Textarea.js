@@ -365,7 +365,6 @@ const isMarkActive = (editor, format) => {
 };
 
 const Element = ({ attributes, children, element }) => {
-  console.log(attributes);
   switch (element.type) {
     case "link":
       return (

@@ -23,10 +23,6 @@ function getRadianAngle(degreeValue) {
  */
 export const getCroppedImg = async (imageSrc, percentCrop, rotation = 0) => {
   const image = await createImage(imageSrc);
-  console.log(typeof image.height);
-  console.log(image.height);
-  console.log(typeof image.width);
-  console.log(image.width);
   const pixelCrop = {
     x: (percentCrop.x * image.width) / 100,
     width: (percentCrop.width * image.width) / 100,

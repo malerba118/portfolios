@@ -52,6 +52,7 @@
     "slate-react": "^0.65.2",
     "stripe": "^8.155.0",
     "superjson": "^1.7.4",
+    "traverse": "^0.6.6",
     "use-debounce": "^7.0.0",
     "use-image": "^1.0.7",
     "webfontloader": "^1.6.28"

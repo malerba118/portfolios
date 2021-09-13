@@ -57,6 +57,10 @@ const Pricing = (props) => {
     }
   };
 
+  const handleManageSubscriptionClick = (e) => {
+    router.push("/profile");
+  };
+
   return (
     <Flex
       direction="column"
@@ -189,7 +193,10 @@ const Pricing = (props) => {
                 {user && (
                   <>
                     {user.subscription?.status === "active" && (
-                      <Button onClick={() => {}} colorScheme="purple">
+                      <Button
+                        onClick={handleManageSubscriptionClick}
+                        colorScheme="purple"
+                      >
                         Manage Subscription
                       </Button>
                     )}

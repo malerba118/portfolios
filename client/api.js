@@ -34,7 +34,8 @@ export const account = {
     const res = await axios.post("/api/create-checkout-session");
     return res.data;
   },
-  getPortalLink: async () => {
-    return "";
+  createPortalLink: async () => {
+    const res = await axios.post("/api/create-portal-link");
+    return res.data;
   },
 };
