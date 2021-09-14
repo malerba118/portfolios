@@ -23,6 +23,17 @@ export function AuthProvider({ user, children }) {
     });
   }, []);
 
+  // force refresh the token every 10 minutes
+  useEffect(() => {
+    const handle = setInterval(async () => {
+      const user = firebaseClient.auth().currentUser;
+      if (user) await user.getIdToken(true);
+    }, 10 * 60 * 1000);
+
+    // clean up setInterval
+    return () => clearInterval(handle);
+  }, []);
+
   return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
 }
 
