@@ -64,6 +64,8 @@ const relevantEvents = new Set([
   "customer.subscription.created",
   "customer.subscription.updated",
   "customer.subscription.deleted",
+  "invoiceitem.created",
+  "invoiceitem.updated",
 ]);
 
 const webhookHandler = async (req, res) => {
@@ -102,6 +104,13 @@ const webhookHandler = async (req, res) => {
                 subscriptionId
               );
             }
+            break;
+          case "invoiceitem.created":
+          case "invoiceitem.updated":
+            await manageSubscriptionStatusChange(
+              event.data.object.customer,
+              event.data.object.subscription
+            );
             break;
           default:
             throw new Error("Unhandled relevant event!");
