@@ -107,6 +107,7 @@ const TemplateSettingsMap = types
   .model("TemplateSettingsMap", {
     madrid: types.optional(TemplateSettings, templates.madrid.defaults),
     venice: types.optional(TemplateSettings, templates.venice.defaults),
+    skrol: types.optional(TemplateSettings, templates.skrol.defaults),
   })
   .actions((self) => ({
     set: (patch) => {

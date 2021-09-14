@@ -17,6 +17,15 @@ export const templates = {
       palette: "desert",
     },
   },
+  skrol: {
+    label: "Skrol",
+    img: `/templates/skrol.png`,
+    defaults: {
+      headingFont: "Montserrat",
+      paragraphFont: "Lato",
+      palette: "desert",
+    },
+  },
 };
 
 export const templateNames = Object.keys(templates).sort();

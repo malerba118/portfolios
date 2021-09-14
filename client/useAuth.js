@@ -9,17 +9,17 @@ const AuthContext = createContext({
 export function AuthProvider({ user, children }) {
   useEffect(() => {
     return firebaseClient.auth().onIdTokenChanged(async (firebaseUser) => {
+      const prevToken = nookies.get(null).token;
       if (!firebaseUser) {
         nookies.destroy(null, "token");
-        nookies.set(null, "token", "", {});
       } else {
         const token = await firebaseUser.getIdToken();
-        nookies.destroy(null, "token");
         nookies.set(null, "token", token, {});
       }
-      // if (!!user !== !!firebaseUser) {
-      //   window.location.reload();
-      // }
+      const currToken = nookies.get(null).token;
+      if (prevToken !== currToken) {
+        window.location.reload();
+      }
     });
   }, []);
 

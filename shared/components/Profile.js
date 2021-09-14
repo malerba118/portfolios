@@ -16,6 +16,7 @@ import FormSection from "./FormSection";
 import InputContainer from "./InputContainer";
 import DateViewer from "./DateViewer";
 import * as api from "client/api";
+import getStripe from "client/stripe";
 import { useRouter } from "next/router";
 
 const ProfileItem = ({ label, children, action, ...otherProps }) => {
@@ -42,6 +43,17 @@ const ProfileItem = ({ label, children, action, ...otherProps }) => {
 const Profile = () => {
   const user = useAuth();
   const router = useRouter();
+
+  const handleUpgradeClick = async (e) => {
+    try {
+      const { sessionId } = await api.account.createCheckoutSession();
+      const stripe = await getStripe();
+      stripe.redirectToCheckout({ sessionId });
+    } catch (error) {
+      return alert(error.message);
+    }
+  };
+
   return (
     <Flex p={16} justify="center">
       <Box
@@ -85,13 +97,15 @@ const Profile = () => {
                   </Button>
                 )}
                 {user?.subscription?.status !== "active" && (
-                  <Button>Upgrade</Button>
+                  <Button onClick={handleUpgradeClick}>Upgrade</Button>
                 )}
               </>
             }
           >
             <Flex justify="space-between" align="flex-end">
-              <Text>No subscription</Text>
+              <Text textTransform="capitalize">
+                {user?.subscription?.status ?? "No subscription"}
+              </Text>
             </Flex>
           </ProfileItem>
         </Stack>

@@ -27,8 +27,6 @@ import { BiCheckCircle } from "react-icons/bi";
 import * as api from "client/api";
 import getStripe from "client/stripe";
 
-const provider = new firebaseClient.auth.GoogleAuthProvider();
-
 export const getServerSideProps = async (ctx) => {
   let config = {};
   config.props = await getCommonSsrProps(ctx);
