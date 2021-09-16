@@ -157,6 +157,20 @@ export default ({ db, user }) => {
     return toData(portfolioDoc);
   };
 
+  const getById = async (id) => {
+    let portfoliosSnapshot = await portfoliosCol.where("id", "==", id).get();
+    let portfolioDoc = portfoliosSnapshot.docs[0];
+    assertResourceExists(portfolioDoc);
+    const data = portfolioDoc.data();
+    if (db.auth.isSuperAdmin()) {
+      return toData(portfolioDoc);
+    }
+    if (data.owner !== user.id) {
+      throw new ResourceNotFoundError();
+    }
+    return toData(portfolioDoc);
+  };
+
   const getBySubdomain = async (subdomain) => {
     let portfoliosSnapshot = await portfoliosCol
       .where("subdomain", "==", subdomain)
@@ -232,6 +246,7 @@ export default ({ db, user }) => {
   return {
     getOrCreate,
     getBySubdomain,
+    getById,
     isSubdomainAvailable,
     updateDraft,
     updateSubdomain,

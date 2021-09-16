@@ -1,4 +1,5 @@
 import SendGrid from "@sendgrid/mail";
+import { ValidationError } from "joi";
 
 SendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -19,6 +20,6 @@ export const sendEmail = async ({ to, from, subject, text, html }) => {
       };
     })
     .catch((err) => {
-      return Promise.reject(new ValidationError());
+      return Promise.reject(new ValidationError(err.message));
     });
 };

@@ -17,7 +17,8 @@ export function AuthProvider({ user, children }) {
         nookies.set(null, "token", token, {});
       }
       const currToken = nookies.get(null).token;
-      if (prevToken !== currToken) {
+      if (Boolean(prevToken) !== Boolean(currToken)) {
+        // if existence of token changes, reload cause user is either logged in or logged out
         window.location.reload();
       }
     });

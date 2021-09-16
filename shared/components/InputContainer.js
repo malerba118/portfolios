@@ -1,10 +1,12 @@
 import React from "react";
-import { Stack, Text, Flex } from "@chakra-ui/react";
+import { Stack, Text, Flex, Tooltip, Icon } from "@chakra-ui/react";
 import {
   IoMdEye as VisibleIcon,
   IoMdEyeOff as HiddenIcon,
 } from "react-icons/io";
 import IconButton from "shared/components/IconButton";
+
+import { BiInfoCircle } from "react-icons/bi";
 
 const InputContainer = ({
   label,
@@ -12,6 +14,7 @@ const InputContainer = ({
   isHidden,
   canHide,
   onHideChange,
+  info,
   ...otherProps
 }) => {
   return (
@@ -26,6 +29,13 @@ const InputContainer = ({
       <Flex justify="space-between" align="flex-end">
         <Text as={isHidden ? "s" : "p"} fontSize="sm" fontWeight={600}>
           {label}
+          {info && (
+            <Tooltip textTransform="none" label={info}>
+              <span>
+                <Icon fontSize="md" mx={1} mb="4px" as={BiInfoCircle} />
+              </span>
+            </Tooltip>
+          )}
         </Text>
         {canHide && isHidden && (
           <IconButton

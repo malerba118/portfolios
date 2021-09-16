@@ -10,6 +10,7 @@ const ContactForm = observer(({ contact }) => {
       <Stack spacing={4}>
         <InputContainer
           label="Email"
+          info="Contact form submissions will be sent to this email. If it's not provided, submissions will be sent to your account email."
           canHide
           isHidden={contact.email.hidden}
           onHideChange={(hidden) => {

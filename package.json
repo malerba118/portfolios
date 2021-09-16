@@ -34,6 +34,7 @@
     "mobx-state-tree": "^5.0.2",
     "nanoid": "^3.1.23",
     "next": "11.0.0",
+    "nextjs-cors": "^2.0.0",
     "nookies": "^2.5.2",
     "preload-it": "^1.4.0",
     "query-string": "^7.0.1",
