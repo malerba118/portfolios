@@ -60,7 +60,7 @@ const Select = ({
               borderColor: "var(--chakra-colors-gray-300) !important",
             }}
             _active={{
-              borderColor: "var(--chakra-colors-purple-300) !important",
+              borderColor: "var(--chakra-colors-secondary-300) !important",
             }}
             {...otherProps}
           >

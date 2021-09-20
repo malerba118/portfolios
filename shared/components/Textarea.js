@@ -280,7 +280,7 @@ const Textarea = ({ size, value, onChange, placeholder = "Description" }) => {
         transition="all var(--chakra-transition-duration-normal);"
         _hover={{ borderColor: "gray.300" }}
         _focusWithin={{
-          boxShadow: "0 0 0 2px var(--chakra-colors-purple-300)!important",
+          boxShadow: "0 0 0 2px var(--chakra-colors-secondary-300)!important",
           borderColor: "transparent",
         }}
       >
@@ -428,7 +428,7 @@ const BlockButton = ({ format, icon }) => {
       flex={1}
       {...(isBlockActive(editor, format) ? styles.variants.active : {})}
       _hover={{
-        bg: isBlockActive(editor, format) ? "purple.400" : "gray.200",
+        bg: isBlockActive(editor, format) ? "secondary.400" : "gray.200",
       }}
       onMouseDown={(event) => {
         event.preventDefault();
@@ -446,7 +446,7 @@ const MarkButton = ({ format, icon }) => {
       flex={1}
       {...(isMarkActive(editor, format) ? styles.variants.active : {})}
       _hover={{
-        bg: isMarkActive(editor, format) ? "purple.400" : "gray.200",
+        bg: isMarkActive(editor, format) ? "secondary.400" : "gray.200",
       }}
       onMouseDown={(event) => {
         event.preventDefault();
@@ -465,7 +465,7 @@ const LinkButton = ({ onMouseDown }) => {
       flex={1}
       {...(active ? styles.variants.active : {})}
       _hover={{
-        bg: active ? "purple.400" : "gray.200",
+        bg: active ? "secondary.400" : "gray.200",
       }}
       onMouseDown={onMouseDown}
       icon={<BsLink />}

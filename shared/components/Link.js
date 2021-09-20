@@ -17,7 +17,7 @@ const variants = {
   },
 };
 
-const Link = ({ children, color = "white", ...otherProps }) => {
+const Link = ({ children, color, ...otherProps }) => {
   return (
     <MotionLink
       pos="relative"
@@ -36,7 +36,7 @@ const Link = ({ children, color = "white", ...otherProps }) => {
           layout
           pos="absolute"
           bottom={"-1px"}
-          background={color}
+          background={"currentColor"}
           height="2px"
           transition={{
             type: "spring",

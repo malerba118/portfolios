@@ -23,7 +23,7 @@ const Toolbar = () => {
       h={"100px"}
       alignItems="center"
       overflow="hidden"
-      color="white"
+      color="secondary.500"
       fontWeight="bold"
     >
       <Heading size="sm">

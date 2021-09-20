@@ -7,7 +7,7 @@ const User = ({ user, size = "sm", showName = false }) => {
         size={size}
         name={user.displayName}
         src={user.photoURL}
-        bg="purple.500"
+        bg="secondary.500"
       />
       {showName && <Text>{user.displayName}</Text>}
     </HStack>

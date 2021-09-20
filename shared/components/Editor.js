@@ -103,7 +103,7 @@ const Editor = observer(() => {
               <Button
                 onClick={() => router.push("/pricing")}
                 size="sm"
-                colorScheme="purple"
+                colorScheme="secondary"
                 variant="outline"
               >
                 Upgrade
@@ -111,7 +111,7 @@ const Editor = observer(() => {
             )}
             <Button
               onClick={publishModal.onOpen}
-              colorScheme="purple"
+              colorScheme="secondary"
               size="sm"
             >
               Publish

@@ -6,7 +6,12 @@ import {
   Text,
   Heading,
   Button,
+  Image,
   Progress,
+  AspectRatio,
+  HStack,
+  Spinner,
+  Center,
 } from "@chakra-ui/react";
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
@@ -15,69 +20,24 @@ import { useElementScroll, useTransform, useSpring } from "framer-motion";
 import { MotionBox } from "./animation";
 import Preload from "preload-it";
 import { textures } from "shared/utils/styles";
+import { MouseProvider } from "./animation/MouseProvider";
+import MouseGravity from "./animation/MouseGravity";
+import { getHostingUrl } from "shared/utils/url";
+import TemplateThumbnail from "./TemplateThumbnail";
+import { templates, templateNames } from "shared/utils/data";
+import Embed from "./Embed";
+
+const blobs = [
+  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <path
+      fill="var(--chakra-colors-primary-300)"
+      d="M36.7,-65.8C48.1,-57,58.3,-48.3,68.5,-37.3C78.7,-26.4,89,-13.2,90.7,1C92.4,15.1,85.5,30.3,75.4,41.5C65.4,52.8,52.2,60.1,39.1,67.5C26,74.8,13,82.2,1.2,80.1C-10.6,78,-21.2,66.5,-35.2,59.7C-49.2,52.9,-66.5,50.6,-75.6,41.5C-84.7,32.3,-85.5,16.1,-82.7,1.6C-79.9,-12.9,-73.3,-25.7,-64.4,-35.1C-55.4,-44.5,-44,-50.5,-32.8,-59.3C-21.7,-68.2,-10.9,-80.1,0.9,-81.6C12.7,-83.2,25.3,-74.5,36.7,-65.8Z"
+      transform="translate(100 100)"
+    />
+  </svg>,
+];
 
 const preload = Preload();
-
-const createPageManager = (numPages) => {
-  const pageSize = 1 / numPages;
-  return {
-    getPage(progress) {
-      return Math.floor(progress / pageSize);
-    },
-    getProgress(page) {
-      return page / numPages;
-    },
-  };
-};
-
-const pageManager = createPageManager(10);
-
-const getVideoSrc = (page) => {
-  if (page < 4) {
-    return "/vernos-content.webm";
-  } else if (page < 7) {
-    return "/vernos-templates.webm";
-  } else if (page < 10) {
-    return "/vernos-publish.webm";
-  } else {
-    return "/vernos-live.webm";
-  }
-};
-
-const useRefFromId = (id, defaultValue) => {
-  const ref = useRef(defaultValue);
-
-  useLayoutEffect(() => {
-    ref.current = document.getElementById(id);
-  }, [id]);
-
-  return ref;
-};
-
-const useMotionValueState = (motionValue) => {
-  const [state, setState] = useState(motionValue.get());
-
-  useEffect(() => {
-    return motionValue.onChange((val) => setState(val));
-  }, [motionValue]);
-
-  return state;
-};
-
-const ProgressBar = ({ controller }) => {
-  const progress = useMotionValueState(controller);
-  return (
-    <Progress
-      pos="absolute"
-      top="0"
-      width="100%"
-      colorScheme="purple"
-      bg="purple.300"
-      size="xs"
-      value={progress}
-    />
-  );
-};
 
 const Video = ({ src, isActive, autoPlay }) => {
   const ref = useRef(null);
@@ -110,68 +70,36 @@ const Video = ({ src, isActive, autoPlay }) => {
 };
 
 const Landing = ({}) => {
-  const ref = useRefFromId("parallax-scroll-container");
-  const scroll = useElementScroll(ref);
-  const [page, setPage] = useState(0);
-  const scale = useTransform(scroll.scrollYProgress, [0.032, 0.075], [0.85, 1]);
-  const progress = {
-    page1: useTransform(
-      scroll.scrollYProgress,
-      [pageManager.getProgress(1), pageManager.getProgress(4)],
-      [0, 100]
-    ),
-    page2: useTransform(
-      scroll.scrollYProgress,
-      [pageManager.getProgress(4), pageManager.getProgress(7)],
-      [0, 100]
-    ),
-    page3: useTransform(
-      scroll.scrollYProgress,
-      [pageManager.getProgress(7), pageManager.getProgress(10)],
-      [0, 100]
-    ),
-  };
-
-  const springs = {
-    scale: useSpring(scale, { mass: 0.02 }),
-  };
-
-  useEffect(() => {
-    preload.fetch([
-      "/vernos-content.webm",
-      "/vernos-templates.webm",
-      "/vernos-publish.webm",
-      "/vernos-live.webm",
-    ]);
-  }, []);
-
-  useEffect(() => {
-    return scroll.scrollYProgress.onChange((progress) => {
-      setPage(pageManager.getPage(progress));
-    });
-  }, []);
-
   return (
-    <Parallax
-      id="parallax-scroll-container"
-      pages={11}
-      style={{
-        height: "100vh",
-        backgroundColor: "var(--chakra-colors-purple-600)",
-        backgroundImage:
-          'url("https://www.transparenttextures.com/patterns/worn-dots.png")',
-        backgroundBlendMode: "overlay",
-        backgroundSize: "20%",
-      }}
-    >
-      <ParallaxLayer offset={0} speed={0}>
-        <Box pos="absolute" inset={0}>
+    <MouseProvider>
+      <Box>
+        <Flex h="100vh" direction="column" pos="relative" overflow="hidden">
+          <Box pos="absolute" left="-300px" top="-300px" w="700px" zIndex={-1}>
+            <MouseGravity opacity={0.5} amount={20}>
+              {blobs[0]}
+            </MouseGravity>
+          </Box>
+          <Box
+            pos="absolute"
+            bottom="-200px"
+            right="-150px"
+            w="500px"
+            zIndex={-1}
+          >
+            <MouseGravity opacity={0.5} amount={10}>
+              {blobs[0]}
+            </MouseGravity>
+          </Box>
           <Toolbar />
-          <Box px={24} py={24} color="white">
-            <Heading fontWeight="900" fontSize="7xl">
-              Build a Portfolio Site in Seconds
-            </Heading>
-            <Heading w="75%" my={2} fontWeight="900" fontSize="2xl">
+          <Box
+            flex={1}
+            px={24}
+            py={24}
+            color="secondary.500"
+            maxW={{ base: "100%", md: "80%" }}
+          >
+            <Heading size="4xl">Build a Portfolio Site in Seconds</Heading>
+            <Heading w="75%" my={2} size="md">
               You shouldn't have to spend your time learning how to build a
               website. That's why Vernos will just do it for you.
             </Heading>
@@ -179,168 +107,174 @@ const Landing = ({}) => {
               <Button
                 my={4}
                 alignSelf="start"
-                variant="outline"
-                _hover={{ bg: "whiteAlpha.200" }}
+                variant="solid"
+                colorScheme="secondary"
+                // _hover={{ bg: "whiteAlpha.200" }}
               >
                 Start for Free
               </Button>
             </NextLink>
           </Box>
-        </Box>
-      </ParallaxLayer>
-      <ParallaxLayer offset={1} speed={0} sticky={{ start: 1, end: 4 }}>
-        <Box
-          pos="absolute"
-          inset={0}
-          bg="purple.500"
-          color="white"
-          {...textures.dots}
-        >
-          <ProgressBar controller={progress.page1} />
-          <Stack pos="absolute" top={8} left={8} spacing={0}>
-            <Heading mx={2} mb={-2} fontSize="3xl">
-              STEP
-            </Heading>
-            <Heading
-              fontSize="9xl"
-              color="transparent"
-              style={{
-                WebkitTextStroke: "1px white",
-              }}
-            >
-              01
-            </Heading>
-          </Stack>
-          <Box pos="absolute" bottom={"37vw"} left={0} right={0}>
-            <Heading textAlign="center" fontSize="7xl" color="white">
-              Add Your Content
-            </Heading>
-          </Box>
-        </Box>
-      </ParallaxLayer>
-      <ParallaxLayer sticky={{ start: 4, end: 7 }}>
-        <Box
-          pos="absolute"
-          inset={0}
-          bg="purple.600"
-          color="white"
-          {...textures.dots}
-        >
-          <ProgressBar controller={progress.page2} />
-          <Stack pos="absolute" top={8} left={8} spacing={0}>
-            <Heading mx={2} mb={-2} fontSize="3xl">
-              STEP
-            </Heading>
-            <Heading
-              fontSize="9xl"
-              color="transparent"
-              style={{
-                WebkitTextStroke: "1px white",
-              }}
-            >
-              02
-            </Heading>
-          </Stack>
-          <Box pos="absolute" bottom={"37vw"} left={0} right={0}>
-            <Heading textAlign="center" fontSize="7xl" color="white">
-              Choose a Template
-            </Heading>
-          </Box>
-        </Box>
-      </ParallaxLayer>
-      <ParallaxLayer sticky={{ start: 7, end: 10 }}>
-        <Box
-          pos="absolute"
-          inset={0}
-          bg="purple.500"
-          color="white"
-          {...textures.dots}
-        >
-          <ProgressBar controller={progress.page3} />
-          <Stack pos="absolute" top={8} left={8} spacing={0}>
-            <Heading mx={2} mb={-2} fontSize="3xl">
-              STEP
-            </Heading>
-            <Heading
-              fontSize="9xl"
-              color="transparent"
-              style={{
-                WebkitTextStroke: "1px white",
-              }}
-            >
-              03
-            </Heading>
-          </Stack>
-          <Box pos="absolute" bottom={"37vw"} left={0} right={0}>
-            <Heading textAlign="center" fontSize="7xl" color="white">
-              Publish
-            </Heading>
-          </Box>
-        </Box>
-      </ParallaxLayer>
-      <ParallaxLayer sticky={{ start: 10, end: 11 }}>
-        <Box
-          pos="absolute"
-          inset={0}
-          bg="purple.600"
-          color="white"
-          {...textures.dots}
-        >
-          {/* <Stack pos="absolute" top={8} left={8} spacing={0}>
-            <Heading mx={2} mb={-2} fontSize="3xl">
-              STEP
-            </Heading>
-            <Heading
-              fontSize="9xl"
-              color="purple.600"
-              textShadow="0px 0px 2px white"
-            >
-              03
-            </Heading>
-          </Stack> */}
-          <Box pos="absolute" bottom={"37vw"} left={0} right={0}>
-            <Heading textAlign="center" fontSize="7xl" color="white">
-              That's it!
-            </Heading>
-          </Box>
-        </Box>
-      </ParallaxLayer>
-      <ParallaxLayer
-        style={{ pointerEvents: "none" }}
-        sticky={{ start: 0.35, end: 10 }}
-      >
-        <Flex pos="absolute" inset={0} justify="center">
-          <MotionBox
-            pos="absolute"
-            w="60vw"
-            bottom="48px"
-            style={{ scale: springs.scale }}
-          >
-            <MockBrowser
-              url={
-                page >= 10
-                  ? "https://austinmalerba.vernos.us"
-                  : "https://vernos.app"
-              }
-            >
-              {[
-                "/vernos-content.webm",
-                "/vernos-templates.webm",
-                "/vernos-publish.webm",
-                "/vernos-live.webm",
-              ].map((src) => (
-                <Video
-                  key={src}
-                  src={src}
-                  isActive={getVideoSrc(page) === src}
-                  autoPlay={page > 0}
-                />
-              ))}
-            </MockBrowser>
-          </MotionBox>
         </Flex>
-      </ParallaxLayer>
-    </Parallax>
+        <Box bg="primary.200" p={16}>
+          <Heading
+            margin="0 auto"
+            color="secondary.500"
+            size="lg"
+            w="100%"
+            maxW="620px"
+          >
+            Vernos is designed for user comfort. Many website builders can be
+            confusing and difficult to learn. Vernos is simple to use, yet will
+            still give you a great looking personal portfolio in seconds!
+          </Heading>
+        </Box>
+        <Stack
+          pos="relative"
+          zIndex={1}
+          direction="column"
+          bg="primary.50"
+          p="16"
+          spacing={6}
+        >
+          <StepLabel step="01" />
+          <Heading textAlign="center" color="secondary.500" size="4xl">
+            Add Your Content
+          </Heading>
+          <Box rounded="xl" p={{ base: 0, md: 16 }} bg="primary.200">
+            <Stack spacing={6}>
+              <MockBrowser url={"https://vernos.app"}>
+                <Video src={"/vernos-content.webm"} isActive autoPlay />
+              </MockBrowser>
+            </Stack>
+          </Box>
+        </Stack>
+        <Stack
+          pos="relative"
+          zIndex={1}
+          direction="column"
+          bg="primary.200"
+          p="16"
+          spacing={6}
+        >
+          <StepLabel step="02" />
+          <Heading textAlign="center" color="secondary.500" size="4xl">
+            Choose a Template
+          </Heading>
+          <Box rounded="xl" p={{ base: 0, md: 16 }} bg="primary.50">
+            <Stack spacing={6}>
+              <MockBrowser url={"https://vernos.app"}>
+                <Video src={"/vernos-templates.webm"} isActive autoPlay />
+              </MockBrowser>
+            </Stack>
+          </Box>
+        </Stack>
+        <Stack
+          pos="relative"
+          zIndex={1}
+          direction="column"
+          bg="primary.50"
+          p="16"
+          spacing={6}
+        >
+          <StepLabel step="03" />
+          <Heading textAlign="center" color="secondary.500" size="4xl">
+            Publish
+          </Heading>
+          <Box rounded="xl" p={{ base: 0, md: 16 }} bg="primary.200">
+            <Stack spacing={6}>
+              <MockBrowser url={"https://vernos.app"}>
+                <Video src={"/vernos-publish.webm"} isActive autoPlay />
+              </MockBrowser>
+            </Stack>
+          </Box>
+        </Stack>
+        <Stack
+          pos="relative"
+          zIndex={1}
+          direction="column"
+          bg="primary.200"
+          p="16"
+          spacing={6}
+          h="100vh"
+        >
+          <TemplatePreviewer height="100%" w="70%" margin="0 auto" />
+        </Stack>
+      </Box>
+    </MouseProvider>
+  );
+};
+
+const StepLabel = ({ step }) => {
+  return (
+    <Stack zIndex={-1} pos="absolute" top={6} left={6} spacing={0}>
+      <Heading color="primary.400" mx={2} mb={-3} size="xl" fontSize="3xl">
+        STEP
+      </Heading>
+      <Heading
+        size="4xl"
+        fontSize="8xl"
+        color="transparent"
+        style={{
+          WebkitTextStroke: "1px var(--chakra-colors-primary-400)",
+        }}
+      >
+        {step}
+      </Heading>
+    </Stack>
+  );
+};
+
+const TemplatePreviewer = ({ ...otherProps }) => {
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+
+  return (
+    <MockBrowser url="https://austinmalerba.vernos.us" {...otherProps}>
+      <Flex direction="column" h="100%">
+        <Box flex={1} pos="relative">
+          {!selectedTemplate && (
+            <Center bg="primary.50" pos="absolute" inset={0}>
+              <Heading
+                textAlign="center"
+                color="secondary.500"
+                size="xl"
+                maxW="500px"
+              >
+                Select some templates below and try them out!
+              </Heading>
+            </Center>
+          )}
+          {selectedTemplate && (
+            <>
+              <Center bg="primary.50" pos="absolute" inset={0}>
+                <Spinner color="secondary.300" />
+              </Center>
+              <Embed
+                src={`${getHostingUrl({ template: selectedTemplate })}`}
+                height="100%"
+                width="100%"
+                scale={0.7}
+                bg="transparent"
+              />
+            </>
+          )}
+        </Box>
+        <HStack spacing={2} h="100px" p={2} bgColor="white">
+          {templateNames.map((templateName) => {
+            const template = templates[templateName];
+            return (
+              <TemplateThumbnail
+                key={templateName}
+                templateName={templateName}
+                template={template}
+                isSelected={selectedTemplate === templateName}
+                onClick={() => setSelectedTemplate(templateName)}
+              />
+            );
+          })}
+        </HStack>
+      </Flex>
+    </MockBrowser>
   );
 };
 

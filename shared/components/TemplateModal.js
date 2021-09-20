@@ -22,28 +22,7 @@ import { getHostingUrl } from "shared/utils/url";
 import { templates, templateNames } from "shared/utils/data";
 import storage from "local-storage";
 import * as styles from "shared/utils/styles";
-
-const TemplateThumbnail = ({ templateName, template, isSelected, onClick }) => {
-  return (
-    <Image
-      key={templateName}
-      tabIndex={0}
-      cursor="pointer"
-      src={template.img}
-      rounded="md"
-      h="100%"
-      onClick={onClick}
-      {...styles.borders({
-        top: true,
-        right: true,
-        bottom: true,
-        left: true,
-        canSelect: true,
-        isSelected,
-      })}
-    />
-  );
-};
+import TemplateThumbnail from "./TemplateThumbnail";
 
 const TemplateModal = ({ onContinue, onClose }) => {
   const [isHidden, setHidden] = useState(storage.get("hide-templates-modal"));
@@ -71,7 +50,7 @@ const TemplateModal = ({ onContinue, onClose }) => {
           <Stack spacing={0}>
             <Box display="inline-block" pos="relative">
               <Center pos="absolute" inset={0}>
-                <Spinner color="purple.300" />
+                <Spinner color="secondary.300" />
               </Center>
               <AspectRatio w="100%" ratio={20 / 9}>
                 <Embed
@@ -109,7 +88,7 @@ const TemplateModal = ({ onContinue, onClose }) => {
             Skip
           </Button>
           <Button
-            colorScheme="purple"
+            colorScheme="secondary"
             onClick={() => {
               setHidden(true);
               onContinue?.(selectedTemplate);

@@ -66,7 +66,7 @@ function PublishModal({ defaultValue, isOpen, onSuccess, onClose }) {
               <Link
                 target="_blank"
                 href={getHostingUrl({ subdomain: debouncedSubdomain })}
-                color="purple.400"
+                color="secondary.400"
               >
                 {getHostingUrl({ subdomain: debouncedSubdomain })}
               </Link>
@@ -117,7 +117,11 @@ function PublishModal({ defaultValue, isOpen, onSuccess, onClose }) {
                 />
                 <InputRightElement px={2} mr={"76px"} bg="transparent">
                   {query.data?.available === true && (
-                    <Icon as={AvailableIcon} fontSize={24} color="purple.400" />
+                    <Icon
+                      as={AvailableIcon}
+                      fontSize={24}
+                      color="secondary.400"
+                    />
                   )}
                   {query.data?.available === false && (
                     <Icon as={UnavailableIcon} fontSize={24} color="red.400" />
@@ -128,18 +132,20 @@ function PublishModal({ defaultValue, isOpen, onSuccess, onClose }) {
           </FormSection>
         </ModalBody>
         <ModalFooter>
+          <Button onClick={onClose} mr={3}>
+            Cancel
+          </Button>
+
           <Button
             isDisabled={!isSubdomainAvailable}
             isLoading={mutations.publish.isLoading}
-            colorScheme="purple"
-            mr={3}
+            colorScheme="secondary"
             onClick={() => {
               mutations.publish.mutate(debouncedSubdomain);
             }}
           >
             Publish
           </Button>
-          <Button onClick={onClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

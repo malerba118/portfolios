@@ -24,7 +24,7 @@ function RadioCard(props) {
           cursor="pointer"
           bg="gray.100"
           _checked={{
-            bg: "purple.300",
+            bg: "secondary.300",
             color: "white",
           }}
           _focus={{

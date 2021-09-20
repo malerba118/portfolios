@@ -21,7 +21,7 @@ const SubscriptionSuccess = (props) => {
       w="100%"
       style={{
         height: "100vh",
-        backgroundColor: "var(--chakra-colors-purple-600)",
+        backgroundColor: "var(--chakra-colors-secondary-600)",
         backgroundImage:
           'url("https://www.transparenttextures.com/patterns/worn-dots.png")',
         backgroundBlendMode: "overlay",
@@ -38,7 +38,7 @@ const SubscriptionSuccess = (props) => {
             router.push("/");
           }}
           m={8}
-          colorScheme="purple"
+          colorScheme="secondary"
         >
           Go to Editor
         </Button>

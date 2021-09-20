@@ -66,23 +66,23 @@ const Pricing = (props) => {
       w="100%"
       style={{
         height: "100vh",
-        backgroundColor: "var(--chakra-colors-purple-600)",
+        backgroundColor: "var(--chakra-colors-primary-50)",
         backgroundImage:
-          'url("https://www.transparenttextures.com/patterns/worn-dots.png")',
-        backgroundBlendMode: "overlay",
-        backgroundSize: "20%",
+          'url("https://www.transparenttextures.com/patterns/asfalt-dark.png")',
+        backgroundBlendMode: "multiply",
+        backgroundSize: "12%",
       }}
     >
       <Toolbar />
       <Center flex={1}>
         <Box>
-          <Heading color="white" textAlign="center" size="4xl">
+          <Heading color="secondary.500" textAlign="center" size="4xl">
             Pricing
           </Heading>
           <SimpleGrid p={8} columns={{ base: 1, md: 2 }} spacing={8}>
             <ProductCard>
               <Stack spacing={4}>
-                <Heading size="lg" color="purple.600">
+                <Heading size="lg" color="secondary.500">
                   Free
                 </Heading>
                 <Heading size="xl">$0</Heading>
@@ -120,7 +120,7 @@ const Pricing = (props) => {
                         `/login?from=${encodeURIComponent("/pricing")}`
                       );
                     }}
-                    colorScheme="purple"
+                    colorScheme="secondary"
                   >
                     Get Started
                   </Button>
@@ -130,7 +130,7 @@ const Pricing = (props) => {
                     onClick={() => {
                       router.push(`/`);
                     }}
-                    colorScheme="purple"
+                    colorScheme="secondary"
                   >
                     Continue
                   </Button>
@@ -139,7 +139,7 @@ const Pricing = (props) => {
             </ProductCard>
             <ProductCard>
               <Stack spacing={4}>
-                <Heading size="lg" color="purple.600">
+                <Heading size="lg" color="secondary.500">
                   Premium
                 </Heading>
                 <HStack align="center">
@@ -183,7 +183,7 @@ const Pricing = (props) => {
                         `/login?from=${encodeURIComponent("/pricing")}`
                       );
                     }}
-                    colorScheme="purple"
+                    colorScheme="secondary"
                   >
                     Get Started
                   </Button>
@@ -193,13 +193,16 @@ const Pricing = (props) => {
                     {user.subscription?.status === "active" && (
                       <Button
                         onClick={handleManageSubscriptionClick}
-                        colorScheme="purple"
+                        colorScheme="secondary"
                       >
                         Manage Subscription
                       </Button>
                     )}
                     {user.subscription?.status !== "active" && (
-                      <Button onClick={handleUpgradeClick} colorScheme="purple">
+                      <Button
+                        onClick={handleUpgradeClick}
+                        colorScheme="secondary"
+                      >
                         Upgrade
                       </Button>
                     )}

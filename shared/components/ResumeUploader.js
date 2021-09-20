@@ -42,7 +42,7 @@ const ResumeUploader = ({ resume, onChange, folder = "", ...otherProps }) => {
       tooltip={!resume ? "Upload Resume" : ""}
     >
       {status === "pending" && (
-        <Spinner thickness="2px" size="sm" color="purple.300" />
+        <Spinner thickness="2px" size="sm" color="secondary.300" />
       )}
       {status === "error" && <Text>Failed to Upload</Text>}
       {(status === "success" || status === "initial") && !resume && (

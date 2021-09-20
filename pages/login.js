@@ -82,7 +82,7 @@ const SignUpForm = ({ form, onChange, error, isLoading, onSubmit }) => {
           isLoading={isLoading}
           key="sign-up-button"
           w="100%"
-          colorScheme="purple"
+          colorScheme="secondary"
           type="submit"
         >
           Sign Up
@@ -136,7 +136,7 @@ const SignInForm = ({ form, onChange, error, isLoading, onSubmit }) => {
           isLoading={isLoading}
           key="sign-up-button"
           w="100%"
-          colorScheme="purple"
+          colorScheme="secondary"
           type="submit"
         >
           Sign In
@@ -166,8 +166,12 @@ const Login = (_props) => {
   return (
     <Flex direction="column" h="100vh" w="100%">
       <Toolbar />
-      <Center flex={1}>
+      <Center flexDirection="column" flex={1}>
+        <Heading color="secondary.500" textAlign="center" size="4xl">
+          Welcome to Vernos
+        </Heading>
         <Stack
+          m={8}
           spacing={4}
           rounded="md"
           w="100%"
@@ -177,17 +181,9 @@ const Login = (_props) => {
           p={8}
           overflow="hidden"
         >
-          <Heading
-            fontWeight="600"
-            fontSize={30}
-            textAlign="center"
-            color="purple.600"
-          >
-            Welcome to Vernos
-          </Heading>
           <Button
             w="100%"
-            colorScheme="purple"
+            colorScheme="secondary"
             onClick={async () => {
               await firebaseClient.auth().signInWithPopup(provider);
               if (router.query.from) {
@@ -230,7 +226,7 @@ const Login = (_props) => {
               isLoading={mutations.signUp.isLoading}
               key="sign-up-button"
               w="100%"
-              colorScheme="purple"
+              colorScheme="secondary"
               onClick={() => mutations.signUp.mutate(form)}
             >
               Sign Up
@@ -241,7 +237,7 @@ const Login = (_props) => {
               isLoading={mutations.signIn.isLoading}
               key="sign-in-button"
               w="100%"
-              colorScheme="purple"
+              colorScheme="secondary"
               onClick={() => mutations.signIn.mutate(form)}
             >
               Sign In
@@ -252,7 +248,7 @@ const Login = (_props) => {
               Already have an account?{" "}
               <Button
                 type="submit"
-                colorScheme="purple"
+                colorScheme="secondary"
                 variant="link"
                 onClick={() => setMode("sign-in")}
               >
@@ -265,7 +261,7 @@ const Login = (_props) => {
               Don't have an account?{" "}
               <Button
                 type="button"
-                colorScheme="purple"
+                colorScheme="secondary"
                 variant="link"
                 onClick={() => setMode("sign-up")}
               >

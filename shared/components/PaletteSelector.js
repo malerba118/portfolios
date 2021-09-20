@@ -56,7 +56,7 @@ const PaletteSelector = ({ palettes = PALETTES, value, onChange }) => {
               canSelect: true,
               isSelected,
             })}
-            bg={isSelected ? "purple.50" : "white"}
+            bg={isSelected ? "white" : "white"}
           >
             <HStack>
               <Box

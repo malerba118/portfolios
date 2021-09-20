@@ -59,7 +59,7 @@ const MediaEditorModal = observer(({ isOpen, media, onSave, onClose }) => {
         </ModalBody>
         <ModalFooter>
           <Button
-            colorScheme="purple"
+            colorScheme="secondary"
             mr={3}
             onClick={() => {
               getCroppedImg(media.rawUrl, crop).then((file) =>

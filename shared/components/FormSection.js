@@ -34,7 +34,7 @@ const FormSection = ({
       className={_styles.showOnHoverTrigger}
       initial={{ height: expanded ? "auto" : "68px" }}
       overflow="hidden"
-      bg={isSelected ? "purple.50" : "white"}
+      bg={isSelected ? "white" : "white"}
       animate={{
         height: expanded ? "auto" : "68px",
         transition: transitions.two(0.3),

@@ -25,19 +25,19 @@ export const borders = ({
   if (canSelect) {
     props._hover = {
       borderColor: isSelected
-        ? "var(--chakra-colors-purple-300) !important"
+        ? "var(--chakra-colors-secondary-300) !important"
         : "var(--chakra-colors-gray-300) !important",
     };
   }
   if (isSelected) {
-    props.borderColor = "var(--chakra-colors-purple-300) !important";
+    props.borderColor = "var(--chakra-colors-secondary-300) !important";
   }
   return props;
 };
 
 export const variants = {
   active: {
-    bg: "purple.300",
+    bg: "secondary.300",
     color: "white",
   },
 };

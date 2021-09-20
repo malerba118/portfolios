@@ -12,9 +12,9 @@ export const Tab = (props) => {
       fontSize="sm"
       fontWeight="600"
       _selected={{
-        color: "purple.400",
+        color: "secondary.400",
         borderBottom: "2px solid",
-        borderColor: "purple.400",
+        borderColor: "secondary.400",
         marginBottom: "-2px",
       }}
       _focus={{

@@ -2,12 +2,12 @@ import { Box, HStack, Text, Flex } from "@chakra-ui/react";
 
 const MockBrowser = ({ url, children, ...otherProps }) => {
   return (
-    <Box boxShadow="md" borderRadius="md" overflow="hidden" {...otherProps}>
+    <Box boxShadow="xl" borderRadius="md" overflow="hidden" {...otherProps}>
       <HStack
         className="mock-browser-navbar"
         px={2}
         h="32px"
-        bg="purple.700"
+        bg="secondary.900"
         spacing={2}
       >
         <HStack>
@@ -17,18 +17,18 @@ const MockBrowser = ({ url, children, ...otherProps }) => {
         </HStack>
         <Flex
           align="center"
-          h="16px"
+          h="20px"
           px={1}
-          bg="whiteAlpha.100"
+          bg="whiteAlpha.200"
           flex={1}
           borderRadius="sm"
         >
-          <Text color="whiteAlpha.900" fontSize="10px" mt="1px">
+          <Text color="whiteAlpha.900" fontSize="11px" mt="1px">
             {url}
           </Text>
         </Flex>
       </HStack>
-      <Box w="100%" bg="gray.100">
+      <Box w="100%" h="calc(100% - 32px)" bg="gray.100">
         {children}
       </Box>
     </Box>
