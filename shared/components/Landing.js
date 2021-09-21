@@ -74,8 +74,15 @@ const Landing = ({}) => {
     <MouseProvider>
       <Box>
         <Flex h="100vh" direction="column" pos="relative" overflow="hidden">
-          <Box pos="absolute" left="-300px" top="-300px" w="700px" zIndex={-1}>
-            <MouseGravity opacity={0.6} amount={20}>
+          <Box
+            pos="absolute"
+            left="-300px"
+            top="-300px"
+            w="700px"
+            zIndex={-1}
+            transform="scale(1.3)"
+          >
+            <MouseGravity opacity={0.66} amount={15}>
               {blobs[0]}
             </MouseGravity>
           </Box>
@@ -85,8 +92,9 @@ const Landing = ({}) => {
             right="-150px"
             w="500px"
             zIndex={-1}
+            transform="scale(1.2)"
           >
-            <MouseGravity opacity={0.6} amount={10}>
+            <MouseGravity opacity={0.66} amount={8}>
               {blobs[0]}
             </MouseGravity>
           </Box>
@@ -244,6 +252,7 @@ const StepLabel = ({ step }) => {
       pos="absolute"
       top={{ base: 2, md: 8 }}
       left={{ base: 2, md: 8 }}
+      display={{ base: "none", md: "block" }}
       spacing={0}
     >
       <Heading color="primary.400" mx={2} mb={-3} size="xl" fontSize="3xl">

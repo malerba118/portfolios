@@ -22,7 +22,7 @@ export const createTheme = ({ isAuthenticated }) => {
     // },
     colors: {
       secondary: colorsToPalette(ant.generate("#307A7D")),
-      primary: colorsToPalette(ant.generate("#DB5858")),
+      primary: colorsToPalette(ant.generate("#DB7058")),
     },
     fonts: {
       heading: "Josefin Sans",
