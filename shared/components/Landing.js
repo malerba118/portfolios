@@ -172,7 +172,12 @@ const Landing = ({}) => {
           <Heading textAlign="center" color="secondary.500" size="4xl">
             Choose a Template
           </Heading>
-          <Box rounded="xl" p={{ base: 0, md: 16 }} bg="primary.50">
+          <Box
+            rounded="xl"
+            p={{ base: 0, md: 16 }}
+            bg="primary.50"
+            {...textures.speckles}
+          >
             <Stack spacing={6}>
               <MockBrowser url={"https://vernos.app"}>
                 <Video
@@ -266,7 +271,13 @@ const TemplatePreviewer = ({ ...otherProps }) => {
       <Flex direction="column" h="calc(100% - 32px)">
         <Box flex={1} pos="relative">
           {!selectedTemplate && (
-            <Center bg="primary.50" pos="absolute" inset={0} p={4}>
+            <Center
+              bg="primary.50"
+              {...textures.speckles}
+              pos="absolute"
+              inset={0}
+              p={4}
+            >
               <Heading
                 textAlign="center"
                 color="secondary.500"
