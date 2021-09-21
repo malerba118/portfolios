@@ -19,7 +19,7 @@ const Toolbar = () => {
   const user = useAuth();
   return (
     <Flex
-      px={24}
+      px={{ base: 8, md: 24 }}
       h={"100px"}
       alignItems="center"
       overflow="hidden"

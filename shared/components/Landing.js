@@ -75,7 +75,7 @@ const Landing = ({}) => {
       <Box>
         <Flex h="100vh" direction="column" pos="relative" overflow="hidden">
           <Box pos="absolute" left="-300px" top="-300px" w="700px" zIndex={-1}>
-            <MouseGravity opacity={0.5} amount={20}>
+            <MouseGravity opacity={0.6} amount={20}>
               {blobs[0]}
             </MouseGravity>
           </Box>
@@ -86,37 +86,41 @@ const Landing = ({}) => {
             w="500px"
             zIndex={-1}
           >
-            <MouseGravity opacity={0.5} amount={10}>
+            <MouseGravity opacity={0.6} amount={10}>
               {blobs[0]}
             </MouseGravity>
           </Box>
           <Toolbar />
-          <Box
+          <Flex
             flex={1}
-            px={24}
-            py={24}
+            px={{ base: 8, md: 24 }}
+            mb={12}
             color="secondary.500"
             maxW={{ base: "100%", md: "80%" }}
+            direction="column"
+            justify="center"
           >
-            <Heading size="4xl">Build a Portfolio Site in Seconds</Heading>
-            <Heading w="75%" my={2} size="md">
-              You shouldn't have to spend your time learning how to build a
-              website. That's why Vernos will just do it for you.
-            </Heading>
-            <NextLink href="/login">
-              <Button
-                my={4}
-                alignSelf="start"
-                variant="solid"
-                colorScheme="secondary"
-                // _hover={{ bg: "whiteAlpha.200" }}
-              >
-                Start for Free
-              </Button>
-            </NextLink>
-          </Box>
+            <Box>
+              <Heading size="4xl">Build a Portfolio Site in Seconds</Heading>
+              <Heading w="75%" my={2} size="md">
+                You shouldn't have to spend your time learning how to build a
+                website. That's why Vernos will just do it for you.
+              </Heading>
+              <NextLink href="/login">
+                <Button
+                  my={4}
+                  alignSelf="start"
+                  variant="solid"
+                  colorScheme="secondary"
+                  // _hover={{ bg: "whiteAlpha.200" }}
+                >
+                  Start for Free
+                </Button>
+              </NextLink>
+            </Box>
+          </Flex>
         </Flex>
-        <Box bgColor="primary.200" p={16}>
+        <Box bgColor="primary.200" p={{ base: 8, md: 24 }}>
           <Heading
             margin="0 auto"
             color="secondary.500"
@@ -134,7 +138,7 @@ const Landing = ({}) => {
           zIndex={1}
           direction="column"
           bgColor="primary.50"
-          p="16"
+          p={{ base: 8, md: 24 }}
           spacing={6}
           {...textures.speckles}
         >
@@ -160,7 +164,7 @@ const Landing = ({}) => {
           zIndex={1}
           direction="column"
           bgColor="primary.200"
-          p="16"
+          p={{ base: 8, md: 24 }}
           spacing={6}
           // {...textures.speckles}
         >
@@ -186,7 +190,7 @@ const Landing = ({}) => {
           zIndex={1}
           direction="column"
           bgColor="primary.50"
-          p="16"
+          p={{ base: 8, md: 24 }}
           spacing={6}
           {...textures.speckles}
         >
@@ -212,7 +216,7 @@ const Landing = ({}) => {
           zIndex={1}
           direction="column"
           bgColor="primary.200"
-          p="16"
+          p={{ base: 8, md: 16 }}
           spacing={6}
           h="100vh"
           // {...textures.speckles}
@@ -230,7 +234,13 @@ const Landing = ({}) => {
 
 const StepLabel = ({ step }) => {
   return (
-    <Stack zIndex={-1} pos="absolute" top={6} left={6} spacing={0}>
+    <Stack
+      zIndex={-1}
+      pos="absolute"
+      top={{ base: 2, md: 8 }}
+      left={{ base: 2, md: 8 }}
+      spacing={0}
+    >
       <Heading color="primary.400" mx={2} mb={-3} size="xl" fontSize="3xl">
         STEP
       </Heading>
