@@ -39,7 +39,7 @@ const blobs = [
 
 const preload = Preload();
 
-const Video = ({ src, isActive, autoPlay }) => {
+const Video = ({ src, isActive, autoPlay, style }) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const Video = ({ src, isActive, autoPlay }) => {
   return (
     <video
       src={src}
-      style={{ display: isActive ? "block" : "none" }}
+      style={{ display: isActive ? "block" : "none", ...style }}
       ref={(el) => {
         if (el) {
           el.playbackRate = 1.5;
@@ -116,7 +116,7 @@ const Landing = ({}) => {
             </NextLink>
           </Box>
         </Flex>
-        <Box bg="primary.200" p={16}>
+        <Box bgColor="primary.200" p={16}>
           <Heading
             margin="0 auto"
             color="secondary.500"
@@ -133,9 +133,10 @@ const Landing = ({}) => {
           pos="relative"
           zIndex={1}
           direction="column"
-          bg="primary.50"
+          bgColor="primary.50"
           p="16"
           spacing={6}
+          {...textures.speckles}
         >
           <StepLabel step="01" />
           <Heading textAlign="center" color="secondary.500" size="4xl">
@@ -144,7 +145,12 @@ const Landing = ({}) => {
           <Box rounded="xl" p={{ base: 0, md: 16 }} bg="primary.200">
             <Stack spacing={6}>
               <MockBrowser url={"https://vernos.app"}>
-                <Video src={"/vernos-content.webm"} isActive autoPlay />
+                <Video
+                  src={"/vernos-content.webm"}
+                  isActive
+                  autoPlay
+                  style={{ width: "100%" }}
+                />
               </MockBrowser>
             </Stack>
           </Box>
@@ -153,9 +159,10 @@ const Landing = ({}) => {
           pos="relative"
           zIndex={1}
           direction="column"
-          bg="primary.200"
+          bgColor="primary.200"
           p="16"
           spacing={6}
+          // {...textures.speckles}
         >
           <StepLabel step="02" />
           <Heading textAlign="center" color="secondary.500" size="4xl">
@@ -164,7 +171,12 @@ const Landing = ({}) => {
           <Box rounded="xl" p={{ base: 0, md: 16 }} bg="primary.50">
             <Stack spacing={6}>
               <MockBrowser url={"https://vernos.app"}>
-                <Video src={"/vernos-templates.webm"} isActive autoPlay />
+                <Video
+                  src={"/vernos-templates.webm"}
+                  isActive
+                  autoPlay
+                  style={{ width: "100%" }}
+                />
               </MockBrowser>
             </Stack>
           </Box>
@@ -173,9 +185,10 @@ const Landing = ({}) => {
           pos="relative"
           zIndex={1}
           direction="column"
-          bg="primary.50"
+          bgColor="primary.50"
           p="16"
           spacing={6}
+          {...textures.speckles}
         >
           <StepLabel step="03" />
           <Heading textAlign="center" color="secondary.500" size="4xl">
@@ -184,7 +197,12 @@ const Landing = ({}) => {
           <Box rounded="xl" p={{ base: 0, md: 16 }} bg="primary.200">
             <Stack spacing={6}>
               <MockBrowser url={"https://vernos.app"}>
-                <Video src={"/vernos-publish.webm"} isActive autoPlay />
+                <Video
+                  src={"/vernos-publish.webm"}
+                  isActive
+                  autoPlay
+                  style={{ width: "100%" }}
+                />
               </MockBrowser>
             </Stack>
           </Box>
@@ -193,12 +211,17 @@ const Landing = ({}) => {
           pos="relative"
           zIndex={1}
           direction="column"
-          bg="primary.200"
+          bgColor="primary.200"
           p="16"
           spacing={6}
           h="100vh"
+          // {...textures.speckles}
         >
-          <TemplatePreviewer height="100%" w="70%" margin="0 auto" />
+          <TemplatePreviewer
+            height="100%"
+            w={{ base: "100%", md: "70%" }}
+            margin="0 auto"
+          />
         </Stack>
       </Box>
     </MouseProvider>
@@ -230,10 +253,10 @@ const TemplatePreviewer = ({ ...otherProps }) => {
 
   return (
     <MockBrowser url="https://austinmalerba.vernos.us" {...otherProps}>
-      <Flex direction="column" h="100%">
+      <Flex direction="column" h="calc(100% - 32px)">
         <Box flex={1} pos="relative">
           {!selectedTemplate && (
-            <Center bg="primary.50" pos="absolute" inset={0}>
+            <Center bg="primary.50" pos="absolute" inset={0} p={4}>
               <Heading
                 textAlign="center"
                 color="secondary.500"

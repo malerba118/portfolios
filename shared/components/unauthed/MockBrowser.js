@@ -28,9 +28,7 @@ const MockBrowser = ({ url, children, ...otherProps }) => {
           </Text>
         </Flex>
       </HStack>
-      <Box w="100%" h="calc(100% - 32px)" bg="gray.100">
-        {children}
-      </Box>
+      {children}
     </Box>
   );
 };

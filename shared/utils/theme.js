@@ -21,7 +21,7 @@ export const createTheme = ({ isAuthenticated }) => {
     //   primary: colorsToPalette(ant.generate("#DB5858")),
     // },
     colors: {
-      secondary: colorsToPalette(ant.generate("#317E82")),
+      secondary: colorsToPalette(ant.generate("#307A7D")),
       primary: colorsToPalette(ant.generate("#DB5858")),
     },
     fonts: {

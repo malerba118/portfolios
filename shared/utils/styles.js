@@ -54,4 +54,10 @@ export const textures = {
       'url("https://www.transparenttextures.com/patterns/worn-dots.png")',
     backgroundBlendMode: "overlay",
   },
+  speckles: {
+    backgroundImage:
+      'url("https://www.transparenttextures.com/patterns/asfalt-dark.png")',
+    backgroundBlendMode: "multiply",
+    backgroundSize: "12%",
+  },
 };
