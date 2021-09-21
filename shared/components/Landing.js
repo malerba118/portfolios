@@ -42,33 +42,34 @@ const preload = Preload();
 const Video = ({ src, isActive, autoPlay, style }) => {
   const ref = useRef(null);
 
-  useEffect(() => {
-    if (ref.current) {
-      if (isActive && autoPlay) {
-        ref.current.play();
-      } else {
-        ref.current.pause();
-        ref.current.currentTime = 0;
-      }
-    }
-  }, [isActive, autoPlay]);
+  // useEffect(() => {
+  //   if (ref.current) {
+  //     if (isActive && autoPlay) {
+  //       ref.current.play();
+  //     } else {
+  //       ref.current.pause();
+  //       ref.current.currentTime = 0;
+  //     }
+  //   }
+  // }, [isActive, autoPlay]);
 
   return (
     <video
-      src={src}
       style={{ display: isActive ? "block" : "none", ...style }}
-      ref={(el) => {
-        if (el) {
-          el.playbackRate = 1.5;
-        }
-        ref.current = el;
-      }}
+      // ref={(el) => {
+      //   if (el) {
+      //     el.playbackRate = 1.5;
+      //   }
+      //   ref.current = el;
+      // }}
       muted
       loop
       autoPlay
       playsInline
       controls
-    />
+    >
+      <source type="video/webm" src={src} />
+    </video>
   );
 };
 
