@@ -168,7 +168,7 @@ const Login = (_props) => {
       <Toolbar />
       <Center flexDirection="column" flex={1}>
         <Heading color="secondary.500" textAlign="center" size="4xl">
-          Welcome to Vernos
+          Welcome
         </Heading>
         <Stack
           m={8}

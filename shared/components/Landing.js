@@ -120,7 +120,7 @@ const Landing = ({}) => {
             </Box>
           </Flex>
         </Flex>
-        <Box bgColor="primary.200" p={{ base: 8, md: 24 }}>
+        <Box bgColor="primary.200" px={{ base: 8, md: 24 }} py={16}>
           <Heading
             margin="0 auto"
             color="secondary.500"
