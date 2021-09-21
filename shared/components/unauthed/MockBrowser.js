@@ -2,7 +2,7 @@ import { Box, HStack, Text, Flex } from "@chakra-ui/react";
 
 const MockBrowser = ({ url, children, ...otherProps }) => {
   return (
-    <Box boxShadow="xl" borderRadius="md" overflow="hidden" {...otherProps}>
+    <Box boxShadow="md" borderRadius="md" overflow="hidden" {...otherProps}>
       <HStack
         className="mock-browser-navbar"
         px={2}

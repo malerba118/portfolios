@@ -65,8 +65,9 @@ const Video = ({ src, isActive, autoPlay, style }) => {
       }}
       muted
       loop
-      autoplay
-      playsinline
+      autoPlay
+      playsInline
+      controls
     />
   );
 };
