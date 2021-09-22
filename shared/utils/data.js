@@ -26,6 +26,15 @@ export const templates = {
       palette: "desert",
     },
   },
+  os: {
+    label: "Operating System",
+    img: `/templates/os.png`,
+    defaults: {
+      headingFont: "Ubuntu Mono",
+      paragraphFont: "Ubuntu Mono",
+      palette: "desert",
+    },
+  },
 };
 
 export const templateNames = Object.keys(templates).sort();
