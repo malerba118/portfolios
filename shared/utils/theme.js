@@ -21,21 +21,6 @@ export const createTheme = ({ isAuthenticated }) => {
     //   primary: colorsToPalette(ant.generate("#DB5858")),
     // },
     colors: {
-      // secondary: colorsToPalette(
-      //   ant.generate("#4d7e89", { backgroundColor: "#ffffff" })
-      // ),
-      // secondary: {
-      //   50: "#e1f4fc",
-      //   100: "#c7dde6",
-      //   200: "#a9c8d3",
-      //   300: "#8bb3c0",
-      //   400: "#6c9fac",
-      //   500: "#538793",
-      //   600: "#3e6673",
-      //   700: "#2a4653",
-      //   800: "#142834",
-      //   900: "#000c15",
-      // },
       secondary: {
         50: "#eaf0f1",
         100: "#cad8dc",
