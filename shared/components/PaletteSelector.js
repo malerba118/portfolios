@@ -32,6 +32,12 @@ const PALETTES = [
       },
     },
   },
+  {
+    id: "gray",
+    colors: {
+      primary: DEFAULT_THEME.colors.gray,
+    },
+  },
 ];
 
 const PaletteSelector = ({ palettes = PALETTES, value, onChange }) => {
