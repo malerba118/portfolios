@@ -58,6 +58,7 @@ const schemas = {
         description: joi.string().required().allow(""),
         images: MediasSchema,
         resume: ResumeSchema.allow(null),
+        logo: MediasSchema,
       }),
       contact: joi.object({
         email: joi.object({
@@ -105,6 +106,9 @@ const getDefaultPortfolio = ({ user }) => {
             items: [],
           },
           resume: null,
+          logo: {
+            items: [],
+          },
         },
         contact: {
           email: {

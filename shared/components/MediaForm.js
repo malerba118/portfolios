@@ -60,7 +60,7 @@ const processFile = async (file) => {
   });
 };
 
-const MediaForm = observer(({ medias, accept }) => {
+const MediaForm = observer(({ medias, accept, allowMultiple = true }) => {
   const [fileMap, setFileMap] = useState({});
   const user = useAuth();
 
@@ -85,6 +85,7 @@ const MediaForm = observer(({ medias, accept }) => {
   return (
     <Flex w="100%" overflowX="auto" overflowY="hidden">
       <ReorderableList
+        isDisabled={!allowMultiple}
         items={medias.items.slice()}
         onChange={(items) => medias.set({ items })}
         getItemStyle={(isDragging) => ({
@@ -101,13 +102,16 @@ const MediaForm = observer(({ medias, accept }) => {
           />
         )}
       </ReorderableList>
-      <FileUploader
-        height={THUMBNAIL_SIZE}
-        width={THUMBNAIL_SIZE}
-        accept={accept}
-        onFiles={handleFiles}
-        tooltip="Upload Photos"
-      />
+      {(allowMultiple || medias.items.length < 1) && (
+        <FileUploader
+          height={THUMBNAIL_SIZE}
+          width={THUMBNAIL_SIZE}
+          accept={accept}
+          onFiles={handleFiles}
+          tooltip="Upload Photos"
+          allowMultiple={allowMultiple}
+        />
+      )}
     </Flex>
   );
 });

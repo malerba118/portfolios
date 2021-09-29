@@ -134,6 +134,7 @@ export const About = types
     description: types.optional(types.string, ""),
     images: types.optional(Medias, { items: [] }),
     resume: types.maybeNull(Resume),
+    logo: types.optional(Medias, { items: [] }),
   })
   .actions((self) => ({
     set: (patch) => {
