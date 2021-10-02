@@ -24,7 +24,7 @@ const AboutForm = observer(({ about }) => {
               onChange={(e) => {
                 about.set({ firstName: e.target.value });
               }}
-              placeholder="First Name"
+              placeholder="Firstname"
               size="sm"
             />
           </InputContainer>
@@ -34,7 +34,7 @@ const AboutForm = observer(({ about }) => {
               onChange={(e) => {
                 about.set({ lastName: e.target.value });
               }}
-              placeholder="Last Name"
+              placeholder="Lastname"
               size="sm"
             />
           </InputContainer>
