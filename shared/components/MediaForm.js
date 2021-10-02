@@ -42,8 +42,8 @@ const getFileDimensions = (file) =>
 const THUMBNAIL_SIZE = "80px";
 
 const options = {
-  maxSizeMB: 0.5,
-  maxWidthOrHeight: 1920,
+  maxSizeMB: 1,
+  maxWidthOrHeight: 2880,
   useWebWorker: true,
 };
 
