@@ -1,4 +1,6 @@
-import { Box, HStack, Text, Flex } from "@chakra-ui/react";
+import { Box, HStack, Text, Flex, Button, Icon } from "@chakra-ui/react";
+import { BsArrowRight } from "react-icons/bs";
+import NextLink from "next/link";
 
 const MockBrowser = ({ url, children, ...otherProps }) => {
   return (
@@ -27,6 +29,14 @@ const MockBrowser = ({ url, children, ...otherProps }) => {
             {url}
           </Text>
         </Flex>
+        <NextLink href="/login">
+          <Button rounded="sm" h="20px" size="xs" colorScheme="primary">
+            <HStack>
+              <span>Start for Free</span>
+              <BsArrowRight />
+            </HStack>
+          </Button>
+        </NextLink>
       </HStack>
       {children}
     </Box>
