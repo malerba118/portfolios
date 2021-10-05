@@ -161,6 +161,18 @@ const Login = (_props) => {
     signIn: useMutation(({ email, password }) =>
       firebaseClient.auth().signInWithEmailAndPassword(email, password)
     ),
+    googleSignIn: useMutation(
+      () => firebaseClient.auth().signInWithPopup(provider),
+      {
+        onSuccess: () => {
+          if (router.query.from) {
+            window.location.href = router.query.from;
+          } else {
+            window.location.href = "/";
+          }
+        },
+      }
+    ),
   };
 
   return (
@@ -184,13 +196,9 @@ const Login = (_props) => {
           <Button
             w="100%"
             colorScheme="secondary"
-            onClick={async () => {
-              await firebaseClient.auth().signInWithPopup(provider);
-              if (router.query.from) {
-                window.location.href = router.query.from;
-              } else {
-                window.location.href = "/";
-              }
+            isLoading={mutations.googleSignIn.isLoading}
+            onClick={() => {
+              mutations.googleSignIn.mutate();
             }}
           >
             <Icon mb="2px" fontSize="xl" as={GoogleIcon} />
