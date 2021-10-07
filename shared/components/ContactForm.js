@@ -3,6 +3,8 @@ import { Stack, Input, HStack } from "@chakra-ui/react";
 import FormSection from "./FormSection";
 import { observer } from "mobx-react";
 import InputContainer from "./InputContainer";
+import SocialLinksForm from "./SocialLinksForm";
+import { nanoid } from "nanoid";
 
 const ContactForm = observer(({ contact }) => {
   return (
@@ -49,6 +51,22 @@ const ContactForm = observer(({ contact }) => {
             placeholder="Phone"
             size="sm"
           />
+        </InputContainer>
+        <InputContainer
+          label="Social Links"
+          canAdd
+          onAdd={() => {
+            contact.socialLinks.add({
+              id: nanoid(),
+              platform: null,
+              url: null,
+            });
+          }}
+          tooltips={{
+            add: "Add Link",
+          }}
+        >
+          <SocialLinksForm socialLinks={contact.socialLinks} />
         </InputContainer>
       </Stack>
     </FormSection>

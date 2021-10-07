@@ -16,6 +16,9 @@ const FormSection = ({
   expanded = true,
   isSelected,
   canSelect,
+  p = 6,
+  iconSize = "sm",
+  overflow = "hidden",
   ...otherProps
 }) => {
   return (
@@ -28,12 +31,12 @@ const FormSection = ({
         isSelected,
         canSelect,
       })}
-      p={6}
+      p={p}
       rounded="md"
       position="relative"
       className={_styles.showOnHoverTrigger}
       initial={{ height: expanded ? "auto" : "68px" }}
-      overflow="hidden"
+      overflow={overflow}
       bg={isSelected ? "white" : "white"}
       animate={{
         height: expanded ? "auto" : "68px",
@@ -54,7 +57,7 @@ const FormSection = ({
         {canEdit && (
           <Tooltip label={tooltips?.edit}>
             <IconButton
-              size="sm"
+              size={iconSize}
               fontSize="sm"
               variant="solid"
               borderRadius={0}
@@ -69,7 +72,7 @@ const FormSection = ({
         {canDelete && (
           <Tooltip label={tooltips?.delete}>
             <IconButton
-              size="sm"
+              size={iconSize}
               fontSize="sm"
               variant="solid"
               borderRadius={0}

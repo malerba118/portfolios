@@ -23,6 +23,7 @@ const Sidebar = observer(({ portfolio }) => {
       position="relative"
       className="sidebar"
       w="420px"
+      minW="420px"
       animate={{
         marginLeft: fullscreen ? "-420px" : 0,
         transition: transitions.one(0.3),

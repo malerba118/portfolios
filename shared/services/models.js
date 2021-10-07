@@ -146,10 +146,54 @@ export const About = types
     },
   }));
 
+export const SocialLink = types
+  .model("SocialLink", {
+    id: types.string,
+    platform: types.maybeNull(types.string),
+    url: types.maybeNull(types.string),
+  })
+  .actions((self) => ({
+    set: (patch) => {
+      Object.entries(patch).forEach(([key, val]) => {
+        if (val !== undefined) {
+          self[key] = val;
+        }
+      });
+    },
+  }));
+
+export const SocialLinks = types
+  .model("SocialLinks", {
+    items: types.array(SocialLink),
+  })
+  .actions((self) => ({
+    add: (item) => {
+      if (Array.isArray(item)) {
+        self.items.unshift(...item);
+      } else {
+        self.items.unshift(item);
+      }
+    },
+    remove: (id) => {
+      const index = self.items.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        self.items.splice(index, 1);
+      }
+    },
+    set: (patch) => {
+      Object.entries(patch).forEach(([key, val]) => {
+        if (val !== undefined) {
+          self[key] = val;
+        }
+      });
+    },
+  }));
+
 export const Contact = types
   .model("Contact", {
     email: hideable(types.optional(types.string, "")),
     phone: hideable(types.optional(types.string, "")),
+    socialLinks: types.optional(SocialLinks, { items: [] }),
   })
   .actions((self) => ({
     set: (patch) => {

@@ -7,6 +7,11 @@ import {
 import IconButton from "shared/components/IconButton";
 
 import { BiInfoCircle } from "react-icons/bi";
+import { MdAdd } from "react-icons/md";
+
+const DEFAULT_TOOLTIPS = {
+  add: "Add",
+};
 
 const InputContainer = ({
   label,
@@ -14,7 +19,11 @@ const InputContainer = ({
   isHidden,
   canHide,
   onHideChange,
+  canAdd,
+  onAdd,
   info,
+  tooltips = DEFAULT_TOOLTIPS,
+  iconSize = "xs",
   ...otherProps
 }) => {
   return (
@@ -41,7 +50,7 @@ const InputContainer = ({
           <IconButton
             tooltip="Show Field"
             rounded="2px"
-            size="xs"
+            size={iconSize}
             onClick={() => onHideChange(false)}
             icon={<HiddenIcon />}
           />
@@ -50,9 +59,18 @@ const InputContainer = ({
           <IconButton
             tooltip="Hide Field"
             rounded="2px"
-            size="xs"
+            size={iconSize}
             onClick={() => onHideChange(true)}
             icon={<VisibleIcon />}
+          />
+        )}
+        {canAdd && (
+          <IconButton
+            tooltip={tooltips?.add}
+            size={iconSize}
+            rounded="4px"
+            icon={<MdAdd />}
+            onClick={() => onAdd?.()}
           />
         )}
       </Flex>

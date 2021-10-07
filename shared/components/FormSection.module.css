@@ -1,7 +1,7 @@
-.showOnHoverTrigger .showOnHover {
+.showOnHoverTrigger > .showOnHover {
   display: none;
 }
 
-.showOnHoverTrigger:hover .showOnHover {
+.showOnHoverTrigger:hover > .showOnHover {
   display: block;
 }

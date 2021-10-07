@@ -43,6 +43,16 @@ const ResumeSchema = joi.object({
   url: joi.string(),
 });
 
+const SocialLinksSchema = joi.object({
+  items: joi.array().items(
+    joi.object({
+      id: joi.string().required(),
+      platform: joi.string().allow(null),
+      url: joi.string().allow(null),
+    })
+  ),
+});
+
 const schemas = {
   updateDraft: joi.object({
     template: joi.string(),
@@ -69,6 +79,7 @@ const schemas = {
           hidden: joi.boolean().required(),
           value: joi.string().required().allow(""),
         }),
+        socialLinks: SocialLinksSchema,
       }),
       projects: joi.array().items(
         joi.object({
@@ -118,6 +129,9 @@ const getDefaultPortfolio = ({ user }) => {
           phone: {
             hidden: false,
             value: "",
+          },
+          socialLinks: {
+            items: [],
           },
         },
         projects: [

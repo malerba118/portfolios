@@ -65,7 +65,11 @@ const Select = ({
             {...otherProps}
           >
             <Text align="start" isTruncated>
-              {label || selected?.props.label}
+              {typeof label === "function"
+                ? label(selected?.props.label)
+                : !!label
+                ? label
+                : selected?.props.label}
             </Text>
           </MenuButton>
           <MenuList
