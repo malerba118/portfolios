@@ -72,7 +72,7 @@ const Toolbar = () => {
                   window.location.href = "/";
                 }}
               >
-                Log out
+                Sign out
               </MenuItem>
             </MenuList>
           </Menu>

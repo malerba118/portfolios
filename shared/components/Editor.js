@@ -26,9 +26,11 @@ import {
   MdFullscreenExit as ExitFullscreenIcon,
   MdRefresh as RefreshIcon,
 } from "react-icons/md";
+import { RiExternalLinkLine } from "react-icons/ri";
 import IconButton from "./IconButton";
 import { useFullscreen } from "./Fullscreen";
 import { useRouter } from "next/router";
+import { getHostingUrl } from "shared/utils/url";
 
 const deviceAspectRatios = {
   phone: 9 / 16,
@@ -88,6 +90,23 @@ const Editor = observer(() => {
               rounded="4px"
               icon={fullscreen ? <ExitFullscreenIcon /> : <FullscreenIcon />}
             />
+            {portfolio.subdomain && (
+              <IconButton
+                tooltip={"Go to published site"}
+                onClick={() => {
+                  window.open(
+                    getHostingUrl({ subdomain: portfolio.subdomain }),
+                    "_blank"
+                  );
+                }}
+                size="sm"
+                fontSize="lg"
+                rounded="4px"
+                pb="2px"
+                pl="2px"
+                icon={<RiExternalLinkLine />}
+              />
+            )}
             <IconButton
               tooltip={"Refresh"}
               onClick={() => setRefreshKey((p) => p + 1)}
