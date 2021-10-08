@@ -74,145 +74,147 @@ const Pricing = (props) => {
       }}
     >
       <Toolbar />
-      <Center flex={1}>
-        <Box>
-          <Heading color="secondary.500" textAlign="center" size="4xl">
-            Pricing
-          </Heading>
-          <SimpleGrid p={8} columns={{ base: 1, md: 2 }} spacing={8}>
-            <ProductCard>
-              <Stack spacing={4}>
-                <Heading size="lg" color="secondary.500">
-                  Free
-                </Heading>
-                <Heading size="xl">$0</Heading>
-                <Text>Best for those just looking to experiment.</Text>
-                <List spacing={3}>
-                  <ListItem>
-                    <ListIcon as={BiCheckCircle} color="green.500" />
-                    <Text as="span" fontSize="sm">
-                      Publishing with Ads
-                    </Text>
-                  </ListItem>
-                  <ListItem>
-                    <ListIcon as={BiCheckCircle} color="green.500" />
-                    <Text as="span" fontSize="sm">
-                      Some Templates
-                    </Text>
-                  </ListItem>
-                  <ListItem>
-                    <ListIcon as={BiCheckCircle} color="green.500" />
-                    <Text as="span" fontSize="sm">
-                      Theme Customization
-                    </Text>
-                  </ListItem>
-                  <ListItem>
-                    <ListIcon as={BiCheckCircle} color="green.500" />
-                    <Text as="span" fontSize="sm">
-                      Contact Form Submission
-                    </Text>
-                  </ListItem>
-                </List>
-                {!user && (
-                  <Button
-                    onClick={() => {
-                      router.push(
-                        `/login?from=${encodeURIComponent("/pricing")}`
-                      );
-                    }}
-                    colorScheme="secondary"
-                  >
-                    Get Started
-                  </Button>
-                )}
-                {user && (
-                  <Button
-                    onClick={() => {
-                      router.push(`/`);
-                    }}
-                    colorScheme="secondary"
-                  >
-                    Continue
-                  </Button>
-                )}
-              </Stack>
-            </ProductCard>
-            <ProductCard>
-              <Stack spacing={4}>
-                <Heading size="lg" color="secondary.500">
-                  Premium
-                </Heading>
-                <HStack align="center">
-                  <Heading size="xl">$4</Heading>
-                  <Text size="sm">/month</Text>
-                </HStack>
-                <Text>
-                  Best for those looking to host a portfolio site for a
-                  prolonged time.
-                </Text>
-                <List spacing={3}>
-                  <ListItem>
-                    <ListIcon as={BiCheckCircle} color="green.500" />
-                    <Text as="span" fontSize="sm">
-                      Publishing <b>without</b> Ads
-                    </Text>
-                  </ListItem>
-                  <ListItem>
-                    <ListIcon as={BiCheckCircle} color="green.500" />
-                    <Text as="span" fontSize="sm">
-                      <b>All</b> Templates
-                    </Text>
-                  </ListItem>
-                  <ListItem>
-                    <ListIcon as={BiCheckCircle} color="green.500" />
-                    <Text as="span" fontSize="sm">
-                      Theme Customization
-                    </Text>
-                  </ListItem>
-                  <ListItem>
-                    <ListIcon as={BiCheckCircle} color="green.500" />
-                    <Text as="span" fontSize="sm">
-                      Contact Form Submission
-                    </Text>
-                  </ListItem>
-                </List>
-                {!user && (
-                  <Button
-                    onClick={() => {
-                      router.push(
-                        `/login?from=${encodeURIComponent("/pricing")}`
-                      );
-                    }}
-                    colorScheme="secondary"
-                  >
-                    Get Started
-                  </Button>
-                )}
-                {user && (
-                  <>
-                    {user.subscription?.status === "active" && (
-                      <Button
-                        onClick={handleManageSubscriptionClick}
-                        colorScheme="secondary"
-                      >
-                        Manage Subscription
-                      </Button>
-                    )}
-                    {user.subscription?.status !== "active" && (
-                      <Button
-                        onClick={handleUpgradeClick}
-                        colorScheme="secondary"
-                      >
-                        Upgrade
-                      </Button>
-                    )}
-                  </>
-                )}
-              </Stack>
-            </ProductCard>
-          </SimpleGrid>
-        </Box>
-      </Center>
+      <Box pos="relative" flex={1}>
+        <Center pos="absolute" inset={0}>
+          <Box maxH="100%">
+            <Heading color="secondary.500" textAlign="center" size="4xl">
+              Pricing
+            </Heading>
+            <SimpleGrid p={8} columns={{ base: 1, md: 2 }} spacing={8}>
+              <ProductCard>
+                <Stack spacing={4}>
+                  <Heading size="lg" color="secondary.500">
+                    Free
+                  </Heading>
+                  <Heading size="xl">$0</Heading>
+                  <Text>Best for those just looking to experiment.</Text>
+                  <List spacing={3}>
+                    <ListItem>
+                      <ListIcon as={BiCheckCircle} color="green.500" />
+                      <Text as="span" fontSize="sm">
+                        Publishing with Ads
+                      </Text>
+                    </ListItem>
+                    <ListItem>
+                      <ListIcon as={BiCheckCircle} color="green.500" />
+                      <Text as="span" fontSize="sm">
+                        Some Templates
+                      </Text>
+                    </ListItem>
+                    <ListItem>
+                      <ListIcon as={BiCheckCircle} color="green.500" />
+                      <Text as="span" fontSize="sm">
+                        Theme Customization
+                      </Text>
+                    </ListItem>
+                    <ListItem>
+                      <ListIcon as={BiCheckCircle} color="green.500" />
+                      <Text as="span" fontSize="sm">
+                        Contact Form Submission
+                      </Text>
+                    </ListItem>
+                  </List>
+                  {!user && (
+                    <Button
+                      onClick={() => {
+                        router.push(
+                          `/login?from=${encodeURIComponent("/pricing")}`
+                        );
+                      }}
+                      colorScheme="secondary"
+                    >
+                      Get Started
+                    </Button>
+                  )}
+                  {user && (
+                    <Button
+                      onClick={() => {
+                        router.push(`/`);
+                      }}
+                      colorScheme="secondary"
+                    >
+                      Continue
+                    </Button>
+                  )}
+                </Stack>
+              </ProductCard>
+              <ProductCard>
+                <Stack spacing={4}>
+                  <Heading size="lg" color="secondary.500">
+                    Premium
+                  </Heading>
+                  <HStack align="center">
+                    <Heading size="xl">$4</Heading>
+                    <Text size="sm">/month</Text>
+                  </HStack>
+                  <Text>
+                    Best for those looking to host a portfolio site for a
+                    prolonged time.
+                  </Text>
+                  <List spacing={3}>
+                    <ListItem>
+                      <ListIcon as={BiCheckCircle} color="green.500" />
+                      <Text as="span" fontSize="sm">
+                        Publishing <b>without</b> Ads
+                      </Text>
+                    </ListItem>
+                    <ListItem>
+                      <ListIcon as={BiCheckCircle} color="green.500" />
+                      <Text as="span" fontSize="sm">
+                        <b>All</b> Templates
+                      </Text>
+                    </ListItem>
+                    <ListItem>
+                      <ListIcon as={BiCheckCircle} color="green.500" />
+                      <Text as="span" fontSize="sm">
+                        Theme Customization
+                      </Text>
+                    </ListItem>
+                    <ListItem>
+                      <ListIcon as={BiCheckCircle} color="green.500" />
+                      <Text as="span" fontSize="sm">
+                        Contact Form Submission
+                      </Text>
+                    </ListItem>
+                  </List>
+                  {!user && (
+                    <Button
+                      onClick={() => {
+                        router.push(
+                          `/login?from=${encodeURIComponent("/pricing")}`
+                        );
+                      }}
+                      colorScheme="secondary"
+                    >
+                      Get Started
+                    </Button>
+                  )}
+                  {user && (
+                    <>
+                      {user.subscription?.status === "active" && (
+                        <Button
+                          onClick={handleManageSubscriptionClick}
+                          colorScheme="secondary"
+                        >
+                          Manage Subscription
+                        </Button>
+                      )}
+                      {user.subscription?.status !== "active" && (
+                        <Button
+                          onClick={handleUpgradeClick}
+                          colorScheme="secondary"
+                        >
+                          Upgrade
+                        </Button>
+                      )}
+                    </>
+                  )}
+                </Stack>
+              </ProductCard>
+            </SimpleGrid>
+          </Box>
+        </Center>
+      </Box>
     </Flex>
   );
 };

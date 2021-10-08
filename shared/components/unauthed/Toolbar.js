@@ -26,7 +26,7 @@ const Toolbar = () => {
       color="secondary.500"
       fontWeight="bold"
     >
-      <Heading size="sm">
+      <Heading size="sm" mb="6px">
         <NextLink href="/">
           <Image cursor="pointer" src="/vernos-white.svg" w={"80px"} />
         </NextLink>

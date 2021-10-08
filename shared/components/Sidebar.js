@@ -21,6 +21,9 @@ const formatter = (value, unit, suffix) => {
   if (value === 0) {
     return "just now";
   }
+  if (value > 1) {
+    unit += "s";
+  }
   return `${value} ${unit} ${suffix}`;
 };
 

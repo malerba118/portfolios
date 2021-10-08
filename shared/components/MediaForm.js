@@ -71,6 +71,7 @@ const MediaForm = observer(({ medias, accept, allowMultiple = true }) => {
       const id = nanoid();
       newMedias.push({
         id,
+        name: file.name,
         rawUrl: null,
         processedUrl: null,
         crop: null,
@@ -207,6 +208,7 @@ const MediaManager = observer(
           h={THUMBNAIL_SIZE}
           rounded="md"
           overflow="hidden"
+          alt={media.name}
         />
         {/* <Box
           display={hovered ? "block" : "none"}
