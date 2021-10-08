@@ -71,7 +71,10 @@ const Editor = observer(() => {
 
   return (
     <Flex h="100%">
-      <Sidebar portfolio={portfolio} />
+      <Sidebar
+        portfolio={portfolio}
+        lastSaved={mutation?.data?.draftLastSaved}
+      />
       <Flex flex={1} className="main" flexDirection="column">
         <Flex
           className="main-header"

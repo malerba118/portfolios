@@ -276,6 +276,7 @@ export const Portfolio = types
     id: types.string,
     subdomain: types.maybeNull(types.string),
     draft: PortfolioData,
+    draftLastSaved: types.maybeNull(types.string),
     published: types.maybeNull(PortfolioData),
     advertisementsDisabled: types.maybe(types.boolean),
   })

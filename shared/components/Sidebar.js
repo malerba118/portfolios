@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Flex, Center, Box, Button } from "@chakra-ui/react";
+import { Flex, Text, Box, Stack, Center } from "@chakra-ui/react";
 import PortfolioContentEditor from "./PortfolioContentEditor";
 import * as styles from "../utils/styles";
 import { observer } from "mobx-react";
@@ -7,6 +7,9 @@ import { Tabs, TabList, Tab } from "./Tabs";
 import Templates from "./Templates";
 import { useFullscreen } from "./Fullscreen";
 import { MotionFlex, transitions } from "./animation";
+import TimeAgoBase from "react-timeago";
+
+const TimeAgo = React.memo(TimeAgoBase);
 
 const tabs = ["content", "templates"];
 const labels = {
@@ -14,9 +17,26 @@ const labels = {
   templates: "Templates",
 };
 
-const Sidebar = observer(({ portfolio }) => {
+const formatter = (value, unit, suffix) => {
+  if (value === 0) {
+    return "just now";
+  }
+  return `${value} ${unit} ${suffix}`;
+};
+
+const Sidebar = observer(({ portfolio, lastSaved }) => {
   const [selectedTab, setSelectedTab] = useState("content");
   const { fullscreen } = useFullscreen();
+  const [lastSavedState, setLastSavedState] = useState(lastSaved);
+
+  // mutation seems to be setting data to undefined at some point
+  // this is a hacky workaround, but should figure it out for real
+  // some time
+  useEffect(() => {
+    if (lastSaved) {
+      setLastSavedState(lastSaved);
+    }
+  }, [lastSaved]);
 
   return (
     <MotionFlex
@@ -36,6 +56,7 @@ const Sidebar = observer(({ portfolio }) => {
         className="sidebar-header"
         h="56px"
         {...styles.borders({ bottom: true })}
+        justifyContent="space-between"
       >
         <Tabs
           index={tabs.indexOf(selectedTab)}
@@ -48,6 +69,33 @@ const Sidebar = observer(({ portfolio }) => {
             ))}
           </TabList>
         </Tabs>
+        <Center h="100%" px={4}>
+          {lastSavedState && (
+            <Stack spacing={0}>
+              <Text
+                fontWeight={600}
+                textAlign="center"
+                fontSize="xs"
+                color="gray.400"
+              >
+                Last saved
+              </Text>
+              <Text
+                fontWeight={600}
+                textAlign="center"
+                fontSize="xs"
+                color="gray.400"
+              >
+                <TimeAgo
+                  minPeriod={30}
+                  live={true}
+                  date={lastSavedState}
+                  formatter={formatter}
+                />
+              </Text>
+            </Stack>
+          )}
+        </Center>
       </Flex>
       <Box className="sidebar-content" flex="1" overflow="auto">
         {selectedTab === "content" && (

@@ -95,6 +95,7 @@ const schemas = {
     }),
   }),
   updateSubdomain: joi.string().required(),
+  draftLastSaved: joi.date().allow(null),
   isSubdomainAvailable: joi.string().required(),
 };
 
@@ -212,6 +213,7 @@ export default ({ db, user }) => {
     await portfoliosCol.doc(portfolio.id).update({
       ...portfolio,
       draft: data,
+      draftLastSaved: new Date().toJSON(),
     });
     return getOrCreate();
   };
