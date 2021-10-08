@@ -24,6 +24,7 @@ const Select = ({
   header,
   size = "sm",
   listProps,
+  placement,
   ...otherProps
 }) => {
   const selected = React.Children.toArray(children).find(
@@ -35,6 +36,7 @@ const Select = ({
       closeOnSelect={closeOnSelect}
       closeOnBlur={closeOnBlur}
       autoSelect={false}
+      placement={placement}
     >
       {(args) => (
         <>

@@ -90,6 +90,13 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
 ));
 
 const ProjectsForm = observer(({ projects, onDelete, onReorder, expanded }) => {
+  if (projects.length === 0) {
+    return (
+      <Text my={2} fontSize="sm" color="gray.600">
+        No projects yet, try adding one.
+      </Text>
+    );
+  }
   return (
     <Stack mb={-6}>
       <ReorderableList

@@ -90,6 +90,7 @@ const SocialLinkItem = observer(({ socialLink, onDelete }) => {
             listProps={{
               width: 28,
             }}
+            placement="top"
           >
             {PLATFORM_OPTIONS.map((option) => (
               <Option
