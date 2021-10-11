@@ -18,6 +18,7 @@ import DateViewer from "./DateViewer";
 import * as api from "client/api";
 import getStripe from "client/stripe";
 import { useRouter } from "next/router";
+import { hasSubscription } from "shared/utils/data";
 
 const ProfileItem = ({ label, children, action, ...otherProps }) => {
   return (
@@ -85,7 +86,7 @@ const Profile = () => {
             alignSelf="stretch"
             action={
               <>
-                {user?.subscription?.status === "active" && (
+                {hasSubscription(user) && (
                   <Button
                     onClick={() =>
                       api.account.createPortalLink().then(({ url }) => {
@@ -96,7 +97,7 @@ const Profile = () => {
                     Manage
                   </Button>
                 )}
-                {user?.subscription?.status !== "active" && (
+                {!hasSubscription(user) && (
                   <Button onClick={handleUpgradeClick}>Upgrade</Button>
                 )}
               </>

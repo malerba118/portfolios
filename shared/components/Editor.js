@@ -31,6 +31,7 @@ import IconButton from "./IconButton";
 import { useFullscreen } from "./Fullscreen";
 import { useRouter } from "next/router";
 import { getHostingUrl } from "shared/utils/url";
+import { hasSubscription } from "shared/utils/data";
 
 const deviceAspectRatios = {
   phone: 9 / 16,
@@ -121,7 +122,7 @@ const Editor = observer(() => {
           </ButtonGroup>
           <DeviceSelector value={device} onChange={setDevice} />
           <HStack pos="absolute" right={4}>
-            {user && user.subscription?.status !== "active" && (
+            {!hasSubscription(user) && (
               <Button
                 onClick={() => router.push("/pricing")}
                 size="sm"
@@ -173,6 +174,7 @@ const Editor = observer(() => {
         defaultValue={portfolio.subdomain}
         isOpen={publishModal.isOpen}
         onClose={publishModal.onClose}
+        portfolio={portfolio}
       />
       <TemplateModal
         onContinue={(templateName) => {

@@ -5,9 +5,10 @@ export const templates = {
     defaults: {
       headingFont: "Ubuntu",
       paragraphFont: "Ubuntu",
-      palette: "ocean",
+      palette: "gray",
     },
-    palettes: ["ocean", "gray"],
+    palettes: ["desert", "gray"],
+    locked: false,
   },
   madrid: {
     label: "Madrid",
@@ -17,6 +18,7 @@ export const templates = {
       paragraphFont: "Lato",
       palette: "desert",
     },
+    locked: false,
     palettes: ["desert", "gray"],
   },
   skrol: {
@@ -25,9 +27,10 @@ export const templates = {
     defaults: {
       headingFont: "Montserrat",
       paragraphFont: "Lato",
-      palette: "blackRed",
+      palette: "purplePink",
     },
     palettes: ["blackRed", "purplePink", "blueGreen"],
+    locked: true,
   },
   os: {
     label: "Operating System",
@@ -35,10 +38,27 @@ export const templates = {
     defaults: {
       headingFont: "Ubuntu Mono",
       paragraphFont: "Ubuntu Mono",
-      palette: "desert",
+      palette: "gray",
     },
     palettes: ["gray", "desert", "pink"],
+    locked: true,
   },
 };
 
-export const templateNames = Object.keys(templates).sort();
+export const templateNames = Object.keys(templates).sort((a, b) => {
+  if (templates[a].locked) {
+    a = "z_" + a;
+  }
+  if (templates[b].locked) {
+    b = "z_" + b;
+  }
+  return a < b ? -1 : a > b ? 1 : 0;
+});
+
+export const isLocked = (templateName) => {
+  return !!templates[templateName]?.locked;
+};
+
+export const hasSubscription = (user) => {
+  return user && user.subscription?.status === "active";
+};

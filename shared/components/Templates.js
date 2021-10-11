@@ -7,6 +7,9 @@ import {
   Image,
   HStack,
   Heading,
+  Icon,
+  Center,
+  Tooltip,
 } from "@chakra-ui/react";
 import { observer } from "mobx-react";
 import Section from "./Section";
@@ -19,11 +22,17 @@ import IconButton from "./IconButton";
 import { MdKeyboardBackspace } from "react-icons/md";
 import * as data from "shared/utils/data";
 import { palettes, selectPalettes } from "shared/utils/colors";
+import { MotionImage } from "./animation";
+import { MdLock } from "react-icons/md";
+import NextLink from "next/link";
+import Link from "./Link";
+import { useAuth } from "client/useAuth";
 
 const templateNames = data.templateNames;
 
 const Templates = observer(({ portfolio }) => {
   const [editing, setEditing] = useState(null);
+  const user = useAuth();
 
   return (
     <Stack p={6} spacing={6}>
@@ -60,14 +69,52 @@ const Templates = observer(({ portfolio }) => {
                         {templateOptions.label}
                       </Text>
                     </Flex>
-                    <Image
-                      objectFit="cover"
-                      src={templateOptions.img}
-                      w="100%"
-                      h="200px"
-                      bg="gray.200"
-                      rounded="md"
-                    />
+                    <Box pos="relative" w="100%" h="200px">
+                      <MotionImage
+                        objectFit="cover"
+                        src={templateOptions.img}
+                        w="100%"
+                        h="100%"
+                        bg="gray.200"
+                        rounded="md"
+                      />
+                      {templateOptions.locked && !data.hasSubscription(user) && (
+                        <>
+                          <Center pos="absolute" inset={0} bg="whiteAlpha.800">
+                            <Stack align="center">
+                              <Icon
+                                color="gray.700"
+                                fontSize="3xl"
+                                as={MdLock}
+                              />
+                              <Text fontSize="sm" textAlign="center" px={4}>
+                                In order to publish with this template you'll
+                                need to{" "}
+                                <span
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                  }}
+                                >
+                                  <NextLink href="/pricing">
+                                    <Text
+                                      display="inline"
+                                      textDecoration="underline"
+                                      _hover={{
+                                        color: "gray.600",
+                                      }}
+                                    >
+                                      upgrade your account
+                                    </Text>
+                                  </NextLink>
+                                </span>
+                                .
+                              </Text>
+                            </Stack>
+                          </Center>
+                        </>
+                      )}
+                    </Box>
                   </Stack>
                 </FormSection>
               );

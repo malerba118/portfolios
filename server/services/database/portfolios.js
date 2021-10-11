@@ -7,7 +7,8 @@ import {
 } from "./utils";
 import { nanoid } from "nanoid";
 import { ResourceNotFoundError, UnauthorizedError } from "./errors";
-import joi from "joi";
+import joi, { ValidationError } from "joi";
+import { hasSubscription, isLocked } from "shared/utils/data";
 
 const MediasSchema = joi.object({
   items: joi.array().items(
@@ -256,7 +257,13 @@ export default ({ db, user }) => {
 
   const publish = async (subdomain) => {
     assertAuthenticated(user);
-    let portfolio = await updateSubdomain(subdomain);
+    let portfolio = await getOrCreate();
+    if (!hasSubscription(user) && isLocked(portfolio?.draft?.template)) {
+      throw new ValidationError(
+        "You will need to upgrade in order to publish while using a locked template"
+      );
+    }
+    portfolio = await updateSubdomain(subdomain);
     await portfoliosCol.doc(portfolio.id).update({
       ...portfolio,
       published: portfolio.draft,
