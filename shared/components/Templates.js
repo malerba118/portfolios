@@ -18,6 +18,7 @@ import PaletteSelector from "./PaletteSelector";
 import IconButton from "./IconButton";
 import { MdKeyboardBackspace } from "react-icons/md";
 import * as data from "shared/utils/data";
+import { palettes, selectPalettes } from "shared/utils/colors";
 
 const templateNames = data.templateNames;
 
@@ -157,6 +158,7 @@ const TemplateSettings = observer(({ template, settings, onBack }) => {
             </HStack>
             <InputContainer label="Palette">
               <PaletteSelector
+                palettes={selectPalettes(templateOptions.palettes)}
                 value={settings.palette || templateOptions.defaults.palette}
                 onChange={(palette) => {
                   settings.set({ palette });

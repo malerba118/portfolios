@@ -7,6 +7,7 @@ export const templates = {
       paragraphFont: "Ubuntu",
       palette: "ocean",
     },
+    palettes: ["ocean", "gray"],
   },
   madrid: {
     label: "Madrid",
@@ -16,6 +17,7 @@ export const templates = {
       paragraphFont: "Lato",
       palette: "desert",
     },
+    palettes: ["desert", "gray"],
   },
   skrol: {
     label: "Skrol",
@@ -23,8 +25,9 @@ export const templates = {
     defaults: {
       headingFont: "Montserrat",
       paragraphFont: "Lato",
-      palette: "desert",
+      palette: "blackRed",
     },
+    palettes: ["blackRed", "purplePink", "blueGreen"],
   },
   os: {
     label: "Operating System",
@@ -34,6 +37,7 @@ export const templates = {
       paragraphFont: "Ubuntu Mono",
       palette: "desert",
     },
+    palettes: ["gray", "desert", "pink"],
   },
 };
 
