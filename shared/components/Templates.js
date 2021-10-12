@@ -62,6 +62,9 @@ const Templates = observer(({ portfolio }) => {
                   canSelect={true}
                   canEdit
                   onEdit={() => setEditing(templateName)}
+                  tooltips={{
+                    edit: "Edit Template",
+                  }}
                 >
                   <Stack spacing={2}>
                     <Flex justify="space-between" align="center">
@@ -78,44 +81,35 @@ const Templates = observer(({ portfolio }) => {
                         bg="gray.200"
                         rounded="md"
                       />
-                      {templateOptions.locked && !data.hasSubscription(user) && (
-                        <>
-                          <Center pos="absolute" inset={0} bg="whiteAlpha.800">
-                            <Stack align="center">
-                              <Icon
-                                color="gray.700"
-                                fontSize="xl"
-                                as={MdLock}
-                              />
-                              <Text fontSize="sm" textAlign="center" px={4}>
-                                In order to publish with this template you'll
-                                need to{" "}
-                                <span
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                  }}
-                                >
-                                  <NextLink href="/pricing">
-                                    <Text
-                                      display="inline"
-                                      textDecoration="underline"
-                                      _hover={{
-                                        color: "gray.600",
-                                      }}
-                                    >
-                                      upgrade your account
-                                    </Text>
-                                  </NextLink>
-                                </span>
-                                .
-                              </Text>
-                            </Stack>
-                          </Center>
-                        </>
-                      )}
                     </Box>
                   </Stack>
+                  {templateOptions.locked && !data.hasSubscription(user) && (
+                    <>
+                      <Tooltip
+                        label="In order to publish with this template you'll first need
+                                need to upgrade"
+                      >
+                        <HStack
+                          pos="absolute"
+                          align="center"
+                          bottom={0}
+                          right={0}
+                          px={2}
+                          py={1}
+                          spacing={1}
+                          bg="secondary.400"
+                          color="whiteAlpha.900"
+                          borderTopLeftRadius="4px"
+                          borderBottomRightRadius="4px"
+                        >
+                          <Text mt="2px" fontSize="sm">
+                            Premium
+                          </Text>
+                          <Icon fontSize="md" as={MdLock} />
+                        </HStack>
+                      </Tooltip>
+                    </>
+                  )}
                 </FormSection>
               );
             })}
@@ -125,33 +119,6 @@ const Templates = observer(({ portfolio }) => {
     </Stack>
   );
 });
-
-const TemplateCard = ({ template }) => {
-  return (
-    <Box
-      className={_styles.showOnHover}
-      position="absolute"
-      top="0px"
-      right="0px"
-      borderBottomStartRadius={3}
-      borderTopEndRadius={3}
-      overflow="hidden"
-    >
-      {canDelete && (
-        <Tooltip label={tooltips?.delete}>
-          <IconButton
-            size="sm"
-            fontSize="sm"
-            variant="solid"
-            borderRadius={0}
-            icon={<Icon as={RemoveIcon} color="orange.500" />}
-            onClick={() => onDelete?.()}
-          />
-        </Tooltip>
-      )}
-    </Box>
-  );
-};
 
 const TemplateSettings = observer(({ template, settings, onBack }) => {
   const templateOptions = data.templates[template];

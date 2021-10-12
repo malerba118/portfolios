@@ -35,9 +35,11 @@ import {
   isValidSubdomain,
   templates,
 } from "shared/utils/data";
+import { useRouter } from "next/router";
 
 const PublishModal = observer(
   ({ defaultValue, isOpen, onSuccess, onClose, portfolio }) => {
+    const router = useRouter();
     const initialRef = React.useRef();
     const finalRef = React.useRef();
     const [subdomain, setSubdomain] = useState(defaultValue);
@@ -109,6 +111,27 @@ const PublishModal = observer(
           <ModalHeader>Publish Changes</ModalHeader>
           <ModalBody>
             <FormSection>
+              {!hasSub && isUsingLockedTemplate && (
+                <>
+                  <Text color="red.400" mb={4} fontSize="sm">
+                    In order to publish while using a locked template, you'll
+                    first need to{" "}
+                    <NextLink href="/pricing">
+                      <Text
+                        display="inline"
+                        textDecoration="underline"
+                        _hover={{
+                          color: "primary.400",
+                        }}
+                        cursor="pointer"
+                      >
+                        upgrade
+                      </Text>
+                    </NextLink>
+                    .
+                  </Text>
+                </>
+              )}
               <InputContainer label="Choose a Subdomain">
                 <InputGroup>
                   <InputLeftAddon
@@ -158,46 +181,33 @@ const PublishModal = observer(
                   </InputRightElement>
                 </InputGroup>
               </InputContainer>
-              {!hasSub && isUsingLockedTemplate && (
-                <>
-                  <Text color="red.400" mt={4} fontSize="sm">
-                    In order to publish while using a locked template, you'll
-                    first need to{" "}
-                    <NextLink href="/pricing">
-                      <Text
-                        display="inline"
-                        textDecoration="underline"
-                        _hover={{
-                          color: "primary.400",
-                        }}
-                        cursor="pointer"
-                      >
-                        upgrade
-                      </Text>
-                    </NextLink>
-                    . If you don't wish to upgrade, then please switch to an
-                    unlocked template.
-                  </Text>
-                </>
-              )}
             </FormSection>
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose} mr={3}>
               Cancel
             </Button>
-            <Button
-              isDisabled={
-                !isSubdomainAvailable || (!hasSub && isUsingLockedTemplate)
-              }
-              isLoading={mutations.publish.isLoading}
-              colorScheme="secondary"
-              onClick={() => {
-                mutations.publish.mutate(debouncedSubdomain);
-              }}
-            >
-              Publish
-            </Button>
+            {!hasSub && isUsingLockedTemplate ? (
+              <Button
+                colorScheme="secondary"
+                onClick={() => {
+                  router.push("/pricing");
+                }}
+              >
+                Upgrade
+              </Button>
+            ) : (
+              <Button
+                isDisabled={!isSubdomainAvailable}
+                isLoading={mutations.publish.isLoading}
+                colorScheme="secondary"
+                onClick={() => {
+                  mutations.publish.mutate(debouncedSubdomain);
+                }}
+              >
+                Publish
+              </Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
