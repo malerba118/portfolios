@@ -8,7 +8,7 @@ import {
 import { nanoid } from "nanoid";
 import { ResourceNotFoundError, UnauthorizedError } from "./errors";
 import joi, { ValidationError } from "joi";
-import { hasSubscription, isLocked } from "shared/utils/data";
+import { hasSubscription, isLocked, isValidSubdomain } from "shared/utils/data";
 
 const MediasSchema = joi.object({
   items: joi.array().items(
@@ -240,9 +240,13 @@ export default ({ db, user }) => {
   };
 
   const updateSubdomain = async (subdomain) => {
+    subdomain = subdomain.toLowerCase();
     assertAuthenticated(user);
     assertValid(subdomain, schemas.updateSubdomain);
     let portfolio = await getOrCreate();
+    if (!isValidSubdomain(subdomain)) {
+      throw new ValidationError("Subdomain is invalid");
+    }
     const available = await isSubdomainAvailable(subdomain);
     if (available) {
       await portfoliosCol.doc(portfolio.id).update({
@@ -250,7 +254,7 @@ export default ({ db, user }) => {
         subdomain,
       });
     } else {
-      throw new ValidationError();
+      throw new ValidationError("Subdomain is unavailable");
     }
     return getOrCreate();
   };

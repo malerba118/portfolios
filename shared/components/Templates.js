@@ -84,7 +84,7 @@ const Templates = observer(({ portfolio }) => {
                             <Stack align="center">
                               <Icon
                                 color="gray.700"
-                                fontSize="3xl"
+                                fontSize="xl"
                                 as={MdLock}
                               />
                               <Text fontSize="sm" textAlign="center" px={4}>

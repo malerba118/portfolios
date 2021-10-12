@@ -62,3 +62,15 @@ export const isLocked = (templateName) => {
 export const hasSubscription = (user) => {
   return user && user.subscription?.status === "active";
 };
+
+export const isValidSubdomain = (str) => {
+  if (str.length === 0) {
+    return false;
+  }
+  if (str.length === 1) {
+    return /[abcdefghijklmnopqrstuvwxyz0123456789]/.test(str);
+  }
+  return /^[abcdefghijklmnopqrstuvwxyz0123456789][abcdefghijklmnopqrstuvwxyz0123456789-]*[abcdefghijklmnopqrstuvwxyz0123456789]$/.test(
+    str
+  );
+};

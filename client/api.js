@@ -24,7 +24,9 @@ export const portfolio = {
 
 export const subdomains = {
   isSubdomainAvailable: async (subdomain) => {
-    const res = await axios.get(`/api/subdomains/${subdomain}`);
+    const res = await axios.get(
+      `/api/subdomains/${encodeURIComponent(subdomain)}`
+    );
     return res.data;
   },
 };

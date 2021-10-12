@@ -16,6 +16,7 @@ import {
   Icon,
   Text,
   Link,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useMutation, useQuery } from "react-query";
 import {
@@ -29,7 +30,11 @@ import { useDebounce } from "use-debounce";
 import { getHostingUrl } from "shared/utils/url";
 import { useAuth } from "client/useAuth";
 import { observer } from "mobx-react";
-import { hasSubscription, templates } from "shared/utils/data";
+import {
+  hasSubscription,
+  isValidSubdomain,
+  templates,
+} from "shared/utils/data";
 
 const PublishModal = observer(
   ({ defaultValue, isOpen, onSuccess, onClose, portfolio }) => {
@@ -114,7 +119,9 @@ const PublishModal = observer(
                   />
                   <Input
                     value={subdomain}
-                    onChange={(e) => setSubdomain(e.target.value)}
+                    onChange={(e) => {
+                      setSubdomain(e.target.value);
+                    }}
                     ref={initialRef}
                     placeholder="subdomain"
                     fontSize="sm"
@@ -134,18 +141,26 @@ const PublishModal = observer(
                       />
                     )}
                     {query.data?.available === false && (
-                      <Icon
-                        as={UnavailableIcon}
-                        fontSize={24}
-                        color="red.400"
-                      />
+                      <Tooltip
+                        placement="top"
+                        bgColor="red.400"
+                        label={query.data?.message}
+                      >
+                        <span>
+                          <Icon
+                            as={UnavailableIcon}
+                            fontSize={24}
+                            color="red.400"
+                          />
+                        </span>
+                      </Tooltip>
                     )}
                   </InputRightElement>
                 </InputGroup>
               </InputContainer>
               {!hasSub && isUsingLockedTemplate && (
                 <>
-                  <Text color="primary.500" mt={4} fontSize="sm">
+                  <Text color="red.400" mt={4} fontSize="sm">
                     In order to publish while using a locked template, you'll
                     first need to{" "}
                     <NextLink href="/pricing">
