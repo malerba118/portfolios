@@ -88,28 +88,100 @@ export const Medias = types
     },
   }));
 
-const TemplateSettings = types
-  .model("TemplateSettings", {
-    headingFont: types.string,
-    paragraphFont: types.string,
-    palette: types.string,
-  })
-  .actions((self) => ({
-    set: (patch) => {
-      Object.entries(patch).forEach(([key, val]) => {
-        if (val !== undefined) {
-          self[key] = val;
-        }
-      });
-    },
-  }));
+const templateModels = {
+  os: types
+    .model("OsSettings", {
+      headingFont: types.optional(
+        types.string,
+        templates.os.defaults.headingFont
+      ),
+      paragraphFont: types.optional(
+        types.string,
+        templates.os.defaults.paragraphFont
+      ),
+      palette: types.optional(types.string, templates.os.defaults.palette),
+      wallpaper: types.optional(Medias, templates.os.defaults.wallpaper),
+    })
+    .actions((self) => ({
+      set: (patch) => {
+        Object.entries(patch).forEach(([key, val]) => {
+          if (val !== undefined) {
+            self[key] = val;
+          }
+        });
+      },
+    })),
+  madrid: types
+    .model("MadridSettings", {
+      headingFont: types.optional(
+        types.string,
+        templates.madrid.defaults.headingFont
+      ),
+      paragraphFont: types.optional(
+        types.string,
+        templates.madrid.defaults.paragraphFont
+      ),
+      palette: types.optional(types.string, templates.madrid.defaults.palette),
+    })
+    .actions((self) => ({
+      set: (patch) => {
+        Object.entries(patch).forEach(([key, val]) => {
+          if (val !== undefined) {
+            self[key] = val;
+          }
+        });
+      },
+    })),
+  skrol: types
+    .model("SkrolSettings", {
+      headingFont: types.optional(
+        types.string,
+        templates.skrol.defaults.headingFont
+      ),
+      paragraphFont: types.optional(
+        types.string,
+        templates.skrol.defaults.paragraphFont
+      ),
+      palette: types.optional(types.string, templates.skrol.defaults.palette),
+    })
+    .actions((self) => ({
+      set: (patch) => {
+        Object.entries(patch).forEach(([key, val]) => {
+          if (val !== undefined) {
+            self[key] = val;
+          }
+        });
+      },
+    })),
+  venice: types
+    .model("VeniceSettings", {
+      headingFont: types.optional(
+        types.string,
+        templates.venice.defaults.headingFont
+      ),
+      paragraphFont: types.optional(
+        types.string,
+        templates.venice.defaults.paragraphFont
+      ),
+      palette: types.optional(types.string, templates.venice.defaults.palette),
+    })
+    .actions((self) => ({
+      set: (patch) => {
+        Object.entries(patch).forEach(([key, val]) => {
+          if (val !== undefined) {
+            self[key] = val;
+          }
+        });
+      },
+    })),
+};
 
 const TemplateSettingsMap = types
   .model("TemplateSettingsMap", {
-    madrid: types.optional(TemplateSettings, templates.madrid.defaults),
-    venice: types.optional(TemplateSettings, templates.venice.defaults),
-    skrol: types.optional(TemplateSettings, templates.skrol.defaults),
-    os: types.optional(TemplateSettings, templates.os.defaults),
+    madrid: types.optional(templateModels.madrid, {}),
+    venice: types.optional(templateModels.venice, {}),
+    skrol: types.optional(templateModels.skrol, {}),
+    os: types.optional(templateModels.os, {}),
   })
   .actions((self) => ({
     set: (patch) => {

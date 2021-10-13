@@ -27,6 +27,7 @@ import { MdLock } from "react-icons/md";
 import NextLink from "next/link";
 import Link from "./Link";
 import { useAuth } from "client/useAuth";
+import MediaForm from "./MediaForm";
 
 const templateNames = data.templateNames;
 
@@ -120,8 +121,24 @@ const Templates = observer(({ portfolio }) => {
   );
 });
 
+const templateForms = {
+  os: observer(({ template, settings }) => {
+    return (
+      <InputContainer label="Wallpaper">
+        <MediaForm
+          medias={settings.wallpaper}
+          accept={["image/png", "image/jpeg", "image/heic", "image/gif"]}
+          allowMultiple={false}
+        />
+      </InputContainer>
+    );
+  }),
+};
+
 const TemplateSettings = observer(({ template, settings, onBack }) => {
   const templateOptions = data.templates[template];
+  // local template inout options
+  const TemplateForm = templateForms[template];
   return (
     <>
       <Section
@@ -179,6 +196,9 @@ const TemplateSettings = observer(({ template, settings, onBack }) => {
                 }}
               />
             </InputContainer>
+            {TemplateForm && (
+              <TemplateForm template={template} settings={settings} />
+            )}
           </Stack>
         </FormSection>
       </Section>

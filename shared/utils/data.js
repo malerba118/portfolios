@@ -1,3 +1,5 @@
+import { nanoid } from "nanoid";
+
 export const templates = {
   venice: {
     label: "Venice",
@@ -39,6 +41,16 @@ export const templates = {
       headingFont: "Ubuntu Mono",
       paragraphFont: "Ubuntu Mono",
       palette: "gray",
+      wallpaper: {
+        items: [
+          {
+            id: nanoid(),
+            name: "wallpaper-light.jpg",
+            type: "image/jpeg",
+            rawUrl: "https://vernos.us/templates/os/wallpaper-light.jpg",
+          },
+        ],
+      },
     },
     palettes: ["gray", "desert", "pink"],
     locked: true,

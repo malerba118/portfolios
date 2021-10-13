@@ -34,10 +34,28 @@ const MediasSchema = joi.object({
   ),
 });
 
-const TemplateSettingsSchema = joi.object({
-  headingFont: joi.string(),
-  paragraphFont: joi.string(),
-  palette: joi.string(),
+const TemplateSettingsMap = joi.object({
+  os: joi.object({
+    headingFont: joi.string(),
+    paragraphFont: joi.string(),
+    palette: joi.string(),
+    wallpaper: MediasSchema,
+  }),
+  madrid: joi.object({
+    headingFont: joi.string(),
+    paragraphFont: joi.string(),
+    palette: joi.string(),
+  }),
+  venice: joi.object({
+    headingFont: joi.string(),
+    paragraphFont: joi.string(),
+    palette: joi.string(),
+  }),
+  skrol: joi.object({
+    headingFont: joi.string(),
+    paragraphFont: joi.string(),
+    palette: joi.string(),
+  }),
 });
 
 const ResumeSchema = joi.object({
@@ -58,9 +76,7 @@ const SocialLinksSchema = joi.object({
 const schemas = {
   updateDraft: joi.object({
     template: joi.string(),
-    templateSettingsMap: joi
-      .object()
-      .pattern(joi.string(), TemplateSettingsSchema),
+    templateSettingsMap: TemplateSettingsMap,
     content: joi.object({
       about: joi.object({
         firstName: joi.string().required().allow(""),

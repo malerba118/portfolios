@@ -5,6 +5,7 @@ const createImage = (url) =>
   new Promise((resolve, reject) => {
     const image = new Image();
     image.crossOrigin = "Anonymous";
+    // image.width = window.innerWidth * 4;
     image.addEventListener("load", () => resolve(image));
     image.addEventListener("error", (error) => reject(error));
     // image.setAttribute("crossOrigin", "anonymous"); // needed to avoid cross-origin issues on CodeSandbox
@@ -65,7 +66,7 @@ export const getCroppedImg = async (imageSrc, percentCrop, rotation = 0) => {
     Math.round(0 - safeArea / 2 + image.height * 0.5 - pixelCrop.y)
   );
 
-  return compress.canvasToFile(canvas, "image/png", nanoid(), Date.now(), 1);
+  return compress.canvasToFile(canvas, "image/png", nanoid(), Date.now(), 100);
 };
 
 // /**
