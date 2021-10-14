@@ -55,6 +55,17 @@ export const templates = {
     palettes: ["gray", "desert", "pink"],
     locked: true,
   },
+  gallery: {
+    label: "Gallery",
+    img: `/templates/gallery.png`,
+    defaults: {
+      headingFont: "Crimson Text",
+      paragraphFont: "EB Garamond",
+      palette: "gray",
+    },
+    palettes: ["gray", "pink", "desert"],
+    locked: false,
+  },
 };
 
 export const templateNames = Object.keys(templates).sort((a, b) => {

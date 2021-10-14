@@ -174,6 +174,27 @@ const templateModels = {
         });
       },
     })),
+  gallery: types
+    .model("GallerySettings", {
+      headingFont: types.optional(
+        types.string,
+        templates.gallery.defaults.headingFont
+      ),
+      paragraphFont: types.optional(
+        types.string,
+        templates.gallery.defaults.paragraphFont
+      ),
+      palette: types.optional(types.string, templates.gallery.defaults.palette),
+    })
+    .actions((self) => ({
+      set: (patch) => {
+        Object.entries(patch).forEach(([key, val]) => {
+          if (val !== undefined) {
+            self[key] = val;
+          }
+        });
+      },
+    })),
 };
 
 const TemplateSettingsMap = types
@@ -182,6 +203,7 @@ const TemplateSettingsMap = types
     venice: types.optional(templateModels.venice, {}),
     skrol: types.optional(templateModels.skrol, {}),
     os: types.optional(templateModels.os, {}),
+    gallery: types.optional(templateModels.gallery, {}),
   })
   .actions((self) => ({
     set: (patch) => {

@@ -66,7 +66,7 @@ export const getCroppedImg = async (imageSrc, percentCrop, rotation = 0) => {
     Math.round(0 - safeArea / 2 + image.height * 0.5 - pixelCrop.y)
   );
 
-  return compress.canvasToFile(canvas, "image/png", nanoid(), Date.now(), 100);
+  return compress.canvasToFile(canvas, "image/png", nanoid(), Date.now(), 30);
 };
 
 // /**

@@ -28,6 +28,7 @@ import NextLink from "next/link";
 import Link from "./Link";
 import { useAuth } from "client/useAuth";
 import MediaForm from "./MediaForm";
+import Img from "./Img";
 
 const templateNames = data.templateNames;
 
@@ -74,7 +75,7 @@ const Templates = observer(({ portfolio }) => {
                       </Text>
                     </Flex>
                     <Box pos="relative" w="100%" h="200px">
-                      <MotionImage
+                      <Img
                         objectFit="cover"
                         src={templateOptions.img}
                         w="100%"

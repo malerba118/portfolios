@@ -42,10 +42,10 @@ const getFileDimensions = (file) =>
 const THUMBNAIL_SIZE = "80px";
 
 const options = {
-  maxSizeMB: 2,
-  maxWidthOrHeight: 4000,
+  maxSizeMB: 0.5,
+  maxWidthOrHeight: 5000,
   useWebWorker: true,
-  initialQuality: 100,
+  initialQuality: 30,
 };
 
 const processFile = async (file) => {

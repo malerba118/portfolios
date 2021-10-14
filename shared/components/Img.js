@@ -28,13 +28,22 @@ const defaultChildren = (status) => {
         pointerEvents="none"
         bg="gray.100"
         rounded="md"
-        animate={{ opacity: status === "loading" ? 1 : 0 }}
+        animate={{
+          opacity: status === "loading" ? 1 : 0,
+          transition: { duration: 0.33 },
+        }}
       />
     </>
   );
 };
 
-const Img = ({ src, imgStyle, children = defaultChildren, ...otherProps }) => {
+const Img = ({
+  src,
+  objectFit,
+  imgStyle,
+  children = defaultChildren,
+  ...otherProps
+}) => {
   const [status, setStatus] = useState("loading");
 
   useEffect(() => {
@@ -42,7 +51,12 @@ const Img = ({ src, imgStyle, children = defaultChildren, ...otherProps }) => {
   }, [src]);
 
   return (
-    <Box display="inline-block" pos="relative" {...otherProps}>
+    <Box
+      display="inline-block"
+      pos="relative"
+      overflow="hidden"
+      {...otherProps}
+    >
       <Box pos="absolute" inset={0} pointerEvents="none">
         {children(status)}
       </Box>
@@ -50,7 +64,13 @@ const Img = ({ src, imgStyle, children = defaultChildren, ...otherProps }) => {
         src={src}
         onLoad={() => setStatus("loaded")}
         onError={() => setStatus("errored")}
-        style={{ opacity: status === "errored" ? 0 : 1, ...imgStyle }}
+        style={{
+          opacity: status === "errored" ? 0 : 1,
+          height: "100%",
+          width: "100%",
+          objectFit,
+          ...imgStyle,
+        }}
       />
     </Box>
   );

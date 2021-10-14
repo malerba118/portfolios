@@ -56,6 +56,11 @@ const TemplateSettingsMap = joi.object({
     paragraphFont: joi.string(),
     palette: joi.string(),
   }),
+  gallery: joi.object({
+    headingFont: joi.string(),
+    paragraphFont: joi.string(),
+    palette: joi.string(),
+  }),
 });
 
 const ResumeSchema = joi.object({
