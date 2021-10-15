@@ -1,6 +1,7 @@
 module.exports = {
   reactStrictMode: true,
-  optimization: {
-    minimizer: [],
+  webpack: (config) => {
+    config.optimization.minimize = false;
+    return config;
   },
 };
