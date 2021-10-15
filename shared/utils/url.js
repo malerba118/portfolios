@@ -1,4 +1,4 @@
-import { isDev } from "./runtime";
+import { isLocal } from "./runtime";
 import qs from "query-string";
 
 export const getSubdomain = (host) => {
@@ -16,7 +16,7 @@ export const getHostingUrl = ({
     template,
     portfolio,
   });
-  if (isDev) {
+  if (isLocal) {
     if (subdomain) {
       // override query to include subdomain
       query = qs.stringify({

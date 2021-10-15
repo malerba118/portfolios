@@ -1,6 +1,6 @@
 import React from "react";
 import Embed from "./Embed";
-import { isDev } from "shared/utils/runtime";
+import { isLocal } from "shared/utils/runtime";
 import { observer } from "mobx-react";
 import * as styles from "../utils/styles";
 import { getHostingUrl } from "shared/utils/url";

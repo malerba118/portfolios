@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Embed from "./Embed";
-import { isDev } from "shared/utils/runtime";
+import { isLocal } from "shared/utils/runtime";
 import { observer } from "mobx-react";
 import firebaseClient from "client/firebase";
 import * as styles from "../utils/styles";

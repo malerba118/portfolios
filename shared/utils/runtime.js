@@ -6,4 +6,4 @@ export const isBrowser = () => {
   return !isServer();
 };
 
-export const isDev = process.env.NEXT_PUBLIC_ENV === "development";
+export const isLocal = process.env.NEXT_PUBLIC_IS_LOCAL === "true";
