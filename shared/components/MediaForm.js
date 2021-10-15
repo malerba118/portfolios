@@ -18,7 +18,7 @@ import {
 import { useAuth } from "client/useAuth";
 import Img from "./Img";
 import ReorderableList from "./ReorderableList";
-import compress from "browser-image-compression";
+import compress from "shared/utils/browser-image-compression";
 import heic2any from "heic2any";
 import MediaEditorModal from "./MediaEditorModal";
 import FileUploader from "./FileUploader";
