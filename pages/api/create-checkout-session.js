@@ -27,7 +27,7 @@ export default router({
       customer: db.user.stripeCustomerId,
       line_items: [
         {
-          price: "price_1JXsXlLkdohqnm1L7KBhO9wT",
+          price: "price_1JkfX5FwyRTPcbuJKNczQ2Lh",
           quantity: 1,
         },
       ],
