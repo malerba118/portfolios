@@ -53,6 +53,10 @@ const Editor = observer(() => {
     return debounce(mutation.mutate, 3000);
   }, [mutation.mutate]);
 
+  // useEffect(() => {
+  //   console.log(query.data);
+  // }, [query.data]);
+
   const portfolio = useMemo(() => {
     if (query.data?.id) {
       return models.Portfolio.create(query.data);

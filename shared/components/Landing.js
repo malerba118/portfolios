@@ -316,7 +316,7 @@ const TemplatePreviewer = ({ ...otherProps }) => {
             </>
           )}
         </Box>
-        <HStack spacing={2} h="100px" p={2} bgColor="white">
+        <HStack spacing={2} h="100px" p={2} bgColor="white" overflowX="auto">
           {templateNames.map((templateName) => {
             const template = templates[templateName];
             return (

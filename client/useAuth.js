@@ -29,7 +29,7 @@ export function AuthProvider({ user, children }) {
     const handle = setInterval(async () => {
       const user = firebaseClient.auth().currentUser;
       if (user) await user.getIdToken(true);
-    }, 10 * 60 * 1000);
+    }, 60 * 10 * 1000);
 
     // clean up setInterval
     return () => clearInterval(handle);
