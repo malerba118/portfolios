@@ -7,6 +7,7 @@ import {
   HStack,
   useDisclosure,
 } from "@chakra-ui/react";
+import Script from "next/script";
 import { useQuery, useMutation } from "react-query";
 import debounce from "lodash/debounce";
 import { useAuth } from "client/useAuth";
@@ -76,6 +77,7 @@ const Editor = observer(() => {
 
   return (
     <Flex h="100%">
+      <Script src="https://cdn.jsdelivr.net/npm/browser-image-compression@1.0.16/dist/browser-image-compression.js" />
       <Sidebar
         portfolio={portfolio}
         lastSaved={mutation?.data?.draftLastSaved}

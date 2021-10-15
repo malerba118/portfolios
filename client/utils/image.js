@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import compress from "browser-image-compression";
+// import compress from "browser-image-compression";
 
 const createImage = (url) =>
   new Promise((resolve, reject) => {
@@ -66,7 +66,13 @@ export const getCroppedImg = async (imageSrc, percentCrop, rotation = 0) => {
     Math.round(0 - safeArea / 2 + image.height * 0.5 - pixelCrop.y)
   );
 
-  return compress.canvasToFile(canvas, "image/png", nanoid(), Date.now(), 10);
+  return imageCompression.canvasToFile(
+    canvas,
+    "image/png",
+    nanoid(),
+    Date.now(),
+    10
+  );
 };
 
 // /**
