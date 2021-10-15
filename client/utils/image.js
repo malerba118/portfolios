@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import compress from "shared/utils/browser-image-compression";
+import compress from "browser-image-compression";
 
 const createImage = (url) =>
   new Promise((resolve, reject) => {
