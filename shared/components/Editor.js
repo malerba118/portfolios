@@ -77,7 +77,7 @@ const Editor = observer(() => {
 
   return (
     <Flex h="100%">
-      <Script src="https://cdn.jsdelivr.net/npm/browser-image-compression@1.0.16/dist/browser-image-compression.js" />
+      <Script src="/browser-image-compression.js" strategy="lazyOnload" />
       <Sidebar
         portfolio={portfolio}
         lastSaved={mutation?.data?.draftLastSaved}
