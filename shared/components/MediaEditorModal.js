@@ -24,6 +24,7 @@ const MediaEditorModal = observer(({ isOpen, media, onSave, onClose }) => {
   const [crop, setCrop] = useState(
     media.crop || { unit: "%", x: 0, y: 0, width: 100, height: 100 }
   );
+  const [isCropping, setCropping] = useState(false);
 
   return (
     <Modal
@@ -59,12 +60,16 @@ const MediaEditorModal = observer(({ isOpen, media, onSave, onClose }) => {
         </ModalBody>
         <ModalFooter>
           <Button
+            isLoading={isCropping}
             colorScheme="secondary"
             mr={3}
             onClick={() => {
-              getCroppedImg(media.rawUrl, crop).then((file) =>
-                onSave({ file, crop, zoom: 1 })
-              );
+              setCropping(true);
+              getCroppedImg(media.rawUrl, crop)
+                .then((file) => onSave({ file, crop, zoom: 1 }))
+                .finally(() => {
+                  setCropping(false);
+                });
             }}
           >
             Save

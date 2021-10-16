@@ -266,9 +266,8 @@ const MediaManager = observer(
             isOpen={editing}
             media={media}
             onSave={({ file, crop, zoom }) => {
-              uploadProcessed({ file, crop, zoom }).then(() => {
-                setEditing(false);
-              });
+              setEditing(false);
+              uploadProcessed({ file, crop, zoom });
             }}
             onClose={() => setEditing(false)}
           />
