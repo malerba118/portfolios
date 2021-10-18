@@ -67,7 +67,9 @@ const Editor = observer(() => {
 
   useEffect(() => {
     return autorun(() => {
-      updatePortfolio(portfolio.draft.toJSON());
+      if (portfolio?.draft) {
+        updatePortfolio(portfolio.draft.toJSON());
+      }
     });
   }, [portfolio]);
 

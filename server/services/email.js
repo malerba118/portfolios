@@ -3,20 +3,24 @@ import { ValidationError } from "joi";
 
 SendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-export const sendEmail = async ({ to, from, subject, text, html }) => {
+export const sendEmail = async ({ to, from, templateId, data }) => {
   return SendGrid.send({
     to,
     from,
-    subject,
-    text,
-    html,
+    template_id: templateId,
+    personalizations: [
+      {
+        to,
+        dynamicTemplateData: data,
+      },
+    ],
   })
     .then(() => {
       return {
         to,
         from,
-        subject,
-        text,
+        templateId,
+        data,
       };
     })
     .catch((err) => {

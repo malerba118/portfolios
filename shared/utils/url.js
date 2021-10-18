@@ -25,15 +25,20 @@ export const getHostingUrl = ({
         portfolio,
         subdomain,
       });
-      return `${process.env.NEXT_PUBLIC_HOSTING_URL_PROTOCOL}://${process.env.NEXT_PUBLIC_HOSTING_URL_HOST}:${process.env.NEXT_PUBLIC_HOSTING_URL_PORT}?${query}`;
+      // prepend ? if query exists
+      query = !!query ? "?" + query : query;
+      return `${process.env.NEXT_PUBLIC_HOSTING_URL_PROTOCOL}://${process.env.NEXT_PUBLIC_HOSTING_URL_HOST}:${process.env.NEXT_PUBLIC_HOSTING_URL_PORT}${query}`;
     } else {
-      return `${process.env.NEXT_PUBLIC_HOSTING_URL_PROTOCOL}://${process.env.NEXT_PUBLIC_HOSTING_URL_HOST}:${process.env.NEXT_PUBLIC_HOSTING_URL_PORT}?${query}`;
+      query = !!query ? "?" + query : query;
+      return `${process.env.NEXT_PUBLIC_HOSTING_URL_PROTOCOL}://${process.env.NEXT_PUBLIC_HOSTING_URL_HOST}:${process.env.NEXT_PUBLIC_HOSTING_URL_PORT}${query}`;
     }
   } else {
+    // prepend ? if query exists
+    query = !!query ? "?" + query : query;
     if (subdomain) {
-      return `${process.env.NEXT_PUBLIC_HOSTING_URL_PROTOCOL}://${subdomain}.${process.env.NEXT_PUBLIC_HOSTING_URL_HOST}?${query}`;
+      return `${process.env.NEXT_PUBLIC_HOSTING_URL_PROTOCOL}://${subdomain}.${process.env.NEXT_PUBLIC_HOSTING_URL_HOST}${query}`;
     } else {
-      return `${process.env.NEXT_PUBLIC_HOSTING_URL_PROTOCOL}://${process.env.NEXT_PUBLIC_HOSTING_URL_HOST}?${query}`;
+      return `${process.env.NEXT_PUBLIC_HOSTING_URL_PROTOCOL}://${process.env.NEXT_PUBLIC_HOSTING_URL_HOST}${query}`;
     }
   }
 };

@@ -2,6 +2,7 @@ import Database from "server/services/database";
 import router from "server/utils/router";
 import { token } from "shared/utils/token";
 import { sendEmail } from "server/services/email";
+import { getHostingUrl } from "shared/utils/url";
 
 export default router(
   {
@@ -9,6 +10,9 @@ export default router(
       const db = await Database({ token: null });
       const portfolio = await db.portfolios.getById(req.query.id);
       let to;
+      let url = portfolio.subdomain
+        ? getHostingUrl({ subdomain: portfolio.subdomain })
+        : "Unavailable (Portfolio not yet published)";
       if (req.body.useDraft) {
         to = portfolio?.draft?.content?.contact?.email?.value;
       } else {
@@ -21,9 +25,13 @@ export default router(
       return sendEmail({
         to,
         from: "vernosapp@gmail.com", // Change to your verified sender
-        subject: "New message via your Vernos portfolio",
-        text: `Someone contacted you through your vernos portfolio! Here's what they said: "${req.body.message}"`,
-        // html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+        templateId: "d-754a495c33c04577843ca7c2d3c4c945",
+        data: {
+          portfolio_url: url,
+          name: req.body.name,
+          email: req.body.email,
+          message: req.body.message,
+        },
       });
     },
   },
