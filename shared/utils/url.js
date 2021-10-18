@@ -10,11 +10,13 @@ export const getHostingUrl = ({
   edit,
   template,
   portfolio,
+  persona,
 } = {}) => {
   let query = qs.stringify({
     edit: !!edit ? true : undefined,
     template,
     portfolio,
+    persona,
   });
   if (isLocal) {
     if (subdomain) {

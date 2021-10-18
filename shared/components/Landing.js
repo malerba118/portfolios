@@ -37,6 +37,14 @@ const blobs = [
   </svg>,
 ];
 
+const TEMPLATE_PERSONAS = {
+  gallery: "wedding",
+  skrol: "fitness",
+  os: "computerEngineer",
+  madrid: "architect",
+  venice: "architect",
+};
+
 const preload = Preload();
 
 const Video = ({ src, isActive, autoPlay, style }) => {
@@ -307,7 +315,10 @@ const TemplatePreviewer = ({ ...otherProps }) => {
                 <Spinner color="secondary.300" />
               </Center>
               <Embed
-                src={`${getHostingUrl({ template: selectedTemplate })}`}
+                src={`${getHostingUrl({
+                  template: selectedTemplate,
+                  persona: TEMPLATE_PERSONAS[selectedTemplate],
+                })}`}
                 height="100%"
                 width="100%"
                 scale={0.7}
