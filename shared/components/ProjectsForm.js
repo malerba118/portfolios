@@ -13,7 +13,7 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
     canDelete
     onDelete={() => onDelete?.(project.id)}
     tooltips={{
-      delete: "Delete Project",
+      delete: "Delete Work Item",
     }}
     expanded={expanded}
   >
@@ -31,7 +31,7 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
           onChange={(e) => {
             project.set({ name: e.target.value });
           }}
-          placeholder="Project Name"
+          placeholder="Name of project, job, service, etc."
           size="sm"
         />
       </InputContainer>
@@ -43,7 +43,7 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
           onChange={(e) => {
             project.set({ summary: e.target.value });
           }}
-          placeholder="Tell us about your project in a sentence"
+          placeholder="Tell us about this work in a sentence"
           size="sm"
         />
       </InputContainer>
@@ -75,7 +75,7 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
           onChange={(value) => {
             project.set({ description: value });
           }}
-          placeholder="Tell us all about your project"
+          placeholder="Tell us all about this work"
           size="sm"
         />
       </InputContainer>

@@ -23,11 +23,11 @@ const PortfolioContentEditor = observer(({ width, height, portfolio }) => {
         <AboutForm about={portfolio.content.about} />
       </Section>
       <Section
-        title="Projects"
+        title="Work"
         canAdd
         onAdd={() => portfolio.content.addProject()}
         tooltips={{
-          add: "Add Project",
+          add: "Add Work Item",
         }}
       >
         {({ expanded }) => (
