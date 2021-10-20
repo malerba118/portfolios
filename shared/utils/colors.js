@@ -37,6 +37,32 @@ export const invert = (palette) => ({
   900: palette[50],
 });
 
+const white = {
+  50: "#ffffff",
+  100: "#d8d8d8",
+  200: "#cccccc",
+  300: "#a8a8a8",
+  400: "#999999",
+  500: "#787878",
+  600: "#666666",
+  700: "#484848",
+  800: "#333333",
+  900: "#181818",
+};
+
+const black = {
+  50: "#000000",
+  100: "#111111",
+  200: "#222222",
+  300: "#333333",
+  400: "#444444",
+  500: "#555555",
+  600: "#666666",
+  700: "#777777",
+  800: "#888888",
+  900: "#999999",
+};
+
 export const palettes = {
   desert: {
     primary: {
@@ -75,6 +101,10 @@ export const palettes = {
   blueGreen: {
     primary: invert(DEFAULT_THEME.colors.blue),
     secondary: DEFAULT_THEME.colors.green,
+  },
+  whiteBlack: {
+    primary: white,
+    secondary: black,
   },
 };
 

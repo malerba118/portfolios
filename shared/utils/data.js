@@ -34,6 +34,17 @@ export const templates = {
     palettes: ["blackRed", "purplePink", "blueGreen"],
     locked: true,
   },
+  circles: {
+    label: "Circles",
+    img: `/templates/circles.png`,
+    defaults: {
+      headingFont: "Montserrat",
+      paragraphFont: "Lato",
+      palette: "whiteBlack",
+    },
+    palettes: ["blackRed", "purplePink", "blueGreen", "whiteBlack"],
+    locked: true,
+  },
   os: {
     label: "Operating System",
     img: `/templates/os.png`,
