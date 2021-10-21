@@ -18,7 +18,7 @@ import {
   Link,
   Tooltip,
 } from "@chakra-ui/react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   IoIosCheckmarkCircleOutline as AvailableIcon,
   IoIosCloseCircleOutline as UnavailableIcon,
@@ -45,6 +45,7 @@ const PublishModal = observer(
     const [subdomain, setSubdomain] = useState(defaultValue);
     const [debouncedSubdomain] = useDebounce(subdomain, 1000);
     const user = useAuth();
+    const queryClient = useQueryClient();
 
     const query = useQuery({
       queryKey: ["subdomain-availability", debouncedSubdomain],
@@ -202,7 +203,11 @@ const PublishModal = observer(
                 isLoading={mutations.publish.isLoading}
                 colorScheme="secondary"
                 onClick={() => {
-                  mutations.publish.mutate(debouncedSubdomain);
+                  mutations.publish.mutate(debouncedSubdomain, {
+                    onSuccess: () => {
+                      queryClient.invalidateQueries("portfolio");
+                    },
+                  });
                 }}
               >
                 Publish

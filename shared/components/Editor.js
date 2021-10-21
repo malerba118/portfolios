@@ -179,7 +179,7 @@ const Editor = observer(() => {
       </Flex>
       <PublishModal
         key={String(publishModal.isOpen)}
-        defaultValue={portfolio.subdomain}
+        defaultValue={query.data?.subdomain}
         isOpen={publishModal.isOpen}
         onClose={publishModal.onClose}
         portfolio={portfolio}
