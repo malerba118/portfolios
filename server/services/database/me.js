@@ -24,7 +24,14 @@ export default ({ db, user }) => {
     return toData(userDoc);
   };
 
+  const get = async () => {
+    assertAuthenticated(user);
+    const userDoc = await usersCol.doc(user.id).get();
+    return toData(userDoc);
+  };
+
   return {
     updateCustomer,
+    get,
   };
 };

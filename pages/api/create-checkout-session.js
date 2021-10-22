@@ -11,7 +11,7 @@ export default router({
     const { price, metadata = {} } = req.body;
 
     const db = await Database({ token: token(req) });
-    let user = db.user;
+    let user = await db.me.get();
     if (!user.stripeCustomerId) {
       const customer = await stripe.customers.create({
         metadata: {
@@ -24,7 +24,7 @@ export default router({
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       billing_address_collection: "required",
-      customer: db.user.stripeCustomerId,
+      customer: user.stripeCustomerId,
       line_items: [
         {
           price: "price_1JkfX5FwyRTPcbuJKNczQ2Lh",
