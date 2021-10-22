@@ -40,6 +40,7 @@ const blobs = [
 const TEMPLATE_PERSONAS = {
   gallery: "wedding",
   skrol: "fitness",
+  circles: "architect",
   os: "computerEngineer",
   madrid: "architect",
   venice: "architect",
