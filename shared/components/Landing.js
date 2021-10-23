@@ -123,9 +123,9 @@ const Landing = ({}) => {
           >
             <Box>
               <Heading size="4xl">Build a Portfolio Site in Seconds</Heading>
-              <Heading w="75%" my={2} size="md">
-                You shouldn't have to spend your time learning how to build a
-                website. That's why Vernos will just do it for you.
+              <Heading w="75%" my={2} size="lg">
+                Don't waste your time learning how to build a website, let
+                Vernos do it for you!
               </Heading>
               <NextLink href="/login">
                 <Button
@@ -149,9 +149,9 @@ const Landing = ({}) => {
             w="100%"
             maxW="620px"
           >
-            Vernos is designed for user comfort. Many website builders can be
-            confusing and difficult to learn. Vernos is simple to use, yet will
-            still give you a great looking personal portfolio in seconds!
+            Many website builders are confusing and difficult to learn. Vernos
+            is simple to use, yet will give you a beautiful personal portfolio
+            in seconds. Here's how it works!
           </Heading>
         </Box>
         <Stack
@@ -285,13 +285,12 @@ const StepLabel = ({ step }) => {
   );
 };
 
-
 const TemplatePreviewer = ({ ...otherProps }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const src = `${getHostingUrl({
     template: selectedTemplate,
     persona: TEMPLATE_PERSONAS[selectedTemplate],
-  })}`
+  })}`;
 
   return (
     <MockBrowser url="https://austinmalerba.vernos.us" {...otherProps}>
