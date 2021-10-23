@@ -285,8 +285,13 @@ const StepLabel = ({ step }) => {
   );
 };
 
+
 const TemplatePreviewer = ({ ...otherProps }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const src = `${getHostingUrl({
+    template: selectedTemplate,
+    persona: TEMPLATE_PERSONAS[selectedTemplate],
+  })}`
 
   return (
     <MockBrowser url="https://austinmalerba.vernos.us" {...otherProps}>
@@ -316,10 +321,8 @@ const TemplatePreviewer = ({ ...otherProps }) => {
                 <Spinner color="secondary.300" />
               </Center>
               <Embed
-                src={`${getHostingUrl({
-                  template: selectedTemplate,
-                  persona: TEMPLATE_PERSONAS[selectedTemplate],
-                })}`}
+                key={src}
+                src={src}
                 height="100%"
                 width="100%"
                 scale={0.7}
