@@ -33,6 +33,7 @@ import { useFullscreen } from "./Fullscreen";
 import { useRouter } from "next/router";
 import { getHostingUrl } from "shared/utils/url";
 import { hasSubscription } from "shared/utils/data";
+import VisibilityRefresh from "./VisibilityRefresh";
 
 const deviceAspectRatios = {
   phone: 9 / 16,
@@ -44,7 +45,10 @@ const Editor = observer(() => {
   const user = useAuth();
   const router = useRouter();
   const [refreshKey, setRefreshKey] = useState(0);
-  const query = useQuery("portfolio", api.portfolio.get);
+  const query = useQuery("portfolio", api.portfolio.get, {
+    refetchOnMount: "always",
+    cacheTime: 0,
+  });
   const mutation = useMutation((data) => api.portfolio.updateDraft(data));
   const [device, setDevice] = useState("desktop");
   const publishModal = useDisclosure();
@@ -193,4 +197,12 @@ const Editor = observer(() => {
   );
 });
 
-export default Editor;
+const WrappedEditor = (props) => {
+  return (
+    <VisibilityRefresh idleThreshold={1000 * 60 * 10}>
+      <Editor {...props} />
+    </VisibilityRefresh>
+  );
+};
+
+export default WrappedEditor;
