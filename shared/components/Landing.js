@@ -48,7 +48,7 @@ const TEMPLATE_PERSONAS = {
 
 const preload = Preload();
 
-const Video = ({ src, isActive, autoPlay, style }) => {
+const Video = ({ src, type = "video/mp4", isActive, autoPlay, style }) => {
   const ref = useRef(null);
 
   // useEffect(() => {
@@ -77,7 +77,7 @@ const Video = ({ src, isActive, autoPlay, style }) => {
       playsInline
       controls
     >
-      <source type="video/webm" src={src} />
+      <source type={type} src={src} />
     </video>
   );
 };
@@ -95,7 +95,7 @@ const Landing = ({}) => {
             zIndex={-1}
             transform="scale(1.3)"
           >
-            <MouseGravity opacity={0.66} amount={15}>
+            <MouseGravity opacity={0.66} amount={-11}>
               {blobs[0]}
             </MouseGravity>
           </Box>
@@ -107,7 +107,7 @@ const Landing = ({}) => {
             zIndex={-1}
             transform="scale(1.2)"
           >
-            <MouseGravity opacity={0.66} amount={8}>
+            <MouseGravity opacity={0.66} amount={-8}>
               {blobs[0]}
             </MouseGravity>
           </Box>
@@ -115,29 +115,36 @@ const Landing = ({}) => {
           <Flex
             flex={1}
             px={{ base: 8, md: 24 }}
-            mb={12}
+            mb={24}
             color="secondary.500"
             maxW={{ base: "100%", md: "80%" }}
             direction="column"
             justify="center"
           >
             <Box>
-              <Heading size="4xl">Build a Portfolio Site in Seconds</Heading>
-              <Heading w="70%" my={2} size="lg">
+              <Heading size="4xl">
+                Build a <br /> Portfolio Site <br />
+                in Seconds
+              </Heading>
+              <Heading w="70%" my={2} fontSize={{ base: "md", md: "2xl" }}>
                 Don't have the time/energy to build a personal website? Let
                 Vernos do it for you!
               </Heading>
-              <NextLink href="/login">
-                <Button
-                  my={4}
-                  alignSelf="start"
-                  variant="solid"
-                  colorScheme="secondary"
-                  // _hover={{ bg: "whiteAlpha.200" }}
-                >
-                  Start for Free
-                </Button>
-              </NextLink>
+              <Box my={4} rounded="4px" bg="primary.300" display="inline-block">
+                <MouseGravity amount={4} maxDisplacement={16}>
+                  <NextLink href="/login">
+                    <Button
+                      alignSelf="start"
+                      variant="solid"
+                      colorScheme="primary"
+                      // _hover={{ bg: "whiteAlpha.200" }}
+                      rounded="4px"
+                    >
+                      Start for Free
+                    </Button>
+                  </NextLink>
+                </MouseGravity>
+              </Box>
             </Box>
           </Flex>
         </Flex>
@@ -171,10 +178,11 @@ const Landing = ({}) => {
             <Stack spacing={6}>
               <MockBrowser url={"https://vernos.app"}>
                 <Video
-                  src={"/vernos-content.webm"}
+                  src={"/add-content-3.mp4"}
+                  type="video/mp4"
                   isActive
                   autoPlay
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", borderRadius: "0 0 4px 4px" }}
                 />
               </MockBrowser>
             </Stack>
@@ -205,7 +213,7 @@ const Landing = ({}) => {
                   src={"/vernos-templates.webm"}
                   isActive
                   autoPlay
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", borderRadius: "0 0 4px 4px" }}
                 />
               </MockBrowser>
             </Stack>
@@ -231,7 +239,7 @@ const Landing = ({}) => {
                   src={"/vernos-publish.webm"}
                   isActive
                   autoPlay
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", borderRadius: "0 0 4px 4px" }}
                 />
               </MockBrowser>
             </Stack>

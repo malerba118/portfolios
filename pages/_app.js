@@ -8,8 +8,11 @@ import "@fontsource/karla/400.css";
 import "../styles/globals.css";
 import "../shared/components/Datepicker.css";
 import "../shared/components/FontSelector.css";
+import { initGoodies } from "shared/utils";
 
 const queryClient = new QueryClient();
+
+initGoodies();
 
 function MyApp({ Component, pageProps }) {
   return (

@@ -5,7 +5,7 @@ const Layout = ({ toolbar, content, fitWindow }) => {
   if (fitWindow) {
     return (
       <FullscreenProvider>
-        <Flex flexDirection="column" h="100vh">
+        <Flex flexDirection="column" h="var(--app-height)">
           {toolbar}
           <Box position="relative" flex={1}>
             <Box position="absolute" top="0" right="0" bottom="0" left="0">

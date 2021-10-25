@@ -17,18 +17,22 @@ const yDistanceTo = (yPosition, el) => {
   return yPosition - yCenter;
 };
 
-const MouseGravity = ({ children, amount = 25, ...otherProps }) => {
+const MouseGravity = ({
+  as,
+  children,
+  amount = 25,
+  maxDisplacement = 64,
+  ...otherProps
+}) => {
   const divisor = 500 / (amount + 1);
   const ref = useRef(null);
   const mouse = useMouse();
   const transformed = {
-    x: useTransform(
-      mouse.position.x,
-      (val) => xDistanceTo(val, ref.current) / divisor
+    x: useTransform(mouse.position.x, (val) =>
+      Math.min(xDistanceTo(val, ref.current) / divisor, maxDisplacement)
     ),
-    y: useTransform(
-      mouse.position.y,
-      (val) => yDistanceTo(val, ref.current) / divisor
+    y: useTransform(mouse.position.y, (val) =>
+      Math.min(yDistanceTo(val, ref.current) / divisor, maxDisplacement)
     ),
   };
   const springs = {
@@ -38,6 +42,7 @@ const MouseGravity = ({ children, amount = 25, ...otherProps }) => {
 
   return (
     <MotionBox
+      as={as}
       ref={ref}
       position="relative"
       style={{ x: springs.x, y: springs.y }}

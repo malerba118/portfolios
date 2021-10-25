@@ -17,10 +17,10 @@ const SubscriptionSuccess = (props) => {
   return (
     <Flex
       direction="column"
-      minH="100vh"
+      minH="var(--app-height)"
       w="100%"
       style={{
-        height: "100vh",
+        height: "var(--app-height)",
         backgroundColor: "var(--chakra-colors-secondary-600)",
         backgroundImage:
           'url("https://www.transparenttextures.com/patterns/worn-dots.png")',

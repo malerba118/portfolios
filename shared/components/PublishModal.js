@@ -15,10 +15,14 @@ import {
   Button,
   Icon,
   Text,
-  Link,
+  HStack,
   Tooltip,
+  Box,
+  useClipboard,
 } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { RiExternalLinkLine } from "react-icons/ri";
+import { MdContentCopy } from "react-icons/md";
 import {
   IoIosCheckmarkCircleOutline as AvailableIcon,
   IoIosCloseCircleOutline as UnavailableIcon,
@@ -36,6 +40,7 @@ import {
   templates,
 } from "shared/utils/data";
 import { useRouter } from "next/router";
+import IconButton from "./IconButton";
 
 const PublishModal = observer(
   ({ defaultValue, isOpen, onSuccess, onClose, portfolio }) => {
@@ -46,6 +51,11 @@ const PublishModal = observer(
     const [debouncedSubdomain] = useDebounce(subdomain, 1000);
     const user = useAuth();
     const queryClient = useQueryClient();
+    const { hasCopied, onCopy } = useClipboard(
+      getHostingUrl({
+        subdomain: debouncedSubdomain,
+      })
+    );
 
     const query = useQuery({
       queryKey: ["subdomain-availability", debouncedSubdomain],
@@ -79,18 +89,52 @@ const PublishModal = observer(
           <ModalContent>
             <ModalHeader>Congrats, your site is live!</ModalHeader>
             <ModalBody>
-              <Text fontSize="md">
-                Check it out at{" "}
-                <Link
-                  target="_blank"
-                  href={getHostingUrl({ subdomain: debouncedSubdomain })}
-                  color="secondary.400"
-                >
-                  {getHostingUrl({ subdomain: debouncedSubdomain })}
-                </Link>
-              </Text>
+              <FormSection>
+                <InputContainer label="Website URL">
+                  <InputGroup>
+                    <Input
+                      value={getHostingUrl({ subdomain: debouncedSubdomain })}
+                      fontSize="sm"
+                    />
+                    <InputRightAddon
+                      bg="gray.100"
+                      px={0}
+                      fontSize="sm"
+                      overflow="hidden"
+                      children={
+                        <HStack spacing={0} height="calc(100%)">
+                          <IconButton
+                            tooltip="Visit link"
+                            icon={<RiExternalLinkLine />}
+                            h="100%"
+                            onClick={() => {
+                              window.open(
+                                getHostingUrl({
+                                  subdomain: debouncedSubdomain,
+                                }),
+                                "_blank"
+                              );
+                            }}
+                          />
+                          <Box h="100%" w="1px" bg="gray.200" />
+                          <IconButton
+                            tooltip={
+                              hasCopied ? "Copied!" : "Copy to clipboard"
+                            }
+                            icon={<MdContentCopy />}
+                            h="100%"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              onCopy(e);
+                            }}
+                          />
+                        </HStack>
+                      }
+                    />
+                  </InputGroup>
+                </InputContainer>
+              </FormSection>
             </ModalBody>
-
             <ModalFooter>
               <Button onClick={onClose}>Close</Button>
             </ModalFooter>

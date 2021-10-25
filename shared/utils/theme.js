@@ -157,7 +157,7 @@ export const createTheme = ({ isAuthenticated }) => {
             },
           },
           "4xl": {
-            WebkitTextStroke: "3px currentColor",
+            WebkitTextStroke: "4px currentColor",
             lineHeight: "120%",
             letterSpacing: ".05em",
             fontSize: {
