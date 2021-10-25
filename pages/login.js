@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import firebaseClient from "client/firebase";
 import { useRouter } from "next/router";
@@ -148,18 +148,31 @@ const SignInForm = ({ form, onChange, error, isLoading, onSubmit }) => {
 
 const Login = (_props) => {
   const router = useRouter();
-  const [mode, setMode] = useState("sign-up");
+  // const [mode, setMode] = useState("sign-up");
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+  const mode = router.query.mode || "sign-in";
+  const setMode = (mode) =>
+    router.push(`/login?mode=${mode}`, undefined, { shallow: true });
 
   const mutations = {
     signUp: useMutation(({ email, password }) =>
       firebaseClient.auth().createUserWithEmailAndPassword(email, password)
     ),
-    signIn: useMutation(({ email, password }) =>
-      firebaseClient.auth().signInWithEmailAndPassword(email, password)
+    signIn: useMutation(
+      ({ email, password }) =>
+        firebaseClient.auth().signInWithEmailAndPassword(email, password),
+      {
+        onSuccess: () => {
+          if (router.query.from) {
+            window.location.href = router.query.from;
+          } else {
+            window.location.href = "/";
+          }
+        },
+      }
     ),
     googleSignIn: useMutation(
       () => firebaseClient.auth().signInWithPopup(provider),

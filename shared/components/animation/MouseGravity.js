@@ -28,12 +28,22 @@ const MouseGravity = ({
   const ref = useRef(null);
   const mouse = useMouse();
   const transformed = {
-    x: useTransform(mouse.position.x, (val) =>
-      Math.min(xDistanceTo(val, ref.current) / divisor, maxDisplacement)
-    ),
-    y: useTransform(mouse.position.y, (val) =>
-      Math.min(yDistanceTo(val, ref.current) / divisor, maxDisplacement)
-    ),
+    x: useTransform(mouse.position.x, (val) => {
+      const displacement = xDistanceTo(val, ref.current) / divisor;
+      if (displacement < 0) {
+        return Math.max(displacement, -maxDisplacement);
+      } else {
+        return Math.min(displacement, maxDisplacement);
+      }
+    }),
+    y: useTransform(mouse.position.y, (val) => {
+      const displacement = yDistanceTo(val, ref.current) / divisor;
+      if (displacement < 0) {
+        return Math.max(displacement, -maxDisplacement);
+      } else {
+        return Math.min(displacement, maxDisplacement);
+      }
+    }),
   };
   const springs = {
     x: useSpring(transformed.x, { mass: 0.25 }),

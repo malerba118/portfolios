@@ -29,7 +29,7 @@ const MockBrowser = ({ url, children, ...otherProps }) => {
             {url}
           </Text>
         </Flex>
-        <NextLink href="/login">
+        <NextLink href="/login?mode=sign-up">
           <Button rounded="sm" h="20px" size="xs" colorScheme="primary">
             <HStack>
               <span>Start for Free</span>

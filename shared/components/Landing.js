@@ -87,13 +87,13 @@ const Landing = ({}) => {
         <Flex h="100vh" direction="column" pos="relative" overflow="hidden">
           <Box
             pos="absolute"
-            left="-300px"
-            top="-300px"
+            left="-320px"
+            top="-320px"
             w="700px"
             zIndex={-1}
             transform="scale(1.3)"
           >
-            <MouseGravity opacity={0.66} amount={-11}>
+            <MouseGravity opacity={0.66} amount={-10}>
               {blobs[0]}
             </MouseGravity>
           </Box>
@@ -115,22 +115,31 @@ const Landing = ({}) => {
             px={{ base: 8, md: 24 }}
             mb={24}
             color="secondary.500"
-            maxW={{ base: "100%", md: "80%" }}
+            maxW={{ base: "100%", md: "65rem" }}
             direction="column"
             justify="center"
+            pos="relative"
           >
             <Box>
-              <Heading size="4xl">
-                Build a <br /> Portfolio Site <br />
-                in Seconds
+              <Heading size="4xl" pos="relative">
+                <Box pos="absolute" top={0} color="primary.400">
+                  Build a Portfolio Site in Seconds
+                </Box>
+                <MouseGravity amount={4} maxDisplacement={4}>
+                  <Box>Build a Portfolio Site in Seconds</Box>
+                </MouseGravity>
               </Heading>
-              <Heading w="70%" my={2} fontSize={{ base: "md", md: "2xl" }}>
-                Don't have the time/energy to build a personal website? Let
-                Vernos do it for you!
+              <Heading w="70%" my={2} size="md" pos="relative">
+                <MouseGravity amount={1} maxDisplacement={2}>
+                  <Box>
+                    Don't have the time/energy to build a personal website? Let
+                    Vernos do it for you!
+                  </Box>
+                </MouseGravity>
               </Heading>
               <Box my={4} rounded="4px" bg="primary.300" display="inline-block">
                 <MouseGravity amount={4} maxDisplacement={8}>
-                  <NextLink href="/login">
+                  <NextLink href="/login?mode=sign-up">
                     <Button
                       alignSelf="start"
                       variant="solid"
@@ -311,7 +320,7 @@ const TemplatePreviewer = ({ ...otherProps }) => {
   })}`;
 
   return (
-    <MockBrowser url="https://austinmalerba.vernos.us" {...otherProps}>
+    <MockBrowser url="https://your-subdomain.vernos.us" {...otherProps}>
       <Flex direction="column" h="calc(100% - 32px)">
         <Box flex={1} pos="relative">
           {!selectedTemplate && (

@@ -32,13 +32,18 @@ const Toolbar = () => {
         </NextLink>
       </Heading>
       <Box flex={1} />
-      <HStack spacing={8}>
+      <HStack spacing={6}>
         <NextLink href="/pricing">
           <Link>Pricing</Link>
         </NextLink>
         {!user && (
-          <NextLink href="/login">
+          <NextLink href="/login?mode=sign-up">
             <Link>Sign Up</Link>
+          </NextLink>
+        )}
+        {!user && (
+          <NextLink href="/login?mode=sign-in">
+            <Link>Sign In</Link>
           </NextLink>
         )}
         {user && (
