@@ -14,7 +14,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
-import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+import { Waypoint } from "react-waypoint";
 import { Toolbar, MockBrowser } from "./unauthed";
 import { useElementScroll, useTransform, useSpring } from "framer-motion";
 import { MotionBox } from "./animation";
@@ -46,43 +46,41 @@ const TEMPLATE_PERSONAS = {
   venice: "architect",
 };
 
+const VIDEO_URLS = {
+  content:
+    "https://firebasestorage.googleapis.com/v0/b/vernos-prod.appspot.com/o/add-content-3.mp4?alt=media&token=66217003-5347-4505-b367-6c88dfb110b6",
+  templates:
+    "https://firebasestorage.googleapis.com/v0/b/vernos-prod.appspot.com/o/choose-template-3.mp4?alt=media&token=04cdec97-902d-40b1-b225-6a9b304bad15",
+  publish:
+    "https://firebasestorage.googleapis.com/v0/b/vernos-prod.appspot.com/o/publish-3.mp4?alt=media&token=7876ec68-debe-4e1b-abbb-453fd3ff0caf",
+};
+
 const preload = Preload();
 
 const Video = ({ src, type = "video/mp4", isActive, autoPlay, style }) => {
   const ref = useRef(null);
 
-  // useEffect(() => {
-  //   if (ref.current) {
-  //     if (isActive && autoPlay) {
-  //       ref.current.play();
-  //     } else {
-  //       ref.current.pause();
-  //       ref.current.currentTime = 0;
-  //     }
-  //   }
-  // }, [isActive, autoPlay]);
+  useEffect(() => {
+    if (ref.current) {
+      if (isActive && autoPlay) {
+        ref.current.currentTime = 0;
+        ref.current.play();
+      } else {
+        ref.current.pause();
+      }
+    }
+  }, [isActive, autoPlay]);
 
   return (
-    <video
-      style={{ display: isActive ? "block" : "none", ...style }}
-      // ref={(el) => {
-      //   if (el) {
-      //     el.playbackRate = 1.5;
-      //   }
-      //   ref.current = el;
-      // }}
-      muted
-      loop
-      autoPlay
-      playsInline
-      controls
-    >
+    <video style={style} ref={ref} muted loop autoPlay playsInline controls>
       <source type={type} src={src} />
     </video>
   );
 };
 
 const Landing = ({}) => {
+  const [activeVideo, setActiveVideo] = useState(null);
+
   return (
     <MouseProvider>
       <Box>
@@ -131,7 +129,7 @@ const Landing = ({}) => {
                 Vernos do it for you!
               </Heading>
               <Box my={4} rounded="4px" bg="primary.300" display="inline-block">
-                <MouseGravity amount={4} maxDisplacement={16}>
+                <MouseGravity amount={4} maxDisplacement={8}>
                   <NextLink href="/login">
                     <Button
                       alignSelf="start"
@@ -177,13 +175,17 @@ const Landing = ({}) => {
           <Box rounded="xl" p={{ base: 0, md: 16 }} bg="primary.200">
             <Stack spacing={6}>
               <MockBrowser url={"https://vernos.app"}>
-                <Video
-                  src={"/add-content-3.mp4"}
-                  type="video/mp4"
-                  isActive
-                  autoPlay
-                  style={{ width: "100%", borderRadius: "0 0 4px 4px" }}
-                />
+                <Waypoint onEnter={() => setActiveVideo("content")}>
+                  <AspectRatio ratio={16 / 9} width="100%">
+                    <Video
+                      src={VIDEO_URLS["content"]}
+                      type="video/mp4"
+                      isActive={activeVideo === "content"}
+                      autoPlay
+                      style={{ width: "100%", borderRadius: "0 0 4px 4px" }}
+                    />
+                  </AspectRatio>
+                </Waypoint>
               </MockBrowser>
             </Stack>
           </Box>
@@ -209,12 +211,16 @@ const Landing = ({}) => {
           >
             <Stack spacing={6}>
               <MockBrowser url={"https://vernos.app"}>
-                <Video
-                  src={"/vernos-templates.webm"}
-                  isActive
-                  autoPlay
-                  style={{ width: "100%", borderRadius: "0 0 4px 4px" }}
-                />
+                <Waypoint onEnter={() => setActiveVideo("templates")}>
+                  <AspectRatio ratio={16 / 9} width="100%">
+                    <Video
+                      src={VIDEO_URLS["templates"]}
+                      isActive={activeVideo === "templates"}
+                      autoPlay
+                      style={{ width: "100%", borderRadius: "0 0 4px 4px" }}
+                    />
+                  </AspectRatio>
+                </Waypoint>
               </MockBrowser>
             </Stack>
           </Box>
@@ -230,17 +236,21 @@ const Landing = ({}) => {
         >
           <StepLabel step="03" />
           <Heading textAlign="center" color="secondary.500" size="4xl">
-            Publish
+            Publish!
           </Heading>
           <Box rounded="xl" p={{ base: 0, md: 16 }} bg="primary.200">
             <Stack spacing={6}>
               <MockBrowser url={"https://vernos.app"}>
-                <Video
-                  src={"/vernos-publish.webm"}
-                  isActive
-                  autoPlay
-                  style={{ width: "100%", borderRadius: "0 0 4px 4px" }}
-                />
+                <Waypoint onEnter={() => setActiveVideo("publish")}>
+                  <AspectRatio ratio={16 / 9} width="100%">
+                    <Video
+                      src={VIDEO_URLS["publish"]}
+                      isActive={activeVideo === "publish"}
+                      autoPlay
+                      style={{ width: "100%", borderRadius: "0 0 4px 4px" }}
+                    />
+                  </AspectRatio>
+                </Waypoint>
               </MockBrowser>
             </Stack>
           </Box>
