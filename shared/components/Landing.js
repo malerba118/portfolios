@@ -129,7 +129,7 @@ const Landing = ({}) => {
                   <Box>Build a Portfolio Site in Seconds</Box>
                 </MouseGravity>
               </Heading>
-              <Heading w="70%" my={2} size="md" pos="relative">
+              <Heading w="70%" my={3} fontSize="xl" pos="relative">
                 <MouseGravity amount={1} maxDisplacement={2}>
                   <Box>
                     Don't have the time/energy to build a personal website? Let
@@ -137,7 +137,7 @@ const Landing = ({}) => {
                   </Box>
                 </MouseGravity>
               </Heading>
-              <Box my={4} rounded="4px" bg="primary.300" display="inline-block">
+              <Box my={3} rounded="4px" bg="primary.300" display="inline-block">
                 <MouseGravity amount={4} maxDisplacement={8}>
                   <NextLink href="/login?mode=sign-up">
                     <Button
