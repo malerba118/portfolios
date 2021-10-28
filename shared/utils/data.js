@@ -1,17 +1,6 @@
 import { nanoid } from "nanoid";
 
 export const templates = {
-  venice: {
-    label: "Venice",
-    img: `/templates/venice.png`,
-    defaults: {
-      headingFont: "Ubuntu",
-      paragraphFont: "Ubuntu",
-      palette: "gray",
-    },
-    palettes: ["desert", "gray"],
-    locked: false,
-  },
   madrid: {
     label: "Madrid",
     img: `/templates/madrid.png`,
@@ -33,6 +22,17 @@ export const templates = {
     },
     palettes: ["blackRed", "purplePink", "blueGreen"],
     locked: true,
+  },
+  reveal: {
+    label: "Reveal",
+    img: `/templates/reveal.png`,
+    defaults: {
+      headingFont: "Montserrat",
+      paragraphFont: "Lato",
+      palette: "desert",
+    },
+    locked: false,
+    palettes: ["desert", "gray"],
   },
   circles: {
     label: "Circles",

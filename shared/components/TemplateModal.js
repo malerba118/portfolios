@@ -24,6 +24,15 @@ import storage from "local-storage";
 import * as styles from "shared/utils/styles";
 import TemplateThumbnail from "./TemplateThumbnail";
 
+const TEMPLATE_PERSONAS = {
+  gallery: "wedding",
+  skrol: "fitness",
+  reveal: "wedding",
+  circles: "architect",
+  os: "computerEngineer",
+  madrid: "architect",
+};
+
 const TemplateModal = ({ onContinue, onClose }) => {
   const [isHidden, setHidden] = useState(storage.get("hide-templates-modal"));
   const initialRef = React.useRef();
@@ -33,6 +42,11 @@ const TemplateModal = ({ onContinue, onClose }) => {
   useEffect(() => {
     storage.set("hide-templates-modal", isHidden);
   }, [isHidden]);
+
+  const src = `${getHostingUrl({
+    template: selectedTemplate,
+    persona: TEMPLATE_PERSONAS[selectedTemplate],
+  })}`;
 
   return (
     <Modal
@@ -54,7 +68,8 @@ const TemplateModal = ({ onContinue, onClose }) => {
               </Center>
               <AspectRatio w="100%" ratio={20 / 9}>
                 <Embed
-                  src={`${getHostingUrl({ template: selectedTemplate })}`}
+                  key={src}
+                  src={src}
                   height="100%"
                   width="100%"
                   scale={0.7}
@@ -62,7 +77,7 @@ const TemplateModal = ({ onContinue, onClose }) => {
                 />
               </AspectRatio>
             </Box>
-            <HStack h="100px" p={2}>
+            <HStack h="100px" p={2} overflowX="auto">
               {templateNames.map((templateName) => {
                 const template = templates[templateName];
                 return (

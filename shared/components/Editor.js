@@ -45,10 +45,7 @@ const Editor = observer(() => {
   const user = useAuth();
   const router = useRouter();
   const [refreshKey, setRefreshKey] = useState(0);
-  const query = useQuery("portfolio", api.portfolio.get, {
-    refetchOnMount: "always",
-    cacheTime: 0,
-  });
+  const query = useQuery("portfolio", api.portfolio.get);
   const mutation = useMutation((data) => api.portfolio.updateDraft(data));
   const [device, setDevice] = useState("desktop");
   const publishModal = useDisclosure();
@@ -83,6 +80,7 @@ const Editor = observer(() => {
 
   return (
     <Flex h="100%">
+      <VisibilityRefresh idleThreshold={1000 * 60 * 10} />
       <Script src="/browser-image-compression.js" strategy="lazyOnload" />
       <Sidebar
         portfolio={portfolio}
@@ -198,11 +196,7 @@ const Editor = observer(() => {
 });
 
 const WrappedEditor = (props) => {
-  return (
-    <VisibilityRefresh idleThreshold={1000 * 60 * 10}>
-      <Editor {...props} />
-    </VisibilityRefresh>
-  );
+  return <Editor {...props} />;
 };
 
 export default WrappedEditor;

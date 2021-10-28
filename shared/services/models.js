@@ -153,6 +153,27 @@ const templateModels = {
         });
       },
     })),
+  reveal: types
+    .model("RevealSettings", {
+      headingFont: types.optional(
+        types.string,
+        templates.reveal.defaults.headingFont
+      ),
+      paragraphFont: types.optional(
+        types.string,
+        templates.reveal.defaults.paragraphFont
+      ),
+      palette: types.optional(types.string, templates.reveal.defaults.palette),
+    })
+    .actions((self) => ({
+      set: (patch) => {
+        Object.entries(patch).forEach(([key, val]) => {
+          if (val !== undefined) {
+            self[key] = val;
+          }
+        });
+      },
+    })),
   circles: types
     .model("CirclesSettings", {
       headingFont: types.optional(
@@ -164,27 +185,6 @@ const templateModels = {
         templates.circles.defaults.paragraphFont
       ),
       palette: types.optional(types.string, templates.circles.defaults.palette),
-    })
-    .actions((self) => ({
-      set: (patch) => {
-        Object.entries(patch).forEach(([key, val]) => {
-          if (val !== undefined) {
-            self[key] = val;
-          }
-        });
-      },
-    })),
-  venice: types
-    .model("VeniceSettings", {
-      headingFont: types.optional(
-        types.string,
-        templates.venice.defaults.headingFont
-      ),
-      paragraphFont: types.optional(
-        types.string,
-        templates.venice.defaults.paragraphFont
-      ),
-      palette: types.optional(types.string, templates.venice.defaults.palette),
     })
     .actions((self) => ({
       set: (patch) => {
@@ -221,8 +221,8 @@ const templateModels = {
 const TemplateSettingsMap = types
   .model("TemplateSettingsMap", {
     madrid: types.optional(templateModels.madrid, {}),
-    venice: types.optional(templateModels.venice, {}),
     skrol: types.optional(templateModels.skrol, {}),
+    reveal: types.optional(templateModels.reveal, {}),
     circles: types.optional(templateModels.circles, {}),
     os: types.optional(templateModels.os, {}),
     gallery: types.optional(templateModels.gallery, {}),
