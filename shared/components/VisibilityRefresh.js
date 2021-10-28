@@ -2,14 +2,33 @@ import React, { useEffect, useState, useRef } from "react";
 import { useEventListener } from "@chakra-ui/react";
 
 const useDocumentVisibility = () => {
-  const [visibilityState, setVisibilityState] = useState(
-    document.visibilityState
-  );
+  const [visibilityState, setVisibilityState] = useState({
+    lastHiddenTimestamp: undefined,
+    lastVisibleTimestamp: Date.now(),
+    state: document.visibilityState,
+  });
 
   useEventListener(
     "visibilitychange",
     () => {
-      setVisibilityState(document.visibilityState);
+      if (document.visibilityState === "hidden") {
+        setVisibilityState((prev) => ({
+          ...prev,
+          lastHiddenTimestamp: Date.now(),
+          state: document.visibilityState,
+        }));
+      } else if (document.visibilityState === "visible") {
+        setVisibilityState((prev) => ({
+          ...prev,
+          lastVisibleTimestamp: Date.now(),
+          state: document.visibilityState,
+        }));
+      } else {
+        setVisibilityState((prev) => ({
+          ...prev,
+          state: document.visibilityState,
+        }));
+      }
     },
     document
   );
@@ -17,26 +36,19 @@ const useDocumentVisibility = () => {
   return visibilityState;
 };
 
-const VisibilityRefresh = ({ idleThreshold = 1000 * 60 * 10, children }) => {
+const VisibilityRefresh = ({ idleThreshold = 1000 * 60 * 10 }) => {
   const visibility = useDocumentVisibility();
-  const lastSeenRef = useRef(null);
-  const [refreshKey, setRefreshKey] = useState(0);
-
   useEffect(() => {
-    if (visibility === "hidden") {
-      lastSeenRef.current = Date.now();
-    } else if (visibility === "visible") {
-      if (Date.now() - lastSeenRef.current > idleThreshold) {
-        setRefreshKey((prev) => prev + 1);
-      }
+    if (
+      visibility.state === "visible" &&
+      visibility.lastVisibleTimestamp - visibility.lastHiddenTimestamp >
+        idleThreshold
+    ) {
+      window.location.reload();
     }
-  }, [visibility]);
+  }, [visibility.state, idleThreshold]);
 
-  useEffect(() => {
-    console.log(refreshKey);
-  }, [refreshKey]);
-
-  return <React.Fragment key={refreshKey}>{children}</React.Fragment>;
+  return null;
 };
 
 export default VisibilityRefresh;

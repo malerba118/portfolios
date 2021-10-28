@@ -34,6 +34,17 @@ export const templates = {
     palettes: ["blackRed", "purplePink", "blueGreen"],
     locked: true,
   },
+  reveal: {
+    label: "Reveal",
+    img: `/templates/reveal.png`,
+    defaults: {
+      headingFont: "Montserrat",
+      paragraphFont: "Lato",
+      palette: "desert",
+    },
+    locked: false,
+    palettes: ["desert", "gray"],
+  },
   circles: {
     label: "Circles",
     img: `/templates/circles.png`,

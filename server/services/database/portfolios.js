@@ -14,10 +14,10 @@ const MediasSchema = joi.object({
   items: joi.array().items(
     joi.object({
       id: joi.string().required(),
-      type: joi.string().allow(null),
-      name: joi.string().allow(null),
-      rawUrl: joi.string().allow(null),
-      processedUrl: joi.string().allow(null),
+      type: joi.string().allow(null, ""),
+      name: joi.string().allow(null, ""),
+      rawUrl: joi.string().allow(null, ""),
+      processedUrl: joi.string().allow(null, ""),
       crop: joi
         .object({
           unit: joi.string(),
@@ -56,6 +56,11 @@ const TemplateSettingsMap = joi.object({
     paragraphFont: joi.string(),
     palette: joi.string(),
   }),
+  reveal: joi.object({
+    headingFont: joi.string(),
+    paragraphFont: joi.string(),
+    palette: joi.string(),
+  }),
   circles: joi.object({
     headingFont: joi.string(),
     paragraphFont: joi.string(),
@@ -78,7 +83,7 @@ const SocialLinksSchema = joi.object({
     joi.object({
       id: joi.string().required(),
       platform: joi.string().allow(null),
-      url: joi.string().allow(null),
+      url: joi.string().allow(null, ""),
     })
   ),
 });
