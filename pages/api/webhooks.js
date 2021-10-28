@@ -11,9 +11,7 @@ export const toDateTime = (secs) => {
 
 const manageSubscriptionStatusChange = async (customerId, subscriptionId) => {
   const database = await Database({ token: null });
-  const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
-    expand: ["default_payment_method"],
-  });
+  const subscription = await stripe.subscriptions.retrieve(subscriptionId);
   // Upsert the latest status of the subscription object.
   const subscriptionData = {
     id: subscription.id,
