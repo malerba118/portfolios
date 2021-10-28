@@ -86,12 +86,15 @@ const AboutForm = observer(({ about }) => {
             medias={about.logo}
             accept={["image/png", "image/jpeg", "image/heic", "image/gif"]}
             allowMultiple={false}
+            tooltip="Upload Photo"
           />
         </InputContainer>
-        <InputContainer label="Photos">
+        <InputContainer label="Profile Photo">
           <MediaForm
             medias={about.images}
             accept={["image/png", "image/jpeg", "image/heic", "image/gif"]}
+            allowMultiple={false}
+            tooltip="Upload Photo"
           />
         </InputContainer>
       </Stack>

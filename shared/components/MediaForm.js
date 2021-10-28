@@ -62,62 +62,64 @@ const processFile = async (file) => {
   });
 };
 
-const MediaForm = observer(({ medias, accept, allowMultiple = true }) => {
-  const [fileMap, setFileMap] = useState({});
-  const user = useAuth();
+const MediaForm = observer(
+  ({ medias, accept, allowMultiple = true, tooltip = "Upload Photos" }) => {
+    const [fileMap, setFileMap] = useState({});
+    const user = useAuth();
 
-  const handleFiles = (files) => {
-    const map = {};
-    const newMedias = [];
-    files.forEach((file) => {
-      const id = nanoid();
-      newMedias.push({
-        id,
-        name: file.name,
-        rawUrl: null,
-        processedUrl: null,
-        crop: null,
-        zoom: null,
+    const handleFiles = (files) => {
+      const map = {};
+      const newMedias = [];
+      files.forEach((file) => {
+        const id = nanoid();
+        newMedias.push({
+          id,
+          name: file.name,
+          rawUrl: null,
+          processedUrl: null,
+          crop: null,
+          zoom: null,
+        });
+        map[id] = file;
       });
-      map[id] = file;
-    });
-    medias.add(newMedias);
-    setFileMap(map);
-  };
+      medias.add(newMedias);
+      setFileMap(map);
+    };
 
-  return (
-    <Flex w="100%" overflowX="auto" overflowY="hidden">
-      <ReorderableList
-        isDisabled={!allowMultiple}
-        items={medias.items.slice()}
-        onChange={(items) => medias.set({ items })}
-        getItemStyle={(isDragging) => ({
-          marginRight: 8,
-        })}
-      >
-        {(media) => (
-          <MediaManager
-            key={media.id}
-            media={media}
-            file={fileMap[media.id]}
-            folder={`users/${user?.id}/public/`}
-            onDelete={() => medias.remove(media.id)}
+    return (
+      <Flex w="100%" overflowX="auto" overflowY="hidden">
+        <ReorderableList
+          isDisabled={!allowMultiple}
+          items={medias.items.slice()}
+          onChange={(items) => medias.set({ items })}
+          getItemStyle={(isDragging) => ({
+            marginRight: 8,
+          })}
+        >
+          {(media) => (
+            <MediaManager
+              key={media.id}
+              media={media}
+              file={fileMap[media.id]}
+              folder={`users/${user?.id}/public/`}
+              onDelete={() => medias.remove(media.id)}
+            />
+          )}
+        </ReorderableList>
+        {(allowMultiple || medias.items.length < 1) && (
+          <FileUploader
+            height={THUMBNAIL_SIZE}
+            width={THUMBNAIL_SIZE}
+            accept={accept}
+            onFiles={handleFiles}
+            tooltip={tooltip}
+            allowMultiple={allowMultiple}
           />
         )}
-      </ReorderableList>
-      {(allowMultiple || medias.items.length < 1) && (
-        <FileUploader
-          height={THUMBNAIL_SIZE}
-          width={THUMBNAIL_SIZE}
-          accept={accept}
-          onFiles={handleFiles}
-          tooltip="Upload Photos"
-          allowMultiple={allowMultiple}
-        />
-      )}
-    </Flex>
-  );
-});
+      </Flex>
+    );
+  }
+);
 
 /**
  * Responsible for thumbnail previews and file uploading to firebase storage

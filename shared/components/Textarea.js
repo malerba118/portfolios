@@ -179,7 +179,6 @@ const Toolbar = ({ className }) => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                alert("maybe");
               }}
             >
               <InputGroup size="md" colorScheme="gray">

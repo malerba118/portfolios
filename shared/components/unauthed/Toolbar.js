@@ -20,7 +20,8 @@ const Toolbar = () => {
   return (
     <Flex
       px={{ base: 8, md: 24 }}
-      h={"100px"}
+      h="100px"
+      minH="100px"
       alignItems="center"
       overflow="hidden"
       color="secondary.500"

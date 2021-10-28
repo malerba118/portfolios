@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useEventListener } from "@chakra-ui/react";
+import { Alert, useEventListener } from "@chakra-ui/react";
 
 const useDocumentVisibility = () => {
   const [visibilityState, setVisibilityState] = useState({

@@ -46,7 +46,12 @@ const Editor = observer(() => {
   const router = useRouter();
   const [refreshKey, setRefreshKey] = useState(0);
   const query = useQuery("portfolio", api.portfolio.get);
-  const mutation = useMutation((data) => api.portfolio.updateDraft(data));
+  const mutation = useMutation((data) => api.portfolio.updateDraft(data), {
+    onError: (err) => {
+      // alert("Error saving draft!");
+      console.log(err?.message);
+    },
+  });
   const [device, setDevice] = useState("desktop");
   const publishModal = useDisclosure();
   const { fullscreen, setFullscreen } = useFullscreen();

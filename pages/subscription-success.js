@@ -4,6 +4,7 @@ import { Button, Center, Flex, Heading } from "@chakra-ui/react";
 import { Toolbar } from "shared/components/unauthed";
 import { getCommonSsrProps } from "server/utils/ssr";
 import { useAuth } from "client/useAuth";
+import { textures } from "shared/utils/styles";
 
 export const getServerSideProps = async (ctx) => {
   let config = {};
@@ -19,18 +20,13 @@ const SubscriptionSuccess = (props) => {
       direction="column"
       minH="var(--app-height)"
       w="100%"
-      style={{
-        height: "var(--app-height)",
-        backgroundColor: "var(--chakra-colors-secondary-600)",
-        backgroundImage:
-          'url("https://www.transparenttextures.com/patterns/worn-dots.png")',
-        backgroundBlendMode: "overlay",
-        backgroundSize: "20%",
-      }}
+      direction="column"
+      bgColor="primary.50"
+      {...textures.speckles}
     >
       <Toolbar />
       <Center flex={1} flexDirection="column">
-        <Heading maxW="900" color="white" textAlign="center" size="3xl">
+        <Heading maxW="900" color="secondary.500" textAlign="center" size="3xl">
           Congrats, you're ready to make an awesome portfolio!
         </Heading>
         <Button
