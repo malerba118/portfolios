@@ -44,7 +44,6 @@ const TEMPLATE_PERSONAS = {
   circles: "architect",
   os: "computerEngineer",
   madrid: "architect",
-  venice: "architect",
 };
 
 const VIDEO_URLS = {

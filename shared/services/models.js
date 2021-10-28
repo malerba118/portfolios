@@ -195,27 +195,6 @@ const templateModels = {
         });
       },
     })),
-  venice: types
-    .model("VeniceSettings", {
-      headingFont: types.optional(
-        types.string,
-        templates.venice.defaults.headingFont
-      ),
-      paragraphFont: types.optional(
-        types.string,
-        templates.venice.defaults.paragraphFont
-      ),
-      palette: types.optional(types.string, templates.venice.defaults.palette),
-    })
-    .actions((self) => ({
-      set: (patch) => {
-        Object.entries(patch).forEach(([key, val]) => {
-          if (val !== undefined) {
-            self[key] = val;
-          }
-        });
-      },
-    })),
   gallery: types
     .model("GallerySettings", {
       headingFont: types.optional(
@@ -242,7 +221,6 @@ const templateModels = {
 const TemplateSettingsMap = types
   .model("TemplateSettingsMap", {
     madrid: types.optional(templateModels.madrid, {}),
-    venice: types.optional(templateModels.venice, {}),
     skrol: types.optional(templateModels.skrol, {}),
     reveal: types.optional(templateModels.reveal, {}),
     circles: types.optional(templateModels.circles, {}),

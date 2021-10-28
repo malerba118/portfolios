@@ -46,11 +46,6 @@ const TemplateSettingsMap = joi.object({
     paragraphFont: joi.string(),
     palette: joi.string(),
   }),
-  venice: joi.object({
-    headingFont: joi.string(),
-    paragraphFont: joi.string(),
-    palette: joi.string(),
-  }),
   skrol: joi.object({
     headingFont: joi.string(),
     paragraphFont: joi.string(),
