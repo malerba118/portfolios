@@ -20,7 +20,6 @@ const SubscriptionSuccess = (props) => {
       direction="column"
       minH="var(--app-height)"
       w="100%"
-      direction="column"
       bgColor="primary.50"
       {...textures.speckles}
     >
