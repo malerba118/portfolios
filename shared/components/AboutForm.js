@@ -81,7 +81,10 @@ const AboutForm = observer(({ about }) => {
             }}
           />
         </InputContainer>
-        <InputContainer label="Logo">
+        <InputContainer
+          label="Logo"
+          info="Accepted formats: png, jpg, heic, gif"
+        >
           <MediaForm
             medias={about.logo}
             accept={["image/png", "image/jpeg", "image/heic", "image/gif"]}
@@ -89,7 +92,10 @@ const AboutForm = observer(({ about }) => {
             tooltip="Upload Photo"
           />
         </InputContainer>
-        <InputContainer label="Profile Photo">
+        <InputContainer
+          label="Profile Photo"
+          info="Accepted formats: png, jpg, heic, gif"
+        >
           <MediaForm
             medias={about.images}
             accept={["image/png", "image/jpeg", "image/heic", "image/gif"]}

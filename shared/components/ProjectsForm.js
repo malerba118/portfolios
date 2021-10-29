@@ -79,7 +79,10 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
           size="sm"
         />
       </InputContainer>
-      <InputContainer label="Photos">
+      <InputContainer
+        label="Photos"
+        info="Accepted formats: png, jpg, heic, gif"
+      >
         <MediaForm
           medias={project.images}
           accept={["image/png", "image/jpeg", "image/gif", "image/heic"]}

@@ -36,6 +36,7 @@
     "mobx-state-tree": "^5.0.2",
     "nanoid": "^3.1.23",
     "next": "11.0.0",
+    "next-seo": "^4.28.1",
     "nextjs-cors": "^2.0.0",
     "nookies": "^2.5.2",
     "patch-package": "^6.4.7",
