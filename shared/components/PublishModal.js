@@ -242,25 +242,6 @@ const PublishModal = observer(
               )}
               {defaultValue && !isEditing && (
                 <InputContainer label="Changes will be published to">
-                  {/* <Flex
-                    alignItems="center"
-                    px={4}
-                    h="48px"
-                    rounded="4px"
-                    // bg="gray.100"
-                    {...borders({
-                      top: true,
-                      right: true,
-                      bottom: true,
-                      left: true,
-                    })}
-                  >
-                    <Text fontSize="sm">
-                      {getHostingUrl({
-                        subdomain: debouncedSubdomain,
-                      })}
-                    </Text>
-                  </Flex> */}
                   <InputGroup>
                     <Input
                       value={getHostingUrl({
