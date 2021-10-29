@@ -18,11 +18,12 @@ import {
   HStack,
   Tooltip,
   Box,
+  Flex,
   useClipboard,
 } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { RiExternalLinkLine } from "react-icons/ri";
-import { MdContentCopy } from "react-icons/md";
+import { MdContentCopy, MdEdit } from "react-icons/md";
 import {
   IoIosCheckmarkCircleOutline as AvailableIcon,
   IoIosCloseCircleOutline as UnavailableIcon,
@@ -41,6 +42,7 @@ import {
 } from "shared/utils/data";
 import { useRouter } from "next/router";
 import IconButton from "./IconButton";
+import { borders } from "shared/utils/styles";
 
 const PublishModal = observer(
   ({ defaultValue, isOpen, onSuccess, onClose, portfolio }) => {
@@ -48,6 +50,7 @@ const PublishModal = observer(
     const initialRef = React.useRef();
     const finalRef = React.useRef();
     const [subdomain, setSubdomain] = useState(defaultValue);
+    const [isEditing, setEditing] = useState(false);
     const [debouncedSubdomain] = useDebounce(subdomain, 1000);
     const user = useAuth();
     const queryClient = useQueryClient();
@@ -177,55 +180,117 @@ const PublishModal = observer(
                   </Text>
                 </>
               )}
-              <InputContainer label="Choose a Subdomain">
-                <InputGroup>
-                  <InputLeftAddon
-                    fontSize="sm"
-                    bg="gray.100"
-                    px={2}
-                    children="https://"
-                  />
-                  <Input
-                    value={subdomain}
-                    onChange={(e) => {
-                      setSubdomain(e.target.value);
-                    }}
-                    ref={initialRef}
-                    placeholder="subdomain"
-                    fontSize="sm"
-                  />
-                  <InputRightAddon
-                    bg="gray.100"
-                    px={2}
-                    fontSize="sm"
-                    children=".vernos.us"
-                  />
-                  <InputRightElement px={2} mr={"76px"} bg="transparent">
-                    {query.data?.available === true && (
-                      <Icon
-                        as={AvailableIcon}
-                        fontSize={24}
-                        color="secondary.400"
-                      />
-                    )}
-                    {query.data?.available === false && (
-                      <Tooltip
-                        placement="top"
-                        bgColor="red.400"
-                        label={query.data?.message}
-                      >
-                        <span>
-                          <Icon
-                            as={UnavailableIcon}
-                            fontSize={24}
-                            color="red.400"
+              {(!defaultValue || isEditing) && (
+                <InputContainer
+                  label={
+                    isEditing ? "Change your Subdomain" : "Choose a Subdomain"
+                  }
+                  info={
+                    isEditing
+                      ? "If you change your subdomain, your site will no longer be available at the former subdomain."
+                      : ""
+                  }
+                >
+                  <InputGroup>
+                    <InputLeftAddon
+                      fontSize="sm"
+                      bg="gray.100"
+                      px={2}
+                      children="https://"
+                    />
+                    <Input
+                      value={subdomain}
+                      onChange={(e) => {
+                        setSubdomain(e.target.value);
+                      }}
+                      ref={initialRef}
+                      placeholder="subdomain"
+                      fontSize="sm"
+                    />
+                    <InputRightAddon
+                      bg="gray.100"
+                      px={2}
+                      fontSize="sm"
+                      children=".vernos.us"
+                    />
+                    <InputRightElement px={2} mr={"76px"} bg="transparent">
+                      {query.data?.available === true && (
+                        <Icon
+                          as={AvailableIcon}
+                          fontSize={24}
+                          color="secondary.400"
+                        />
+                      )}
+                      {query.data?.available === false && (
+                        <Tooltip
+                          placement="top"
+                          bgColor="red.400"
+                          label={query.data?.message}
+                        >
+                          <span>
+                            <Icon
+                              as={UnavailableIcon}
+                              fontSize={24}
+                              color="red.400"
+                            />
+                          </span>
+                        </Tooltip>
+                      )}
+                    </InputRightElement>
+                  </InputGroup>
+                </InputContainer>
+              )}
+              {defaultValue && !isEditing && (
+                <InputContainer label="Changes will be published to">
+                  {/* <Flex
+                    alignItems="center"
+                    px={4}
+                    h="48px"
+                    rounded="4px"
+                    // bg="gray.100"
+                    {...borders({
+                      top: true,
+                      right: true,
+                      bottom: true,
+                      left: true,
+                    })}
+                  >
+                    <Text fontSize="sm">
+                      {getHostingUrl({
+                        subdomain: debouncedSubdomain,
+                      })}
+                    </Text>
+                  </Flex> */}
+                  <InputGroup>
+                    <Input
+                      value={getHostingUrl({
+                        subdomain: debouncedSubdomain,
+                      })}
+                      ref={initialRef}
+                      placeholder="subdomain"
+                      fontSize="sm"
+                    />
+                    <InputRightAddon
+                      bg="gray.100"
+                      px={0}
+                      fontSize="sm"
+                      overflow="hidden"
+                      children={
+                        <HStack spacing={0} height="100%">
+                          <IconButton
+                            tooltip={"Edit"}
+                            icon={<MdEdit />}
+                            h="100%"
+                            onClick={(e) => {
+                              setEditing(true);
+                            }}
                           />
-                        </span>
-                      </Tooltip>
-                    )}
-                  </InputRightElement>
-                </InputGroup>
-              </InputContainer>
+                        </HStack>
+                      }
+                    />
+                  </InputGroup>
+                </InputContainer>
+              )}
             </FormSection>
           </ModalBody>
           <ModalFooter>
