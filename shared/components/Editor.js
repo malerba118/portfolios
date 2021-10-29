@@ -109,6 +109,31 @@ const Editor = observer(() => {
               rounded="4px"
               icon={fullscreen ? <ExitFullscreenIcon /> : <FullscreenIcon />}
             />
+            {/* {portfolio.subdomain && (
+              <IconButton
+                tooltip={"Go to published site"}
+                onClick={() => {
+                  window.open(
+                    getHostingUrl({ subdomain: portfolio.subdomain }),
+                    "_blank"
+                  );
+                }}
+                size="sm"
+                fontSize="lg"
+                rounded="4px"
+                pb="2px"
+                pl="2px"
+                icon={<RiExternalLinkLine />}
+              />
+            )} */}
+            <IconButton
+              tooltip={"Refresh"}
+              onClick={() => setRefreshKey((p) => p + 1)}
+              size="sm"
+              fontSize="xl"
+              rounded="4px"
+              icon={<RefreshIcon />}
+            />
             {portfolio.subdomain && (
               <IconButton
                 tooltip={"Go to published site"}
@@ -126,14 +151,6 @@ const Editor = observer(() => {
                 icon={<RiExternalLinkLine />}
               />
             )}
-            <IconButton
-              tooltip={"Refresh"}
-              onClick={() => setRefreshKey((p) => p + 1)}
-              size="sm"
-              fontSize="xl"
-              rounded="4px"
-              icon={<RefreshIcon />}
-            />
           </ButtonGroup>
           <DeviceSelector value={device} onChange={setDevice} />
           <HStack pos="absolute" right={4}>
