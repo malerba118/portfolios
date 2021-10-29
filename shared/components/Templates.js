@@ -125,7 +125,10 @@ const Templates = observer(({ portfolio }) => {
 const templateForms = {
   os: observer(({ template, settings }) => {
     return (
-      <InputContainer label="Wallpaper">
+      <InputContainer
+        label="Wallpaper"
+        info="Accepted formats: png, jpg, heic, gif"
+      >
         <MediaForm
           medias={settings.wallpaper}
           accept={["image/png", "image/jpeg", "image/heic", "image/gif"]}
