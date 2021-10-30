@@ -15,6 +15,7 @@ import {
   FormErrorMessage,
   FormControl,
   Box,
+  Link as ChakraLink,
 } from "@chakra-ui/react";
 import { Toolbar } from "shared/components/unauthed";
 import { getCommonSsrProps } from "server/utils/ssr";
@@ -267,17 +268,46 @@ const Login = (_props) => {
             </MotionButton>
           )} */}
               {mode === "sign-up" && (
-                <Text alignSelf="flex-start">
-                  Already have an account?{" "}
-                  <Button
-                    type="submit"
-                    colorScheme="secondary"
-                    variant="link"
-                    onClick={() => setMode("sign-in")}
+                <Box>
+                  <Text alignSelf="flex-start">
+                    Already have an account?{" "}
+                    <Button
+                      type="submit"
+                      colorScheme="secondary"
+                      variant="link"
+                      onClick={() => setMode("sign-in")}
+                    >
+                      Sign In
+                    </Button>
+                    .
+                  </Text>
+                  <Text
+                    mt={1}
+                    alignSelf="flex-start"
+                    fontSize="xs"
+                    wordBreak="break-word"
                   >
-                    Sign In
-                  </Button>
-                </Text>
+                    By creating an account, you agree to our{" "}
+                    <ChakraLink
+                      color="secondary.600"
+                      href="/terms-and-conditions.html"
+                      isExternal
+                      fontSize="xs"
+                    >
+                      terms and conditions
+                    </ChakraLink>{" "}
+                    and{" "}
+                    <ChakraLink
+                      color="secondary.600"
+                      href="/privacy-policy.html"
+                      isExternal
+                      fontSize="xs"
+                    >
+                      privacy policy
+                    </ChakraLink>
+                    .
+                  </Text>
+                </Box>
               )}
               {mode === "sign-in" && (
                 <Text alignSelf="flex-start">
@@ -290,6 +320,7 @@ const Login = (_props) => {
                   >
                     Sign Up
                   </Button>
+                  .
                 </Text>
               )}
             </Stack>

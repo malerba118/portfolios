@@ -1,14 +1,8 @@
 import NextLink from "next/link";
 import {
-  Avatar,
   Box,
   Flex,
   Heading,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Text,
   Image,
   HStack,
 } from "@chakra-ui/react";
@@ -38,13 +32,13 @@ const Toolbar = () => {
           <Link>Pricing</Link>
         </NextLink>
         {!user && (
-          <NextLink href="/login?mode=sign-up">
-            <Link>Sign Up</Link>
-          </NextLink>
-        )}
-        {!user && (
           <NextLink href="/login?mode=sign-in">
             <Link>Sign In</Link>
+          </NextLink>
+        )}
+         {!user && (
+          <NextLink href="/login?mode=sign-up">
+            <Link>Sign Up</Link>
           </NextLink>
         )}
         {user && (
