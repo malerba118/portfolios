@@ -81,7 +81,7 @@ const SocialLinkItem = observer(({ socialLink, onDelete }) => {
       overflow="visible"
     >
       <HStack spacing={4}>
-        <Box pos="relative" flex={1} zIndex={0}>
+        <Box pos="relative" zIndex={0}>
           <Select
             label={(label) => label || "Platform"}
             value={socialLink.platform}
@@ -106,7 +106,7 @@ const SocialLinkItem = observer(({ socialLink, onDelete }) => {
           onChange={(e) => {
             socialLink.set({ url: e.target.value });
           }}
-          flex={2}
+          flex={1}
           placeholder="url..."
           size="sm"
           _focus={{

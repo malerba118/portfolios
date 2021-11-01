@@ -76,8 +76,8 @@ const PublishModal = observer(
       query.data?.available === true;
 
     const hasSub = hasSubscription(user);
-    const isUsingLockedTemplate = !!templates[portfolio?.draft?.template]
-      ?.locked;
+    const isUsingLockedTemplate =
+      !!templates[portfolio?.draft?.template]?.locked;
 
     if (mutations.publish.isSuccess) {
       return (
@@ -98,6 +98,12 @@ const PublishModal = observer(
                     <Input
                       value={getHostingUrl({ subdomain: debouncedSubdomain })}
                       fontSize="sm"
+                      isReadOnly
+                      _focus={{
+                        boxShadow:
+                          "0 0 0 2px var(--chakra-colors-secondary-300) !important",
+                      }}
+                      zIndex={1}
                     />
                     <InputRightAddon
                       bg="gray.100"
@@ -250,6 +256,12 @@ const PublishModal = observer(
                       ref={initialRef}
                       placeholder="subdomain"
                       fontSize="sm"
+                      isReadOnly
+                      _focus={{
+                        boxShadow:
+                          "0 0 0 2px var(--chakra-colors-secondary-300) !important",
+                      }}
+                      zIndex={1}
                     />
                     <InputRightAddon
                       bg="gray.100"

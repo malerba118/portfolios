@@ -16,7 +16,7 @@ const AboutForm = observer(({ about }) => {
     <FormSection>
       <Stack spacing={4}>
         <HStack spacing={4}>
-          <InputContainer label="First Name">
+          <InputContainer w="100%" label="First Name">
             <Input
               type="text"
               name="first-name"
@@ -28,7 +28,7 @@ const AboutForm = observer(({ about }) => {
               size="sm"
             />
           </InputContainer>
-          <InputContainer label="Last Name">
+          <InputContainer w="100%" label="Last Name">
             <Input
               value={about.lastName}
               onChange={(e) => {
