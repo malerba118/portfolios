@@ -38,9 +38,9 @@ export const templates = {
     label: "Circles",
     img: `/templates/circles.png`,
     defaults: {
-      headingFont: "Montserrat",
-      paragraphFont: "Lato",
-      palette: "whiteBlack",
+      headingFont: "IBM Plex Mono",
+      paragraphFont: "IBM Plex Mono",
+      palette: "blackRed",
     },
     palettes: ["blackRed", "purplePink", "blueGreen", "whiteBlack"],
     locked: true,

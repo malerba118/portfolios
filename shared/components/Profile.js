@@ -19,6 +19,7 @@ import * as api from "client/api";
 import getStripe from "client/stripe";
 import { useRouter } from "next/router";
 import { hasSubscription } from "shared/utils/data";
+import { useMutation, useQueryClient } from "react-query";
 
 const ProfileItem = ({ label, children, action, ...otherProps }) => {
   return (
@@ -44,6 +45,10 @@ const ProfileItem = ({ label, children, action, ...otherProps }) => {
 const Profile = () => {
   const user = useAuth();
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const mutations = {
+    restoreDraft: useMutation(api.portfolio.restoreDraft),
+  };
 
   const handleUpgradeClick = async (e) => {
     try {
@@ -80,6 +85,31 @@ const Profile = () => {
           </ProfileItem>
           <ProfileItem label="Joined" alignSelf="stretch">
             <DateViewer startDate={user.createdAt} />
+          </ProfileItem>
+          <ProfileItem
+            label="Restore Draft"
+            alignSelf="stretch"
+            action={
+              <Button
+                onClick={() => {
+                  mutations.restoreDraft.mutate(
+                    {},
+                    {
+                      onSuccess: () => {
+                        queryClient.invalidateQueries("portfolio");
+                      },
+                    }
+                  );
+                }}
+                isLoading={mutations.restoreDraft.isLoading}
+              >
+                Restore
+              </Button>
+            }
+          >
+            <Flex justify="space-between" align="flex-end">
+              <Text>Restore draft to last published version</Text>
+            </Flex>
           </ProfileItem>
           <ProfileItem
             label="Subscription"

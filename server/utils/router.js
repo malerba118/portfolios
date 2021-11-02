@@ -6,7 +6,7 @@ const defaultDataHandler = ({ data, res }) => {
 };
 
 const defaultErrorHandler = ({ error, res }) => {
-  console.log(error);
+  console.log({ type: error.type, name: error.name, message: error.message });
   res.status(500);
   res.json(error);
 };

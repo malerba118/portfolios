@@ -16,6 +16,10 @@ export const portfolio = {
     const res = await axios.put("/api/me/portfolio/draft", data);
     return res.data;
   },
+  restoreDraft: async () => {
+    const res = await axios.post("/api/me/portfolio/restore-draft");
+    return res.data;
+  },
   publish: async (subdomain) => {
     const res = await axios.post(`/api/me/portfolio/publish`, { subdomain });
     return res.data;

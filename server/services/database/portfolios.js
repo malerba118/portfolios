@@ -246,6 +246,18 @@ export default ({ db, user }) => {
     return getOrCreate();
   };
 
+  const restoreDraft = async () => {
+    assertAuthenticated(user);
+    let portfolio = await getOrCreate();
+    assertValid(portfolio.published, schemas.updateDraft);
+    await portfoliosCol.doc(portfolio.id).update({
+      ...portfolio,
+      draft: portfolio.published,
+      draftLastSaved: new Date().toJSON(),
+    });
+    return getOrCreate();
+  };
+
   const isSubdomainAvailable = async (subdomain) => {
     assertAuthenticated(user);
     assertValid(subdomain, schemas.isSubdomainAvailable);
@@ -307,6 +319,7 @@ export default ({ db, user }) => {
     getById,
     isSubdomainAvailable,
     updateDraft,
+    restoreDraft,
     updateSubdomain,
     publish,
   };
