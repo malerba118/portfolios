@@ -19,7 +19,6 @@ import EditorPreview from "./EditorPreview";
 
 const TimeAgo = React.memo(TimeAgoBase);
 
-// const tabs = ["content", "templates"];
 const labels = {
   content: "Content",
   templates: "Templates",

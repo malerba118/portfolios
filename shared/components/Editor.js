@@ -25,17 +25,6 @@ import { autorun } from "mobx";
 import PublishModal from "./PublishModal";
 import TemplateModal from "./TemplateModal";
 import Sidebar from "./Sidebar";
-import {
-  MdFullscreen as FullscreenIcon,
-  MdFullscreenExit as ExitFullscreenIcon,
-  MdRefresh as RefreshIcon,
-} from "react-icons/md";
-import { RiExternalLinkLine } from "react-icons/ri";
-import IconButton from "./IconButton";
-import { useFullscreen } from "./Fullscreen";
-import { useRouter } from "next/router";
-import { getHostingUrl } from "shared/utils/url";
-import { hasSubscription } from "shared/utils/data";
 import VisibilityRefresh from "./VisibilityRefresh";
 import EditorPreview from "./EditorPreview";
 
@@ -75,20 +64,6 @@ const Editor = observer(() => {
   if (!portfolio) {
     return null;
   }
-
-  // if (hideEditor) {
-  //   return (
-  //     <Center flexDirection="column" h="100%" p={4}>
-  //       <Heading size="xl" textAlign="center">
-  //         Oops, Tiny Screen Alert!
-  //       </Heading>
-  //       <Text fontSize="md" textAlign="center">
-  //         Unfortunately editing is not supported on mobile devices, please sign
-  //         in on a browser to continue!
-  //       </Text>
-  //     </Center>
-  //   );
-  // }
 
   return (
     <Flex h="100%">
