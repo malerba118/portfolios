@@ -337,7 +337,7 @@ const TemplatePreviewer = ({ ...otherProps }) => {
                 size="xl"
                 maxW="500px"
               >
-                Select some templates below and try them out!
+                Select some templates to see what you can make!
               </Heading>
             </Center>
           )}

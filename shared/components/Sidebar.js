@@ -1,5 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Flex, Text, Box, Stack, Center } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  Box,
+  Stack,
+  Center,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import PortfolioContentEditor from "./PortfolioContentEditor";
 import * as styles from "../utils/styles";
 import { observer } from "mobx-react";
@@ -8,13 +15,14 @@ import Templates from "./Templates";
 import { useFullscreen } from "./Fullscreen";
 import { MotionFlex, transitions } from "./animation";
 import TimeAgoBase from "react-timeago";
+import EditorPreview from "./EditorPreview";
 
 const TimeAgo = React.memo(TimeAgoBase);
 
-const tabs = ["content", "templates"];
 const labels = {
   content: "Content",
   templates: "Templates",
+  preview: "Preview",
 };
 
 const formatter = (value, unit, suffix) => {
@@ -27,10 +35,19 @@ const formatter = (value, unit, suffix) => {
   return `${value} ${unit} ${suffix}`;
 };
 
-const Sidebar = observer(({ portfolio, lastSaved }) => {
+const Sidebar = observer(({ portfolio, lastSaved, subdomain }) => {
   const [selectedTab, setSelectedTab] = useState("content");
   const { fullscreen } = useFullscreen();
   const [lastSavedState, setLastSavedState] = useState(lastSaved);
+  const isSmallScreen = useBreakpointValue({ base: true, md: false });
+
+  const tabs = useMemo(() => {
+    if (isSmallScreen) {
+      return ["content", "templates", "preview"];
+    } else {
+      return ["content", "templates"];
+    }
+  }, [isSmallScreen]);
 
   // mutation seems to be setting data to undefined at some point
   // this is a hacky workaround, but should figure it out for real
@@ -41,12 +58,18 @@ const Sidebar = observer(({ portfolio, lastSaved }) => {
     }
   }, [lastSaved]);
 
+  useEffect(() => {
+    if (!isSmallScreen) {
+      setSelectedTab((prev) => (prev === "preview" ? "content" : prev));
+    }
+  }, [isSmallScreen]);
+
   return (
     <MotionFlex
       position="relative"
       className="sidebar"
-      w="420px"
-      minW="420px"
+      w={isSmallScreen ? "100%" : "420px"}
+      minW={isSmallScreen ? "100%" : "420px"}
       animate={{
         marginLeft: fullscreen ? "-420px" : 0,
         transition: transitions.one(0.3),
@@ -106,6 +129,9 @@ const Sidebar = observer(({ portfolio, lastSaved }) => {
         )}
         {selectedTab === "templates" && (
           <Templates portfolio={portfolio.draft} />
+        )}
+        {selectedTab === "preview" && (
+          <EditorPreview h="100%" portfolio={portfolio} subdomain={subdomain} />
         )}
       </Box>
     </MotionFlex>

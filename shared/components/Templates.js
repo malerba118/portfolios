@@ -8,7 +8,7 @@ import {
   HStack,
   Heading,
   Icon,
-  Center,
+  AspectRatio,
   Tooltip,
 } from "@chakra-ui/react";
 import { observer } from "mobx-react";
@@ -74,7 +74,7 @@ const Templates = observer(({ portfolio }) => {
                         {templateOptions.label}
                       </Text>
                     </Flex>
-                    <Box pos="relative" w="100%" h="200px">
+                    <AspectRatio pos="relative" w="100%" ratio={16 / 9}>
                       <Img
                         objectFit="cover"
                         src={templateOptions.img}
@@ -83,7 +83,7 @@ const Templates = observer(({ portfolio }) => {
                         bg="gray.200"
                         rounded="md"
                       />
-                    </Box>
+                    </AspectRatio>
                   </Stack>
                   {templateOptions.locked && !data.hasSubscription(user) && (
                     <>
