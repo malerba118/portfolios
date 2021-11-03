@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
 import { Flex, useBreakpointValue } from "@chakra-ui/react";
 import Script from "next/script";
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation, focusManager } from "react-query";
 import debounce from "lodash/debounce";
 import { observer } from "mobx-react";
 import * as models from "shared/services/models";
@@ -12,11 +12,23 @@ import Sidebar from "./Sidebar";
 // import VisibilityRefresh from "./VisibilityRefresh";
 import EditorPreview from "./EditorPreview";
 
+focusManager.setEventListener((handleFocus) => {
+  // Listen to visibillitychange and focus
+  if (typeof window !== "undefined" && window.addEventListener) {
+    window.addEventListener("visibilitychange", handleFocus, false);
+  }
+
+  return () => {
+    // Be sure to unsubscribe if a new handler is set
+    window.removeEventListener("visibilitychange", handleFocus);
+  };
+});
+
 const Editor = observer(() => {
   const isSmallScreen = useBreakpointValue({ base: true, md: false });
   const query = useQuery("portfolio", api.portfolio.get, {
     staleTime: 1000 * 60 * 2,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: "always",
     refetchOnMount: "always",
   });
   const mutation = useMutation((data) => api.portfolio.updateDraft(data), {

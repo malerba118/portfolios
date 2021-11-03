@@ -8,19 +8,25 @@ const AuthContext = createContext({
 
 export function AuthProvider({ user, children }) {
   useEffect(() => {
+    // probably unneccesary to track prev but leaving for now (the problem was firebase client was configured to use session storage for auth instead of local storage)
+    let prevToken = nookies.get(null).token;
+    let prevUid = nookies.get(null).uid;
     return firebaseClient.auth().onIdTokenChanged(async (firebaseUser) => {
-      const prevToken = nookies.get(null).token;
       if (!firebaseUser) {
         nookies.destroy(null, "token");
+        nookies.destroy(null, "uid");
       } else {
         const token = await firebaseUser.getIdToken();
         nookies.set(null, "token", token, {});
+        nookies.set(null, "uid", firebaseUser.uid, {});
       }
       const currToken = nookies.get(null).token;
+      const currUid = nookies.get(null).uid;
       if (Boolean(prevToken) !== Boolean(currToken)) {
-        // if existence of token changes, reload cause user is either logged in or logged out
         window.location.reload();
       }
+      prevToken = currToken;
+      prevUid = currUid;
     });
   }, []);
 
