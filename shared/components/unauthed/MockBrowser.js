@@ -2,9 +2,16 @@ import { Box, HStack, Text, Flex, Button, Icon } from "@chakra-ui/react";
 import { BsArrowRight } from "react-icons/bs";
 import NextLink from "next/link";
 
+const shadow = `0px 1.2px 5px -18px rgba(0, 0, 0, 0.02),
+  0px 3px 12px -18px rgba(0, 0, 0, 0.028),
+  0px 5.6px 22.5px -18px rgba(0, 0, 0, 0.035),
+  0px 10.1px 40.2px -18px rgba(0, 0, 0, 0.042),
+  0px 18.8px 75.2px -18px rgba(0, 0, 0, 0.05),
+  0px 45px 180px -18px rgba(0, 0, 0, 0.07)`;
+
 const MockBrowser = ({ url, children, ...otherProps }) => {
   return (
-    <Box boxShadow="md" borderRadius="md" overflow="hidden" {...otherProps}>
+    <Box boxShadow={shadow} borderRadius="md" overflow="hidden" {...otherProps}>
       <HStack
         className="mock-browser-navbar"
         px={2}
