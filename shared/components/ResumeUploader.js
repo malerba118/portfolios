@@ -21,7 +21,9 @@ const ResumeUploader = ({ resume, onChange, folder = "", ...otherProps }) => {
     try {
       setStatus("pending");
       const file = files[0];
-      const fileRef = storageRef.current.child(folder + "resume-" + file.name);
+      const fileRef = storageRef.current.child(
+        folder + "resume-" + file.name + "-" + Date.now()
+      );
       await fileRef.put(file);
       const url = await fileRef.getDownloadURL();
       setStatus("success");

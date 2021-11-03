@@ -138,7 +138,7 @@ const MediaManager = observer(
             const proccesedFile = await processFile(file);
             const dimensions = await getFileDimensions(proccesedFile);
             const fileRef = storageRef.current.child(
-              folder + "raw-" + media.id
+              folder + "raw-" + media.id + "-" + Date.now()
             );
             await fileRef.put(proccesedFile);
             const url = await fileRef.getDownloadURL();
@@ -159,7 +159,7 @@ const MediaManager = observer(
         setLoading(true);
         const proccesedFile = await processFile(file);
         const fileRef = storageRef.current.child(
-          folder + "processed-" + media.id
+          folder + "processed-" + media.id + "-" + Date.now()
         );
         await fileRef.put(proccesedFile);
         const url = await fileRef.getDownloadURL();
