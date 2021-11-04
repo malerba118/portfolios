@@ -106,6 +106,24 @@ export const palettes = {
     primary: white,
     secondary: black,
   },
+  magentaMagenta: {
+    primary: colorsToPalette(ant.magenta),
+    secondary: generate(colorsToPalette(ant.magenta)[500], {
+      theme: "dark",
+      backgroundColor: "#222222",
+    }),
+  },
+  volcanoVolcano: {
+    primary: colorsToPalette(ant.volcano),
+    secondary: generate(colorsToPalette(ant.volcano)[500], {
+      theme: "dark",
+      backgroundColor: "#222222",
+    }),
+  },
+  grayGreen: {
+    primary: invert(DEFAULT_THEME.colors.gray),
+    secondary: DEFAULT_THEME.colors.green,
+  },
 };
 
 export const selectPalettes = (paletteNames) => {

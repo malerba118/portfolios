@@ -1,5 +1,10 @@
 import { AuthProvider } from "client/useAuth";
-import { QueryClient, QueryClientProvider } from "react-query";
+import {
+  QueryClient,
+  QueryCache,
+  QueryClientProvider,
+  MutationCache,
+} from "react-query";
 import { ChakraProvider } from "@chakra-ui/react";
 import { createTheme } from "shared/utils/theme";
 import "@fontsource/josefin-sans/400.css";
@@ -10,8 +15,26 @@ import "../shared/components/Datepicker.css";
 import "../shared/components/FontSelector.css";
 import { initGoodies } from "shared/utils";
 import { DefaultSeo } from "next-seo";
+import firebaseClient from "client/firebase";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error) => {
+      // refresh token if expired
+      if (error?.response?.data?.code === "auth/id-token-expired") {
+        firebaseClient.auth().currentUser.getIdToken(true);
+      }
+    },
+  }),
+  mutationCache: new MutationCache({
+    onError: (error) => {
+      // refresh token if expired
+      if (error?.response?.data?.code === "auth/id-token-expired") {
+        firebaseClient.auth().currentUser.getIdToken(true);
+      }
+    },
+  }),
+});
 
 initGoodies();
 
@@ -33,8 +56,7 @@ function MyApp({ Component, pageProps }) {
                 "Build a sleek, modern, portfolio site in seconds. Showcase your work without having to learn a complex website builder first.",
               images: [
                 {
-                  url:
-                    "https://firebasestorage.googleapis.com/v0/b/vernos-prod.appspot.com/o/open-graph-seo-photo.png?alt=media&token=330fbede-2b1e-49ce-8a7b-5bc454914d3c",
+                  url: "https://firebasestorage.googleapis.com/v0/b/vernos-prod.appspot.com/o/open-graph-seo-photo.png?alt=media&token=330fbede-2b1e-49ce-8a7b-5bc454914d3c",
                   width: 720,
                   height: 353,
                   alt: "Vernos Editor",

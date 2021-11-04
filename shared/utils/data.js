@@ -20,7 +20,15 @@ export const templates = {
       paragraphFont: "Lato",
       palette: "purplePink",
     },
-    palettes: ["blackRed", "purplePink", "blueGreen"],
+    palettes: [
+      "blackRed",
+      "volcanoVolcano",
+      "magentaMagenta",
+      "purplePink",
+      "blueGreen",
+      "grayGreen",
+      "whiteBlack",
+    ],
     locked: true,
   },
   reveal: {
@@ -42,7 +50,15 @@ export const templates = {
       paragraphFont: "IBM Plex Mono",
       palette: "blackRed",
     },
-    palettes: ["blackRed", "purplePink", "blueGreen", "whiteBlack"],
+    palettes: [
+      "blackRed",
+      "volcanoVolcano",
+      "magentaMagenta",
+      "purplePink",
+      "blueGreen",
+      "grayGreen",
+      "whiteBlack",
+    ],
     locked: true,
   },
   os: {
