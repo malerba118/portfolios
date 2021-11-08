@@ -24,7 +24,8 @@ export default router(
       }
       return sendEmail({
         to,
-        from: "vernosapp@gmail.com", // Change to your verified sender
+        from: "support@vernos.app", // Change to your verified sender,
+        replyTo: "support+no-reply@vernos.app",
         templateId: "d-754a495c33c04577843ca7c2d3c4c945",
         data: {
           portfolio_url: url,

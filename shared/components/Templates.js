@@ -6,7 +6,7 @@ import {
   Text,
   Image,
   HStack,
-  Heading,
+  Center,
   Icon,
   AspectRatio,
   Tooltip,
@@ -115,6 +115,13 @@ const Templates = observer(({ portfolio }) => {
                 </FormSection>
               );
             })}
+            <FormSection>
+              <Center w="100%" h="64px">
+                <Text fontSize="sm" fontWeight={600} color="gray.800">
+                  More templates coming soon!
+                </Text>
+              </Center>
+            </FormSection>
           </Stack>
         </Section>
       )}
