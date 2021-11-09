@@ -329,8 +329,14 @@ export const Project = types
     summary: types.optional(types.string, ""),
     description: types.optional(types.string, ""),
     images: types.optional(Medias, { items: [] }),
-    startDate: types.optional(types.maybeNull(types.Date), null),
-    endDate: types.optional(types.maybeNull(types.Date), null),
+    startDate: types.union(
+      types.optional(types.maybeNull(types.Date), null),
+      types.literal("present")
+    ),
+    endDate: types.union(
+      types.optional(types.maybeNull(types.Date), null),
+      types.literal("present")
+    ),
   })
   .actions((self) => ({
     set: (patch) => {

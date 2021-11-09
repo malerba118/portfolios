@@ -65,6 +65,7 @@ const ProjectFormItem = observer(({ project, expanded, onDelete }) => (
               onChange={(date) => {
                 project.set({ endDate: date });
               }}
+              allowPresent
             />
           </Box>
         </InputContainer>
