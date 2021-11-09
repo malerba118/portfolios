@@ -23,7 +23,7 @@ export default router({
     }
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      billing_address_collection: "required",
+      billing_address_collection: "auto",
       customer: user.stripeCustomerId,
       line_items: [
         {
