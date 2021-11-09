@@ -115,8 +115,8 @@ const schemas = {
           name: joi.string().required().allow(""),
           summary: joi.string().required().allow(""),
           description: joi.string().required().allow(""),
-          startDate: joi.date().required().allow(null),
-          endDate: joi.date().required().allow(null),
+          startDate: joi.date().required().allow(null).allow("present"),
+          endDate: joi.date().required().allow(null).allow("present"),
           images: MediasSchema,
         })
       ),
