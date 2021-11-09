@@ -153,7 +153,7 @@ const Pricing = (props) => {
                   </Heading>
                   <HStack align="center">
                     <Heading lineHeight=".9em" size="xl">
-                      $4
+                      $6
                     </Heading>
                     <Text size="sm">/month</Text>
                   </HStack>

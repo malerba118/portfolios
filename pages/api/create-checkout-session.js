@@ -27,7 +27,7 @@ export default router({
       customer: user.stripeCustomerId,
       line_items: [
         {
-          price: "price_1JkfX5FwyRTPcbuJKNczQ2Lh",
+          price: process.env.PREMIUM_PLAN_PRICE_ID,
           quantity: 1,
         },
       ],
