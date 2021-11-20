@@ -81,11 +81,32 @@ export const palettes = {
   ocean: {
     primary: DEFAULT_THEME.colors.twitter,
   },
+  purple: {
+    primary: DEFAULT_THEME.colors.purple,
+  },
+  green: {
+    primary: DEFAULT_THEME.colors.whatsapp,
+  },
+  teal: {
+    primary: DEFAULT_THEME.colors.teal,
+  },
+  yellow: {
+    primary: DEFAULT_THEME.colors.yellow,
+  },
+  orange: {
+    primary: DEFAULT_THEME.colors.orange,
+  },
+  red: {
+    primary: DEFAULT_THEME.colors.red,
+  },
   pink: {
     primary: DEFAULT_THEME.colors.pink,
   },
   gray: {
     primary: DEFAULT_THEME.colors.gray,
+  },
+  darkGray: {
+    primary: invert(DEFAULT_THEME.colors.gray),
   },
   blackRed: {
     primary: generate(CHAKRA_THEME.colors.red[50], {
