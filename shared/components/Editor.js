@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
-import { Flex, useBreakpointValue } from "@chakra-ui/react";
+import { Flex, Spinner, Center, useBreakpointValue } from "@chakra-ui/react";
 import Script from "next/script";
 import { useQuery, useMutation, focusManager } from "react-query";
 import debounce from "lodash/debounce";
@@ -24,7 +24,7 @@ focusManager.setEventListener((handleFocus) => {
   };
 });
 
-const Editor = observer(() => {
+const Editor = observer(({ onReady }) => {
   const isSmallScreen = useBreakpointValue({ base: true, md: false });
   const query = useQuery("portfolio", api.portfolio.get, {
     staleTime: 1000 * 60 * 2,
@@ -42,10 +42,6 @@ const Editor = observer(() => {
     return debounce(mutation.mutate, 3000);
   }, [mutation.mutate]);
 
-  // useEffect(() => {
-  //   alert(query.data);
-  // }, [query.data]);
-
   const portfolio = useMemo(() => {
     if (query.dataUpdatedAt) {
       return models.Portfolio.create(query.data);
@@ -59,6 +55,12 @@ const Editor = observer(() => {
         updatePortfolio(portfolio.draft.toJSON());
       }
     });
+  }, [portfolio]);
+
+  useEffect(() => {
+    if (portfolio) {
+      onReady?.();
+    }
   }, [portfolio]);
 
   if (!portfolio) {

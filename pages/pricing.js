@@ -72,6 +72,7 @@ const Pricing = (props) => {
         backgroundBlendMode: "multiply",
         backgroundSize: "12%",
       }}
+      overflow="auto"
     >
       <Toolbar />
       <Box pos="relative" flex={1}>
@@ -153,7 +154,7 @@ const Pricing = (props) => {
                   </Heading>
                   <HStack align="center">
                     <Heading lineHeight=".9em" size="xl">
-                      $6
+                      $10
                     </Heading>
                     <Text size="sm">/month</Text>
                   </HStack>

@@ -5,8 +5,8 @@ export const templates = {
     label: "Madrid",
     img: `/templates/madrid.png`,
     defaults: {
-      headingFont: "Montserrat",
-      paragraphFont: "Lato",
+      headingFont: "Major Mono Display",
+      paragraphFont: "Noto Sans TC",
       palette: "desert",
     },
     locked: false,
