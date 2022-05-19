@@ -1,11 +1,5 @@
 import NextLink from "next/link";
-import {
-  Box,
-  Flex,
-  Heading,
-  Image,
-  HStack,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, Image, HStack } from "@chakra-ui/react";
 import Link from "../Link";
 import { useAuth } from "client/useAuth";
 
@@ -17,26 +11,38 @@ const Toolbar = () => {
       h="100px"
       minH="100px"
       alignItems="center"
+      justifyContent="space-between"
       overflow="hidden"
-      color="secondary.500"
+      color="blackAlpha.800"
       fontWeight="bold"
+      pos="relative"
     >
-      <Heading size="sm" mb="6px">
+      <Heading
+        size="sm"
+        pos="absolute"
+        left="50%"
+        transform="translateX(-50%)"
+        display="inline-block"
+      >
         <NextLink href="/">
-          <Image cursor="pointer" src="/vernos-white.svg" w={"80px"} />
+          <Image cursor="pointer" src="/branding/logo.svg" w={"240px"} />
         </NextLink>
       </Heading>
-      <Box flex={1} />
-      <HStack spacing={6}>
+      <HStack spacing={8}>
+        <NextLink href="/about">
+          <Link>About</Link>
+        </NextLink>
         <NextLink href="/pricing">
           <Link>Pricing</Link>
         </NextLink>
+      </HStack>
+      <HStack spacing={8}>
         {!user && (
           <NextLink href="/login?mode=sign-in">
             <Link>Sign In</Link>
           </NextLink>
         )}
-         {!user && (
+        {!user && (
           <NextLink href="/login?mode=sign-up">
             <Link>Sign Up</Link>
           </NextLink>

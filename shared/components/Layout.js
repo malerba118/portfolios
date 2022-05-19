@@ -1,26 +1,33 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, ChakraProvider } from "@chakra-ui/react";
+import { useAuth } from "client/useAuth";
+import { createTheme } from "shared/utils/editor-theme";
 import FullscreenProvider from "./Fullscreen";
 
 const Layout = ({ toolbar, content, fitWindow }) => {
+  const user = useAuth();
   if (fitWindow) {
     return (
-      <FullscreenProvider>
-        <Flex flexDirection="column" h="var(--app-height)">
-          {toolbar}
-          <Box position="relative" flex={1}>
-            <Box position="absolute" top="0" right="0" bottom="0" left="0">
-              {content}
+      <ChakraProvider theme={createTheme({ isAuthenticated: !!user })}>
+        <FullscreenProvider>
+          <Flex flexDirection="column" h="var(--app-height)">
+            {toolbar}
+            <Box position="relative" flex={1}>
+              <Box position="absolute" top="0" right="0" bottom="0" left="0">
+                {content}
+              </Box>
             </Box>
-          </Box>
-        </Flex>
-      </FullscreenProvider>
+          </Flex>
+        </FullscreenProvider>
+      </ChakraProvider>
     );
   }
   return (
-    <FullscreenProvider>
-      {toolbar}
-      {content}
-    </FullscreenProvider>
+    <ChakraProvider theme={createTheme({ isAuthenticated: !!user })}>
+      <FullscreenProvider>
+        {toolbar}
+        {content}
+      </FullscreenProvider>
+    </ChakraProvider>
   );
 };
 

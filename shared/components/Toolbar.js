@@ -41,7 +41,7 @@ const Toolbar = () => {
     >
       <Heading size="sm">
         <Link href="/">
-          <Image cursor="pointer" src="/vernos-4.svg" w={"68px"} />
+          <Image cursor="pointer" src="/branding/logo.svg" w={"100px"} />
         </Link>
       </Heading>
       <Box flex={1} />

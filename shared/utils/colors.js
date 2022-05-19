@@ -106,7 +106,18 @@ export const palettes = {
     primary: DEFAULT_THEME.colors.gray,
   },
   darkGray: {
-    primary: invert(DEFAULT_THEME.colors.gray),
+    primary: invert({
+      50: "#FFFFFF",
+      100: "#F7FAFC",
+      200: "#d5ddec",
+      300: "#97a3b4",
+      400: "#7b899d",
+      500: "#626f84",
+      600: "#4b5768",
+      700: "#343e4b",
+      800: "#1e2530",
+      900: "#1a2028",
+    }),
   },
   blackRed: {
     primary: generate(CHAKRA_THEME.colors.red[50], {

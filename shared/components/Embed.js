@@ -20,7 +20,10 @@ const Embed = ({
 
   useEffect(() => {
     if (loaded) {
-      iframeRef.current?.contentWindow?.postMessage(debouncedData, "*");
+      iframeRef.current?.contentWindow?.postMessage(
+        { sender: "vernos-app", payload: debouncedData },
+        "*"
+      );
     }
   }, [debouncedData, loaded]);
 

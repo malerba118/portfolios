@@ -22,3 +22,11 @@ a {
 .show-on-hover-trigger:hover .show-on-hover {
   display: block;
 }
+
+@font-face {
+  font-family: "screamer";
+  src: url("/branding/fk-screamer/FKScreamer-Upright.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+}

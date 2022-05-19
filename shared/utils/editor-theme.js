@@ -1,6 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
 import * as ant from "@ant-design/colors";
-import "@fontsource/dm-sans"; // Defaults to weight 400.
 
 const colorsToPalette = (colors) => ({
   50: colors[0],
@@ -37,7 +36,7 @@ export const createTheme = ({ isAuthenticated }) => {
       primary: colorsToPalette(ant.generate("#DB7058")),
     },
     fonts: {
-      heading: "screamer",
+      heading: "DM Sans",
       body: "DM Sans",
     },
     styles: {
@@ -63,17 +62,6 @@ export const createTheme = ({ isAuthenticated }) => {
           _focus: {
             boxShadow: "none",
           },
-        },
-        variants: {
-          solid: (props) => ({
-            bg: `${props.colorScheme}.300`,
-            border: `2px solid black`,
-            _hover: {
-              boxShadow: "2px 2px 0px 0px black",
-              transform: "translate(-2px, -2px) !important",
-              bg: `${props.colorScheme}.400`,
-            },
-          }),
         },
       },
       IconButton: {
@@ -103,9 +91,7 @@ export const createTheme = ({ isAuthenticated }) => {
         },
       },
       Heading: {
-        baseStyle: {
-          letterSpacing: ".075em",
-        },
+        baseStyle: {},
         sizes: {
           "2xs": {
             lineHeight: "140%",
@@ -130,7 +116,6 @@ export const createTheme = ({ isAuthenticated }) => {
           },
           md: {
             lineHeight: "140%",
-            letterSpacing: ".075em",
             fontSize: {
               base: "md",
               md: "xl",
@@ -138,25 +123,24 @@ export const createTheme = ({ isAuthenticated }) => {
           },
           lg: {
             lineHeight: "140%",
-            letterSpacing: ".075em",
             fontSize: {
               base: "lg",
               md: "2xl",
             },
           },
           xl: {
-            // WebkitTextStroke: "1px currentColor",
+            WebkitTextStroke: "1px currentColor",
             lineHeight: "140%",
-            letterSpacing: ".075em",
+            letterSpacing: ".05em",
             fontSize: {
               base: "xl",
               md: "3xl",
             },
           },
           "2xl": {
-            // WebkitTextStroke: "2px currentColor",
+            WebkitTextStroke: "2px currentColor",
             lineHeight: 1.2,
-            letterSpacing: ".15em",
+            letterSpacing: ".05em",
 
             fontSize: {
               base: "2xl",
@@ -164,48 +148,21 @@ export const createTheme = ({ isAuthenticated }) => {
             },
           },
           "3xl": {
-            // WebkitTextStroke: "3px currentColor",
+            WebkitTextStroke: "3px currentColor",
             lineHeight: "120%",
-            letterSpacing: ".15em",
+            letterSpacing: ".05em",
             fontSize: {
               base: "3xl",
               md: "5xl",
             },
           },
           "4xl": {
-            // WebkitTextStroke: "4px currentColor",
+            WebkitTextStroke: "4px currentColor",
             lineHeight: "120%",
-            letterSpacing: ".15em",
+            letterSpacing: ".05em",
             fontSize: {
               base: "4xl",
               md: "6xl",
-            },
-          },
-          "5xl": {
-            // WebkitTextStroke: "4px currentColor",
-            lineHeight: "120%",
-            letterSpacing: ".15em",
-            fontSize: {
-              base: "5xl",
-              md: "7xl",
-            },
-          },
-          "6xl": {
-            // WebkitTextStroke: "4px currentColor",
-            lineHeight: "120%",
-            letterSpacing: ".15em",
-            fontSize: {
-              base: "6xl",
-              md: "8xl",
-            },
-          },
-          "7xl": {
-            // WebkitTextStroke: "4px currentColor",
-            lineHeight: "120%",
-            letterSpacing: ".15em",
-            fontSize: {
-              base: "7xl",
-              md: "9xl",
             },
           },
         },

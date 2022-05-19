@@ -7,9 +7,6 @@ import {
 } from "react-query";
 import { ChakraProvider } from "@chakra-ui/react";
 import { createTheme } from "shared/utils/theme";
-import "@fontsource/josefin-sans/400.css";
-import "@fontsource/josefin-sans/600.css";
-import "@fontsource/karla/400.css";
 import "../styles/globals.css";
 import "../shared/components/Datepicker.css";
 import "../shared/components/FontSelector.css";

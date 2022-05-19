@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Landing from "shared/components/Landing";
+import Landing from "shared/components/Landing2";
 import Toolbar from "shared/components/Toolbar";
 import Layout from "shared/components/Layout";
 // import * as unauthed from "shared/components/unauthed";
