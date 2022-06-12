@@ -1,4 +1,15 @@
-import { Rect } from './types';
+import * as React from 'react';
+export declare type RefCallback<T> = (newValue: T | null) => void;
+export declare type RefObject<T> = React.MutableRefObject<T | null>;
+export declare type DefinedReactRef<T> = RefCallback<T> | RefObject<T>;
+export declare type ReactRef<T> = DefinedReactRef<T> | null;
+export declare function assignRef<T>(ref: ReactRef<T>, value: T | null): ReactRef<T>;
+export interface Rect {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
 export declare const getRect: (el: HTMLElement) => Rect;
 export declare class LayoutSection {
     private container;

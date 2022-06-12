@@ -1,11 +1,11 @@
-import { Rect } from '../types';
+import { Rect } from '../utils';
 interface UseScrollLayoutManagerParams {
     scrollAxis: 'x' | 'y';
 }
 export interface Layout {
     sections: Record<string, Rect>;
     container: Rect;
-    scrollMax: number;
+    maxScrollPosition: number;
 }
 export interface LayoutManager {
     layout: Layout;

@@ -1,5 +1,5 @@
 import { HTMLMotionProps } from 'framer-motion';
-import { FC } from 'react';
+import React from 'react';
 import { SpringOptions } from 'popmotion';
 import { LayoutSection, LayoutContainer } from '../utils';
 export declare type StyleObj = {
@@ -16,11 +16,13 @@ export declare type StyleObj = {
     skewX?: number | string;
     skewY?: number | string;
     opacity?: number | string;
+    backgroundColor?: string;
+    color?: string;
 };
 export declare type KeyframesContext = {
     section: LayoutSection;
     container: LayoutContainer;
-    scrollMax: number;
+    maxScrollPosition: number;
     data?: any;
 };
 export declare type KeyframesObj = Record<number, StyleObj>;
@@ -41,11 +43,13 @@ export declare type SpringConfigs = {
     skewX?: SpringOptions;
     skewY?: SpringOptions;
     opacity?: SpringOptions;
+    backgroundColor?: SpringOptions;
+    color?: SpringOptions;
 };
 export interface ScrollItemProps extends HTMLMotionProps<'div'> {
     keyframes?: Keyframes;
     springs?: SpringConfigs;
     data?: any;
 }
-declare const Item: FC<ScrollItemProps>;
+declare const Item: React.ForwardRefExoticComponent<ScrollItemProps & React.RefAttributes<HTMLDivElement>>;
 export default Item;

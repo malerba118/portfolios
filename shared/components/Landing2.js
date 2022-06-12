@@ -17,81 +17,22 @@ import {
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { Waypoint } from "react-waypoint";
 import { Toolbar, MockBrowser } from "./unauthed";
-import { useElementScroll, useTransform, useSpring } from "framer-motion";
-import { MotionBox } from "./animation";
+import {
+  useElementScroll,
+  useTransform,
+  useSpring,
+  AnimatePresence,
+} from "framer-motion";
+import { MotionHeading } from "./animation";
 import Preload from "preload-it";
 import Entrance from "./animation/Entrance";
-import { Scroll } from "../../scrollex";
+import { Scroll, useScrollState } from "../../scrollex";
+import { templateNames } from "shared/utils/data";
+import { clamp } from "lodash";
 
 const ScrollItem = chakra(Scroll.Item);
 const ScrollSection = chakra(Scroll.Section);
 const ScrollContainer = chakra(Scroll.Container);
-
-const TEMPLATE_PERSONAS = {
-  gallery: "wedding",
-  skrol: "fitness",
-  reveal: "wedding",
-  circles: "architect",
-  os: "computerEngineer",
-  madrid: "architect",
-};
-
-const INTRO_PHRASES = [
-  "Who needs a resume...",
-  "when you have a website?",
-  "Showcase your work",
-  "Showcase yourself",
-  "Good-looking portfolios",
-  "Easy to build",
-  "Publish in seconds",
-];
-
-const VIDEO_URLS = {
-  content:
-    "https://firebasestorage.googleapis.com/v0/b/vernos-prod.appspot.com/o/add-content-3.mp4?alt=media&token=66217003-5347-4505-b367-6c88dfb110b6",
-  templates:
-    "https://firebasestorage.googleapis.com/v0/b/vernos-prod.appspot.com/o/choose-template-3.mp4?alt=media&token=04cdec97-902d-40b1-b225-6a9b304bad15",
-  publish:
-    "https://firebasestorage.googleapis.com/v0/b/vernos-prod.appspot.com/o/publish-3.mp4?alt=media&token=7876ec68-debe-4e1b-abbb-453fd3ff0caf",
-};
-
-const preload = Preload();
-
-const Video = ({ src, type = "video/mp4", isActive, autoPlay, style }) => {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    if (ref.current) {
-      if (isActive && autoPlay) {
-        ref.current.currentTime = 0;
-        ref.current.play();
-      } else {
-        ref.current.pause();
-      }
-    }
-  }, [isActive, autoPlay]);
-
-  return (
-    <video style={style} ref={ref} muted loop autoPlay playsInline controls>
-      <source type={type} src={src} />
-    </video>
-  );
-};
-
-const keyframe = {
-  0: {
-    translateY: 100,
-  },
-  100: {
-    translateY: 0,
-  },
-  900: {
-    translateY: 0,
-  },
-  1000: {
-    translateY: -100,
-  },
-};
 
 const keyframes = {
   intro: {
@@ -126,13 +67,214 @@ const keyframes = {
       },
     }),
   },
+  templates: {
+    images: ({ section, container }) => ({
+      [section.topAt("container-top")]: {
+        translateX: "0%",
+      },
+      [section.bottomAt("container-bottom")]: {
+        translateX: "-83%",
+      },
+    }),
+  },
   steps: {},
   demo: {},
 };
 
 const Landing = ({}) => {
-  const [activeVideo, setActiveVideo] = useState(null);
+  return (
+    <ScrollContainer h="100vh">
+      <IntroSection />
+      <TemplateDemoSection />
 
+      {/**
+            <TemplateDemoSection />
+
+      <CTA1Section />
+      <StepsSection />
+      <CTA2Section />
+      <FooterSection />
+     */}
+    </ScrollContainer>
+  );
+};
+
+const IntroSection = ({}) => {
+  return (
+    <ScrollSection showOverflow h="100vh">
+      <Toolbar />
+      <Flex h="calc(100% - 100px)">
+        <Box bg="blue.300" flex={1}>
+          <Stack p={16}>
+            <Heading size="6xl" color="white">
+              THE BEST WAY TO&nbsp;
+              <Box position="relative" display="inline-block">
+                <Image src="/branding/circle.svg" position="absolute"></Image>
+                SHOWCASE
+              </Box>
+              &nbsp;YOUR WORK
+            </Heading>
+            <Text fontSize="3xl" color="white">
+              create a beautiful portfolio in seconds
+            </Text>
+            <Button colorScheme="pink" w="fit-content">
+              Start for free
+            </Button>
+          </Stack>
+        </Box>
+        <Center
+          bg="pink.100"
+          flex={1}
+          display={{ base: "none", md: "flex" }}
+          position="relative"
+        >
+          <Image
+            src="/branding/intro-page-img.png"
+            h="100%"
+            objectFit="contain"
+          ></Image>
+          <Image
+            src="/branding/character_magnifier.svg"
+            position="absolute"
+            left={2}
+            bottom={2}
+            w="clamp(150px, 40%, 230px)"
+          ></Image>
+        </Center>
+      </Flex>
+    </ScrollSection>
+  );
+};
+
+const items = [
+  "Who needs a resume...",
+  "when you have a portfolio site?",
+  "so what are you proud of?",
+  "go on and show the world!",
+];
+
+const variants = {
+  heading: {
+    initial: {
+      y: 100,
+    },
+    active: {
+      y: 0,
+    },
+    exit: {
+      y: -100,
+    },
+  },
+};
+
+const inverseVariants = {
+  heading: {
+    initial: {
+      y: -100,
+    },
+    active: {
+      y: 0,
+    },
+    exit: {
+      y: 100,
+    },
+  },
+};
+
+const TemplateDemoSectionInner = () => {
+  const selectedIndex = useScrollState(({ section, position, container }) => {
+    const index = Math.floor(
+      (position - section.topAt("container-top")) /
+        ((section.height - container.height) / items.length)
+    );
+    return clamp(index, 0, items.length - 1);
+  });
+
+  const scrollDirection = useScrollState(({ velocity }) => {
+    if (velocity >= 0) return "down";
+    else {
+      return "up";
+    }
+  });
+
+  const headingVariants =
+    scrollDirection === "down" ? variants.heading : inverseVariants.heading;
+
+  const phraseColor =
+    selectedIndex == items.length - 1 ? "orange.300" : "black";
+
+  return (
+    <Stack h="100vh" pos="sticky" top={0}>
+      <Box pt={16}>
+        <Box overflow="hidden">
+          <AnimatePresence exitBeforeEnter>
+            <MotionHeading
+              key={selectedIndex}
+              size="6xl"
+              textAlign="center"
+              variants={headingVariants}
+              initial="initial"
+              animate="active"
+              exit="exit"
+              transition={{
+                type: "spring",
+                damping: 20,
+                stiffness: 300,
+                mass: 0.1,
+              }}
+              textTransform="uppercase"
+              color={phraseColor}
+            >
+              {items[selectedIndex]}
+            </MotionHeading>
+          </AnimatePresence>
+        </Box>
+      </Box>
+      <Center flex={1} w="100%">
+        <Box h="400px" w="600px">
+          <ScrollItem
+            display="flex"
+            keyframes={keyframes.templates.images}
+            w="max-content"
+          >
+            {templateNames.map((template) => (
+              <Image
+                key={template}
+                marginRight={"24px"}
+                w="calc(600px - 24px)"
+                h="400px"
+                objectFit="contain"
+                src={"/templates/" + template + ".png"}
+              ></Image>
+            ))}
+          </ScrollItem>
+        </Box>
+        <Image
+          alt="little guy with telescope looking at templates"
+          src="branding/character_telescope.svg"
+          position="absolute"
+          left={10}
+          bottom={8}
+          w="clamp(150px, 40%, 230px)"
+        ></Image>
+      </Center>
+    </Stack>
+  );
+};
+
+const TemplateDemoSection = ({}) => {
+  return (
+    <ScrollSection h="1000vh" w="100%" showOverflow>
+      <TemplateDemoSectionInner />
+    </ScrollSection>
+  );
+};
+
+const CTA1Section = ({}) => {
+  return <ScrollSection></ScrollSection>;
+};
+
+const OldLanding = ({}) => {
   return (
     <ScrollContainer h="100vh">
       <ScrollSection>

@@ -22,6 +22,78 @@ export const createTheme = ({ isAuthenticated }) => {
     //   primary: colorsToPalette(ant.generate("#DB5858")),
     // },
     colors: {
+      pink: {
+        50: "#ffe4fa",
+        100: "#feb3ea", //use this one
+        200: "#fb82dc",
+        300: "#fb53ce",
+        400: "#f928bf",
+        500: "#e018a6",
+        600: "#ae0f81",
+        700: "#7d085c",
+        800: "#4c0138",
+        900: "#1c0015",
+      },
+      blue: {
+        50: "#e2ecff",
+        100: "#b1c5ff",
+        200: "#809efe",
+        300: "#4f77fd",
+        400: "#1f50fb",
+        500: "#0936e2",
+        600: "#022ab0",
+        700: "#001e7f",
+        800: "#00124f",
+        900: "#00061f",
+      },
+      orange: {
+        50: "#ffe6e0",
+        100: "#ffbdb1",
+        200: "#ff927f",
+        300: "#ff674d",
+        400: "#fe3d1b",
+        500: "#e52401",
+        600: "#b31b00",
+        700: "#811200",
+        800: "#4f0800",
+        900: "#200000",
+      },
+      green: {
+        50: "#dafff7",
+        100: "#adffea",
+        200: "#7effdc",
+        300: "#4dffce",
+        400: "#24ffc1",
+        500: "#11e6a7",
+        600: "#00b382",
+        700: "#00805d",
+        800: "#004e37",
+        900: "#001c12",
+      },
+      yellow: {
+        50: "#fffadb",
+        100: "#ffefaf",
+        200: "#ffe57e",
+        300: "#ffda4d",
+        400: "#ffd01e",
+        500: "#e6b607",
+        600: "#b38e00",
+        700: "#806500",
+        800: "#4d3d00",
+        900: "#1d1400",
+      },
+      gray: {
+        50: "#f2f2f2",
+        100: "#d9d9d9",
+        200: "#bfbfbf",
+        300: "#a6a6a6",
+        400: "#8c8c8c",
+        500: "#737373",
+        600: "#595959",
+        700: "#404040",
+        800: "#262626",
+        900: "#0d0d0d",
+      },
       secondary: {
         50: "#eaf0f1",
         100: "#cad8dc",
@@ -50,10 +122,10 @@ export const createTheme = ({ isAuthenticated }) => {
           ? {}
           : {
               backgroundColor: "var(--chakra-colors-primary-50)",
-              backgroundImage:
-                'url("https://www.transparenttextures.com/patterns/asfalt-dark.png")',
-              backgroundBlendMode: "multiply",
-              backgroundSize: "12%",
+              // backgroundImage:
+              //   'url("https://www.transparenttextures.com/patterns/asfalt-dark.png")',
+              // backgroundBlendMode: "multiply",
+              // backgroundSize: "12%",
             },
       }),
     },
@@ -63,15 +135,15 @@ export const createTheme = ({ isAuthenticated }) => {
           _focus: {
             boxShadow: "none",
           },
+          borderRadius: "20px",
         },
         variants: {
           solid: (props) => ({
-            bg: `${props.colorScheme}.300`,
-            border: `2px solid black`,
+            px: 8,
+            bg: `${props.colorScheme}.100`,
+            color: "black",
             _hover: {
-              boxShadow: "2px 2px 0px 0px black",
-              transform: "translate(-2px, -2px) !important",
-              bg: `${props.colorScheme}.400`,
+              bg: `${props.colorScheme}.200`,
             },
           }),
         },
@@ -104,7 +176,7 @@ export const createTheme = ({ isAuthenticated }) => {
       },
       Heading: {
         baseStyle: {
-          letterSpacing: ".075em",
+          fontWeight: 400,
         },
         sizes: {
           "2xs": {
@@ -130,7 +202,6 @@ export const createTheme = ({ isAuthenticated }) => {
           },
           md: {
             lineHeight: "140%",
-            letterSpacing: ".075em",
             fontSize: {
               base: "md",
               md: "xl",
@@ -138,7 +209,6 @@ export const createTheme = ({ isAuthenticated }) => {
           },
           lg: {
             lineHeight: "140%",
-            letterSpacing: ".075em",
             fontSize: {
               base: "lg",
               md: "2xl",
@@ -147,7 +217,6 @@ export const createTheme = ({ isAuthenticated }) => {
           xl: {
             // WebkitTextStroke: "1px currentColor",
             lineHeight: "140%",
-            letterSpacing: ".075em",
             fontSize: {
               base: "xl",
               md: "3xl",
@@ -156,8 +225,6 @@ export const createTheme = ({ isAuthenticated }) => {
           "2xl": {
             // WebkitTextStroke: "2px currentColor",
             lineHeight: 1.2,
-            letterSpacing: ".15em",
-
             fontSize: {
               base: "2xl",
               md: "4xl",
@@ -166,7 +233,6 @@ export const createTheme = ({ isAuthenticated }) => {
           "3xl": {
             // WebkitTextStroke: "3px currentColor",
             lineHeight: "120%",
-            letterSpacing: ".15em",
             fontSize: {
               base: "3xl",
               md: "5xl",
@@ -175,7 +241,6 @@ export const createTheme = ({ isAuthenticated }) => {
           "4xl": {
             // WebkitTextStroke: "4px currentColor",
             lineHeight: "120%",
-            letterSpacing: ".15em",
             fontSize: {
               base: "4xl",
               md: "6xl",
@@ -184,7 +249,6 @@ export const createTheme = ({ isAuthenticated }) => {
           "5xl": {
             // WebkitTextStroke: "4px currentColor",
             lineHeight: "120%",
-            letterSpacing: ".15em",
             fontSize: {
               base: "5xl",
               md: "7xl",
@@ -193,7 +257,6 @@ export const createTheme = ({ isAuthenticated }) => {
           "6xl": {
             // WebkitTextStroke: "4px currentColor",
             lineHeight: "120%",
-            letterSpacing: ".15em",
             fontSize: {
               base: "6xl",
               md: "8xl",
@@ -202,7 +265,6 @@ export const createTheme = ({ isAuthenticated }) => {
           "7xl": {
             // WebkitTextStroke: "4px currentColor",
             lineHeight: "120%",
-            letterSpacing: ".15em",
             fontSize: {
               base: "7xl",
               md: "9xl",
