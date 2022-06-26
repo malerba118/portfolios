@@ -73,7 +73,7 @@ const keyframes = {
         translateX: "0%",
       },
       [section.bottomAt("container-bottom")]: {
-        translateX: "-83%",
+        translateX: "-100%",
       },
     }),
   },
@@ -86,7 +86,7 @@ const Landing = ({}) => {
     <ScrollContainer h="100vh">
       <IntroSection />
       <TemplateDemoSection />
-
+      <BannerOneSection />
       {/**
             <TemplateDemoSection />
 
@@ -231,21 +231,24 @@ const TemplateDemoSectionInner = () => {
         </Box>
       </Box>
       <Center flex={1} w="100%">
-        <Box h="400px" w="600px">
+        <Box h="400px" w="0px">
           <ScrollItem
             display="flex"
             keyframes={keyframes.templates.images}
             w="max-content"
+            gap={8}
           >
             {templateNames.map((template) => (
               <Image
                 key={template}
-                marginRight={"24px"}
-                w="calc(600px - 24px)"
+                // marginRight={"24px"}
+                // w="calc(600px - 24px)"
+                w="600px"
                 h="400px"
                 objectFit="contain"
                 src={"/templates/" + template + ".png"}
-              ></Image>
+                alt={template + ".png"}
+              />
             ))}
           </ScrollItem>
         </Box>
@@ -270,8 +273,64 @@ const TemplateDemoSection = ({}) => {
   );
 };
 
-const CTA1Section = ({}) => {
-  return <ScrollSection></ScrollSection>;
+const BannerOneSection = ({}) => {
+  return (
+    <ScrollSection>
+      <Center
+        padding={12}
+        bg="green.600"
+        // hidden on smalls screens
+        display={{ base: "none", lg: "flex" }}
+      >
+        <Stack>
+          <Heading color="yellow.300" size="6xl" textTransform="uppercase">
+            creating a portfolio
+          </Heading>
+          <HStack spacing={6}>
+            <Img
+              w={{ base: "200px", md: "300px" }}
+              src="/branding/character_chilling.svg"
+            />
+            <Stack>
+              <Heading color="yellow.300" size="6xl" textTransform="uppercase">
+                has never been so easy
+              </Heading>
+              <HStack>
+                <Box flex={1}></Box>
+                <Button colorScheme="pink" w="fit-content">
+                  Start for free
+                </Button>
+              </HStack>
+            </Stack>
+          </HStack>
+        </Stack>
+      </Center>
+      <Center
+        padding={12}
+        bg="green.600"
+        // hidden on big screens
+        display={{ base: "flex", lg: "none" }}
+      >
+        <Stack spacing={6} alignItems="center">
+          <Heading
+            color="yellow.300"
+            size="6xl"
+            textAlign="center"
+            textTransform="uppercase"
+          >
+            creating a portfolio has never been so easy
+          </Heading>
+          <Img
+            w={{ base: "200px", md: "300px" }}
+            src="/branding/character_chilling.svg"
+          />
+          <Button colorScheme="pink" w="fit-content">
+            Start for free
+          </Button>
+        </Stack>
+      </Center>
+    </ScrollSection>
+  );
 };
 
 const OldLanding = ({}) => {
@@ -352,6 +411,7 @@ const OldLanding = ({}) => {
                 position="absolute"
                 data={{ index }}
                 w="100vw"
+                key={phrase}
               >
                 <Heading
                   size="3xl"
