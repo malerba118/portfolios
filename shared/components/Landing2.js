@@ -26,7 +26,7 @@ import {
 import { MotionHeading } from "./animation";
 import Preload from "preload-it";
 import Entrance from "./animation/Entrance";
-import { Scroll, useScrollState } from "../../scrollex";
+import { Scroll, useScrollState } from "scrollex";
 import { templateNames } from "shared/utils/data";
 import { clamp } from "lodash";
 
@@ -77,8 +77,32 @@ const keyframes = {
       },
     }),
   },
-  steps: {},
-  demo: {},
+  bannerOne: {
+    iconSpiral: ({ section, container }) => ({
+      [section.topAt("container-bottom") - 200]: {
+        translateY: "-50px",
+        translateX: "70px",
+
+        rotateZ: "0deg",
+      },
+      [section.bottomAt("container-bottom") + 200]: {
+        translateY: "100px",
+        translateX: "0px",
+        rotateZ: "-90deg",
+      },
+    }),
+  },
+  steps: {
+    roundedStar: ({ section, container }) => ({
+      [section.topAt("container-bottom")]: {
+        rotateZ: "20deg",
+        translateX: "-33%",
+      },
+      [section.bottomAt("container-top")]: {
+        rotateZ: "180deg",
+      },
+    }),
+  },
 };
 
 const Landing = ({}) => {
@@ -87,9 +111,10 @@ const Landing = ({}) => {
       <IntroSection />
       <TemplateDemoSection />
       <BannerOneSection />
+      <StepsSection />
+      {/* <Box h="100vh"></Box> */}
       {/**
             <TemplateDemoSection />
-
       <CTA1Section />
       <StepsSection />
       <CTA2Section />
@@ -101,7 +126,7 @@ const Landing = ({}) => {
 
 const IntroSection = ({}) => {
   return (
-    <ScrollSection showOverflow h="100vh">
+    <ScrollSection h="100vh">
       <Toolbar />
       <Flex h="calc(100% - 100px)">
         <Box bg="blue.300" flex={1}>
@@ -267,7 +292,7 @@ const TemplateDemoSectionInner = () => {
 
 const TemplateDemoSection = ({}) => {
   return (
-    <ScrollSection h="1000vh" w="100%" showOverflow>
+    <ScrollSection h="1000vh" w="100%">
       <TemplateDemoSectionInner />
     </ScrollSection>
   );
@@ -281,7 +306,20 @@ const BannerOneSection = ({}) => {
         bg="green.600"
         // hidden on smalls screens
         display={{ base: "none", lg: "flex" }}
+        pos="relative"
       >
+        <ScrollItem
+          pos="absolute"
+          right="-28"
+          top="-28"
+          keyframes={keyframes.bannerOne.iconSpiral}
+        >
+          <Img
+            w={{ base: "200px", md: "300px" }}
+            src="/branding/icon-spiral.svg"
+          />
+        </ScrollItem>
+
         <Stack>
           <Heading color="yellow.300" size="6xl" textTransform="uppercase">
             creating a portfolio
@@ -333,99 +371,85 @@ const BannerOneSection = ({}) => {
   );
 };
 
-const OldLanding = ({}) => {
+const StepsSection = ({}) => {
   return (
-    <ScrollContainer h="100vh">
-      <ScrollSection>
-        <ScrollItem h="100vh">
-          <Stack h="100%" spacing={0}>
-            <Entrance initialOpacity={0} delay={1.6} damping={300}>
-              <Toolbar />
-            </Entrance>
-            <Center flex={1} w="100%" pb={36}>
-              <Stack alignItems="center">
-                <Entrance initialY={200}>
-                  <Heading size="7xl">We see you</Heading>
-                </Entrance>
-                <Entrance initialY={120} delay={0.4}>
-                  <Heading size="xl">and so will your next employer</Heading>
-                </Entrance>
-                <Entrance initialY={40} delay={0.8}>
-                  <Text fontSize="lg" pt={4}>
-                    Make a beautiful portfolio site in seconds.
-                  </Text>
-                </Entrance>
-                <Entrance initialOpacity={0} initialY={60} delay={1.2}>
-                  <Center py={4} px={2}>
-                    <Button
-                      color="black"
-                      py={6}
-                      px={6}
-                      colorScheme="red"
-                      rounded="lg"
-                    >
-                      Get Started for Free
-                    </Button>
-                  </Center>
-                </Entrance>
-              </Stack>
-            </Center>
-            <Entrance initialOpacity={0} delay={1.6} damping={300}>
-              <Img
-                pos="absolute"
-                bottom={8}
-                left={-4}
-                src="/branding/character_telescope.svg"
-                h={44}
-              />
-              <Img
-                pos="absolute"
-                bottom={8}
-                right={0}
-                src="/branding/character_guitar.svg"
-                h={64}
-              />
-            </Entrance>
-          </Stack>
-        </ScrollItem>
-      </ScrollSection>
-      <ScrollSection showOverflow h="700vh" pageId="page-two">
-        <Center pos="sticky" top={0} h="100vh" spacing={0}>
-          <ScrollItem
-            border="4px solid red"
-            keyframes={keyframes.intro.phraseContainer}
-            springs={{
-              translateY: { damping: 100, mass: 1, stiffness: 500 },
-            }}
-            position="relative"
-            overflow="hidden"
-            w="100vw"
-            h="100px"
-          >
-            {/* <Heading size="3xl" textTransform="uppercase">
-              Tell us about you
-            </Heading> */}
-            {INTRO_PHRASES.map((phrase, index) => (
-              <ScrollItem
-                keyframes={keyframes.intro.phrase}
-                position="absolute"
-                data={{ index }}
-                w="100vw"
-                key={phrase}
-              >
-                <Heading
-                  size="3xl"
-                  textTransform="uppercase"
-                  textAlign="center"
-                >
-                  {phrase}
-                </Heading>
-              </ScrollItem>
-            ))}
-          </ScrollItem>
-        </Center>
-      </ScrollSection>
-    </ScrollContainer>
+    <ScrollSection h="1000vh" w="100%">
+      <StepsSectionInner />
+    </ScrollSection>
+  );
+};
+
+const steps = [
+  {
+    title: "Add Your Content",
+    description:
+      "Share all about projects you’ve worked on, past work experiences, degrees and certifications you’ve earned!",
+    character: "",
+    image: "/templates/reveal.png",
+  },
+  {
+    title: "Choose a Template",
+    description: "Pick the template that looks best with your content",
+    character: "",
+    image: "/templates/circles.png",
+  },
+  {
+    title: "Customize Your Theme",
+    description:
+      "Tweak fonts, colors, and other details until it feels like your own!",
+    character: "",
+    image: "/templates/reveal.png",
+  },
+  {
+    title: "Publish!",
+    description: "Publish your site and share it with the world!",
+    character: "",
+    image: "/templates/circles.png",
+  },
+];
+
+const StepsSectionInner = () => {
+  const selectedIndex = useScrollState(({ section, position, container }) => {
+    const index = Math.floor(
+      (position - section.topAt("container-top")) /
+        ((section.height - container.height) / steps.length)
+    );
+    return clamp(index, 0, steps.length - 1);
+  });
+
+  const currentStep = steps[selectedIndex || 0];
+
+  return (
+    <Box pos="sticky" top={0} h="100vh" overflow="hidden">
+      <ScrollItem
+        keyframes={keyframes.steps.roundedStar}
+        top="-5%"
+        h="110%"
+        pos="absolute"
+        display="inline-block"
+        zIndex={-1}
+      >
+        <Img src="/branding/rounded-star.svg" h="100%" w="100%" />
+      </ScrollItem>
+      <HStack display="flex" h="100%">
+        <Stack flex={1} p="10">
+          <Heading fontSize="6xl"> {currentStep.title}</Heading>
+          <Text fontSize="xl" w="70%">
+            {currentStep.description}
+          </Text>
+          <Img src={currentStep.character} />
+        </Stack>
+        <Box flex={1}>
+          <Img
+            minW="120%"
+            minH="50vh"
+            src={currentStep.image}
+            objectFit="cover"
+            objectPosition="left"
+          />
+        </Box>
+      </HStack>
+    </Box>
   );
 };
 

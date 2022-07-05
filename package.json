@@ -57,7 +57,7 @@
     "react-select": "^4.3.1",
     "react-timeago": "^6.2.1",
     "react-waypoint": "^10.1.0",
-    "scrollex": "^1.1.0",
+    "scrollex": "^2.0.0",
     "slate": "^0.63.0",
     "slate-history": "^0.62.0",
     "slate-react": "^0.65.2",
