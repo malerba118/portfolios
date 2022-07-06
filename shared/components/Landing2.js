@@ -112,14 +112,7 @@ const Landing = ({}) => {
       <TemplateDemoSection />
       <BannerOneSection />
       <StepsSection />
-      {/* <Box h="100vh"></Box> */}
-      {/**
-            <TemplateDemoSection />
-      <CTA1Section />
-      <StepsSection />
-      <CTA2Section />
       <FooterSection />
-     */}
     </ScrollContainer>
   );
 };
@@ -453,4 +446,31 @@ const StepsSectionInner = () => {
   );
 };
 
+const FooterSection = () => {
+  return (
+    <Box px="15%">
+      <Center roundedTop="100px" bg="blue.300" h="80vh" mt="15%">
+        <Flex flexDirection="column" alignItems="center" gap={8}>
+          <Heading
+            color="white"
+            fontSize="6xl"
+            textTransform="uppercase"
+            textAlign="center"
+          >
+            Worlds change when eyes meet
+          </Heading>
+          <Text color="white" fontSize="3xl" mt={-4} textAlign="center">
+            Follow us to stay in touch
+          </Text>
+          <HStack>
+            <Img src="/branding/logos/instagram.png" />
+            <Img src="/branding/logos/twitter.png" />
+            <Img src="/branding/logos/facebook.png" />
+          </HStack>
+          <Img src="/branding/vernos-logo-pink.png" />
+        </Flex>
+      </Center>
+    </Box>
+  );
+};
 export default Landing;
